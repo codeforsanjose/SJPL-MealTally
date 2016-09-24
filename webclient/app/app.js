@@ -23,8 +23,8 @@ angular.module('app', [
     'app.auth',
     'app.layout',
     //'app.chat',
-    //'app.dashboard',
-    //'app.calendar',
+    'app.dashboard',
+    'app.calendar',
     //'app.inbox',
     //'app.graphs',
     //'app.tables',
@@ -36,7 +36,8 @@ angular.module('app', [
     //'app.misc',
     //'app.smartAdmin',
     //'app.eCommerce'
-    'app.home'
+    'app.home',
+    'app.library'
 ])
 .config(function ($provide, $httpProvider, RestangularProvider) {
 

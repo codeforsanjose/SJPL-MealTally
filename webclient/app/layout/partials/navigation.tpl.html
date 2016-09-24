@@ -11,10 +11,17 @@
         -->
 
         <ul data-smart-menu>
-
+            <li data-ui-sref-active="active">
+                <a data-ui-sref="app.dashboard" title="Dashboard">
+                    <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{getWord('Dashboard')}}</span></a>
+            </li>
             <li data-ui-sref-active="active">
                 <a data-ui-sref="app.home" title="Outlook">
                     <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{getWord('Home')}}</span></a>
+            </li>
+            <li data-ui-sref-active="active">
+                <a data-ui-sref="app.library" title="Library">
+                    <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{getWord('Library')}}</span></a>
             </li>
 
         </ul>
