@@ -15,13 +15,13 @@ angular.module('app.home', ['ui.router'])
                     templateUrl: 'app/home/views/home.html',
                     controller: 'HomeController'
                 }
-            },
-            resolve: {
-                test: function(myTestService){
-                    return myTestService.getTest().then(function(result){
-                        return result.message
-                    })
-                }
             }
+            // resolve: {
+            //     test: function(myTestService){
+            //         return myTestService.getTest().then(function(result){
+            //             return result.message
+            //         })
+            //     }
+            // }
         })
 });
