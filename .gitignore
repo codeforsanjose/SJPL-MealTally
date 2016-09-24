@@ -1,5 +1,4 @@
 web/build
 web/node_modules
 web/bower_components
-server/node_modules
 server/.DS_Store
