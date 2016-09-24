@@ -2,6 +2,7 @@
     <form id="smart-form-register" class="smart-form" data-smart-registration-form>
     <header>
         Add Meal
+        <pre> {{ameal}}</pre>
     </header>
 
 
@@ -10,11 +11,11 @@
         <div class="row">
             <section class="col col-6">
                 <label class="input"> </i>
-                    <input type="date" name="username" placeholder="Date">
+                    <input type="date" name="username" placeholder="Date" ng-model="ameal.date">
             </section>  
             <section class="col col-6">
                 <label class="input"> </i>
-                    <input type="sitename" name="sitename" placeholder="Site Name">
+                    <input type="sitename" name="sitename" placeholder="Site Name" ng-model="ameal.siteName">
             </section>
         </div>
                 
@@ -23,7 +24,7 @@
         <div class="row">
             <section class="col col-6">
                 <label class="select">
-                    <select name="budget">
+                    <select name="budget" ng-model="ameal.meal.type">
                         <option value="0" selected="" disabled="">Mealtype</option>
                         <option value="1">Breakfast</option>
                         <option value="2">AM Snack</option>
@@ -35,65 +36,55 @@
             </section>
         </div>
     <!--</fieldset>-->
-    <fieldset>          
-
-        <section>
-            <label class="input"> <i class="icon-append fa fa-lock"></i>
-                <input type="password" name="password" placeholder="Password" id="password">
-                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+       
+    <!--<fieldset>          -->
+      <div class="row">
+            
+        <section class="col col-6">
+            <label class="input">
+                <input type="number" name="noofmeals" placeholder="Number Of Meals" id="noofmeals" ng-model="ameal.meal.vendorReceived">
+                <b class="tooltip tooltip-bottom-right">Meals Recieved from Vendor</b>
+             </label>
         </section>
-
-        <section>
-            <label class="input"> <i class="icon-append fa fa-lock"></i>
-                <input type="password" name="passwordConfirm" placeholder="Confirm password">
-                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+        <section class="col col-6">
+            <label class="input">
+                <input type="number" name="noofmeals" placeholder="Carry Over from Yesterday" id="noofmeals" ng-model="ameal.meal.carryOver"
+                <b class="tooltip tooltip-bottom-right">Carry Over from yesterday</b>
+             </label>
         </section>
+      </div>    
+      <div class="row">
+          <h5 style="margin:10px;"> Meals Consumed </h5>
+           <section class="col col-4">
+                <label class="input"> </i>
+                    <input type="number" name="childconsume" placeholder="Child meal count" ng-model="ameal.meal.consumed.child">
+            </section>  
+            <section class="col col-4">
+                <label class="input"> </i>
+                    <input type="number" name="adultconsume" placeholder="Adult meal count" ng-model="ameal.meal.consumed.adult">
+            </section>
+            <section class="col col-4">
+                <label class="input"> </i>
+                    <input type="number" name="volunteerconsume" placeholder="Volunteer meal count" ng-model="ameal.meal.consumed.volunteer">
+            </section>
+      </div> 
+      <div class="row">
+          <section class="col col-6">
+                <label class="input"> </i>
+                    <input type="number" name="damaged" placeholder="Damaged meal count" ng-model="ameal.meal.damaged">
+            </section>
+           <section class="col col-6">
+                <label class="input"> </i>
+                    <input type="number" name="wasted" placeholder="Wasted meal count" ng-model="ameal.meal.wasted">
+            </section>
+      </div>          
+
+        
     </fieldset>
 
-    <fieldset>
-        <div class="row">
-            <section class="col col-6">
-                <label class="input">
-                    <input type="text" name="firstname" placeholder="First name" ng-model="registration.firstname">
-                </label>
-            </section>
-            <section class="col col-6">
-                <label class="input">
-                    <input type="text" name="lastname" placeholder="Last name"  ng-model="registration.lastname">
-                </label>
-            </section>
-        </div>
-
-        <div class="row">
-            <section class="col col-6">
-                <label class="select">
-                    <select name="gender">
-                        <option value="0" selected="" disabled="">Gender</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                        <option value="3">Prefer not to answer</option>
-                    </select> <i></i> </label>
-            </section>
-            <section class="col col-6">
-                <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                    <input type="text" name="request" placeholder="Request activation on"
-                           data-smart-datepicker data-dateformat='dd/mm/yy' ng-model="registration.date">
-                </label>
-            </section>
-        </div>
-
-        <section>
-            <label class="checkbox">
-                <input type="checkbox" name="subscription" id="subscription">
-                <i></i>I want to receive news and special offers</label>
-            <label class="checkbox">
-                <input type="checkbox" name="terms" id="terms">
-                <i></i>I agree with the Terms and Conditions</label>
-        </section>
-    </fieldset>
     <footer>
-        <button type="submit" class="btn btn-primary">
-            Validate Form
+        <button type="submit" class="btn btn-primary" ng-click="addMeal()>
+            Submit
         </button>
     </footer>
 </form>
