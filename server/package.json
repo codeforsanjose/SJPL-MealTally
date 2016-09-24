@@ -1,0 +1,29 @@
+{
+  "name": "mealtally",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaganmaheshwari/MealTally.git"
+  },
+  "author": "togetherly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaganmaheshwari/MealTally/issues"
+  },
+  "homepage": "https://github.com/gaganmaheshwari/MealTally#readme",
+  "dependencies": {
+    "angularjs": "0.0.1",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.6.1",
+    "morgan": "^1.7.0",
+    "serve-favicon": "^2.3.0"
+  }
+}
