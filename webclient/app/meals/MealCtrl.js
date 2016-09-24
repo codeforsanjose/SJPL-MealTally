@@ -1,23 +1,29 @@
 'use strict';
 
-angular.module('app.meal').controller('MealAddController', function ($scope) {
-    $scope.test 
+angular.module('app.meal').controller('MealAddController', function ($scope,mealService) {
+    $scope.isMealAdded=false
     $scope.ameal = {
         "date": '',
         "siteName": '',
         "meal": {
             "type": '',
-            "vendorReceived": 0,
-            "carryOver": 0,
+            "vendorReceived":'' ,
+            "carryOver":'' ,
             "consumed": {
-                "child": 0,
-                "adult": 0,
-                "volunteer": 0
+                "child":'' ,
+                "adult": '',
+                "volunteer":'' 
             },
-            "damaged": 0,
-            "wasted": 0
+            "damaged": '',
+            "wasted": ''
 
         } 
+    }
+
+    $scope.addMeal = function(){
+        mealService.addMeal(meal).then(function(result){
+            $scope.isMealAdded = true
+        })
     }
   
     var init = function(){

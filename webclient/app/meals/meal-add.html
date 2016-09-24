@@ -3,6 +3,13 @@
     <header>
         Add Meal
         <pre> {{ameal}}</pre>
+        <div class="alert alert-success fade in" ng-show="isMealAdded">
+            <button class="close" data-dismiss="alert">
+                ×
+            </button>
+            <i class="fa-fw fa fa-check"></i>
+            <strong>Success</strong> The page has been added.
+        </div>
     </header>
 
 
@@ -26,11 +33,11 @@
                 <label class="select">
                     <select name="budget" ng-model="ameal.meal.type">
                         <option value="0" selected="" disabled="">Mealtype</option>
-                        <option value="1">Breakfast</option>
-                        <option value="2">AM Snack</option>
-                        <option value="3">Lunch</option>
-                        <option value="4">PM Snack</option>
-                        <option value="5">Supper</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="AM Snack">AM Snack</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="PM Snack">PM Snack</option>
+                        <option value="Supper">Supper</option>
                         
                     </select> <i></i> </label>
             </section>
@@ -48,7 +55,7 @@
         </section>
         <section class="col col-6">
             <label class="input">
-                <input type="number" name="noofmeals" placeholder="Carry Over from Yesterday" id="noofmeals" ng-model="ameal.meal.carryOver"
+                <input type="number" name="carryovermeal" placeholder="Carry Over from Yesterday" id="carryovermeal" ng-model="ameal.meal.carryOver">
                 <b class="tooltip tooltip-bottom-right">Carry Over from yesterday</b>
              </label>
         </section>
@@ -83,7 +90,7 @@
     </fieldset>
 
     <footer>
-        <button type="submit" class="btn btn-primary" ng-click="addMeal()>
+        <button type="submit" class="btn btn-primary" ng-click="addMeal()">
             Submit
         </button>
     </footer>
