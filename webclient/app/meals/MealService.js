@@ -1,12 +1,12 @@
 'use strict';  
-angular.module('app.meal').service('MealService', ['$http','$global',function ($http,$global) {
+angular.module('app.meal').service('mealService', function ($http) {
       return {       
           addMeal : function(payload){
-              var url = $global.getServerAddr("/rest/item")
+              var url ="/rest/item"
               return $http.post(url, payload)
                 .then(function (result) {
                     return result.data;
               });
           }         
       }
-}]);
+});

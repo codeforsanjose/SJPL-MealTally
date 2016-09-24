@@ -2,6 +2,7 @@
 
 angular.module('app.meal').controller('MealAddController', function ($scope,mealService) {
     $scope.isMealAdded=false
+    $scope.test ="hello world"
     $scope.ameal = {
         "date": '',
         "siteName": '',
