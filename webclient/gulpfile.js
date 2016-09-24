@@ -7,6 +7,8 @@ var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var fs = require('fs');
 var _ = require('lodash');
+var del = require('del');
+
 
 
 var scripts = require('./app.scripts.json');
@@ -30,15 +32,34 @@ var source = {
             // other js files [controllers, services, etc.]
             'app/**/!(module)*.js'
         ],
-        tpl: 'app/**/*.tpl.html'
+        tpl: 'app/**/*.html'
     }
 };
 
 var destinations = {
-    js: 'build'
+    js: 'build',
+    dist:'dist'
 };
 
+gulp.task('clean:dist', function () {
+  return del([
+    'dist/api/*'
+  ],{force:true}).then(paths => {
+    console.log('Files and folders that would be deleted:\n', paths.join('\n'));
+  });;
+});  
 
+
+gulp.task('copy2Dist', function(){
+  return gulp.src([
+      './build/*.js',
+      './sound/*',
+      './styles/**/*',
+      './api/**/*',
+      '*.html'
+  ],  {base: '.'}) 
+    .pipe(gulp.dest(destinations.dist));
+})
 gulp.task('build', function(){
     return es.merge(gulp.src(source.js.src) , getTemplateStream())
          .pipe(ngAnnotate())
@@ -60,7 +81,7 @@ gulp.task('watch', function(){
 
 gulp.task('connect', function() {
     connect.server({
-        port: 8888
+        port: 9001
     });
 });
 
@@ -69,7 +90,7 @@ gulp.task('vendor', function(){
         var paths = [];
         chunkScripts.forEach(function(script){
             var scriptFileName = scripts.paths[script];
-
+            console.log('file name found ' + scriptFileName);
             if (!fs.existsSync(__dirname + '/' + scriptFileName)) {
 
                 throw console.error('Required path doesn\'t exist: ' + __dirname + '/' + scriptFileName, script)
@@ -84,7 +105,7 @@ gulp.task('vendor', function(){
 
 });
 
-gulp.task('prod', ['vendor', 'build']);
+gulp.task('prod', ['vendor', 'build','copy2Dist']);
 gulp.task('dev', ['vendor', 'js', 'watch', 'connect']);
 gulp.task('default', ['dev']);
 
