@@ -1,0 +1,100 @@
+<div>
+    <form id="smart-form-register" class="smart-form" data-smart-registration-form>
+    <header>
+        Add Meal
+    </header>
+
+
+
+    <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <label class="input"> </i>
+                    <input type="date" name="username" placeholder="Date">
+            </section>  
+            <section class="col col-6">
+                <label class="input"> </i>
+                    <input type="sitename" name="sitename" placeholder="Site Name">
+            </section>
+        </div>
+                
+    <!--<fieldset>-->
+    <!--<fieldset>-->
+        <div class="row">
+            <section class="col col-6">
+                <label class="select">
+                    <select name="budget">
+                        <option value="0" selected="" disabled="">Mealtype</option>
+                        <option value="1">Breakfast</option>
+                        <option value="2">AM Snack</option>
+                        <option value="3">Lunch</option>
+                        <option value="4">PM Snack</option>
+                        <option value="5">Supper</option>
+                        
+                    </select> <i></i> </label>
+            </section>
+        </div>
+    <!--</fieldset>-->
+    <fieldset>          
+
+        <section>
+            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" id="password">
+                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+        </section>
+
+        <section>
+            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                <input type="password" name="passwordConfirm" placeholder="Confirm password">
+                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+        </section>
+    </fieldset>
+
+    <fieldset>
+        <div class="row">
+            <section class="col col-6">
+                <label class="input">
+                    <input type="text" name="firstname" placeholder="First name" ng-model="registration.firstname">
+                </label>
+            </section>
+            <section class="col col-6">
+                <label class="input">
+                    <input type="text" name="lastname" placeholder="Last name"  ng-model="registration.lastname">
+                </label>
+            </section>
+        </div>
+
+        <div class="row">
+            <section class="col col-6">
+                <label class="select">
+                    <select name="gender">
+                        <option value="0" selected="" disabled="">Gender</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Prefer not to answer</option>
+                    </select> <i></i> </label>
+            </section>
+            <section class="col col-6">
+                <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                    <input type="text" name="request" placeholder="Request activation on"
+                           data-smart-datepicker data-dateformat='dd/mm/yy' ng-model="registration.date">
+                </label>
+            </section>
+        </div>
+
+        <section>
+            <label class="checkbox">
+                <input type="checkbox" name="subscription" id="subscription">
+                <i></i>I want to receive news and special offers</label>
+            <label class="checkbox">
+                <input type="checkbox" name="terms" id="terms">
+                <i></i>I agree with the Terms and Conditions</label>
+        </section>
+    </fieldset>
+    <footer>
+        <button type="submit" class="btn btn-primary">
+            Validate Form
+        </button>
+    </footer>
+</form>
+</div>
