@@ -20,14 +20,16 @@ angular.module('app.meal').service('mealService', function ($http) {
                   return result.data
               })
           },
-          getRefLogs:function(){
-              var url="/api/reflogs.json"
+          getRefLogs:function(weekStart){
+              var url="/reflogs?DATEFROM="+weekStart
+            //   var url="/api/reflogs.json"
                return $http.get(url).then(function(result){
                   return result.data
               })
           },    
-          getFoodLogs:function(){
-              var url="/api/foodlogs.json"
+          getFoodLogs:function(weekStart){
+              var url="/foodlogs?DATEFROM="+weekStart
+            //   var url="/api/foodlogs.json"
                return $http.get(url).then(function(result){
                   return result.data
               })

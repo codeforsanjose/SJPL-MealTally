@@ -6,12 +6,17 @@ angular.module('app.home').controller('HomeController',
     $scope.refLogList
     $scope.foodLogList
     var vm = this;
+    
 
     var init = function(){
-        mealService.getRefLogs().then(function(result){
+        var dt = new Date()
+        var amoment = moment().startOf('week');
+        
+        var weekStart = amoment.format('YYYY-MM-DD')
+        mealService.getRefLogs(weekStart).then(function(result){
             $scope.refLogList = result
         })
-        mealService.getFoodLogs().then(function(result){
+        mealService.getFoodLogs(weekStart).then(function(result){
             $scope.foodLogList = result
         })
 
