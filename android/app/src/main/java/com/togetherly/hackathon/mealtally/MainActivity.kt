@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     val mealCountForm = MealCountForm()
 
+    lateinit var mealTypeText: TextView
     lateinit var mealsFromVendor: EditText
     lateinit var mealsLeftover: EditText
     lateinit var totalMeals: TextView
@@ -41,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var lunchText: TextView
     lateinit var PMSnackText: TextView
     lateinit var supperText: TextView
-    lateinit var mealTypeText: TextView
 
     lateinit var childrenButton: Button
     lateinit var adultsButton: Button
@@ -95,12 +95,14 @@ class MainActivity : AppCompatActivity() {
         // B-e-a-u-t-i-f-u-l
         val top = sceneRoot.findViewById(R.id.top) as LinearLayout
         top.animate()
+                .scaleX(0.0f)
                 .scaleY(0.0f)
                 .setDuration(0)
                 .start()
         top.animate()
+                .scaleX(1.0f)
                 .scaleY(1.0f)
-                .setDuration(200)
+                .setDuration(500)
                 .start()
 
         setNextArrowListener(transitionSet)
@@ -309,10 +311,17 @@ class MainActivity : AppCompatActivity() {
         setMealCountFormValues()
     }
 
+    // TODO: Complete this method. Save values across transitions
     private fun setMealCountFormValues() {
         bindViews()
+        val libraryText = sceneRoot.findViewById(R.id.locationText) as TextView
 
-
+        libraryText.text = mealCountForm.siteName
+        mealTypeText.text = mealCountForm.mealType
+        mealsFromVendor.setText(mealCountForm.vendorReceived)
+        mealsLeftover.setText(mealCountForm.carryOver)
+        totalMeals.text = mealCountForm.getTotalMeals()
+        totalServedCount.text = mealCountForm.getTotalServed()
     }
 
     private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
@@ -321,24 +330,26 @@ class MainActivity : AppCompatActivity() {
         val date = DateFormat.format("yyyy-MM-d", Date().time)
         Log.d("Date", date.toString())
 
-        val requestBody = """
-            {
-                "date": "$date.toString()",
-                "siteName": "$siteName",
-                "meal": {
-                "type": "$mealType",
-                "vendorReceived": $vendorReceived,
-                "carryOver": $carryOver,
-                "consumed": {
-                    "child": $childrenFoodCount,
-                    "adult": $adultFoodCount,
-                    "volunteer": $staffFoodCount
-                    },
-                "damaged": $damaged,
-                "wasted": $wasted
+        val requestBody = with(mealCountForm) {
+                """
+                {
+                    "date": "$date.toString()",
+                    "siteName": "$siteName",
+                    "meal": {
+                    "type": "$mealType",
+                    "vendorReceived": $vendorReceived,
+                    "carryOver": $carryOver,
+                    "consumed": {
+                        "child": $childrenFoodCount,
+                        "adult": $adultFoodCount,
+                        "volunteer": $staffFoodCount
+                        },
+                    "damaged": $damaged,
+                    "wasted": $wasted
+                    }
                 }
-            }
-        """
+                """
+        }
 
         val jsonObject = JSONObject(requestBody)
 

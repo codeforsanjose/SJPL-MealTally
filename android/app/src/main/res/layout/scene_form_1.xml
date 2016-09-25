@@ -82,6 +82,9 @@
 
                 <TextView
                     android:id="@+id/breakfastText"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:text="Breakfast"
                     android:onClick="selectMealType"
                     android:layout_width="wrap_content"
@@ -129,7 +132,6 @@
                     style="@style/MealTypeTextView"/>
 
                 <TextView
-                    android:text="Hidden Meal"
                     android:id="@+id/mealTypeText"
                     android:layout_below="@id/AMSnackText"
                     android:visibility="invisible"
@@ -205,9 +207,12 @@
                     android:layout_height="wrap_content"
                     style="@style/FormLabelTextView"/>
 
-
-
             </LinearLayout>
+
+            <View
+                android:background="@color/overlayShadow"
+                android:layout_width="50dp"
+                android:layout_height="2dp"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -216,7 +221,7 @@
 
                 <TextView
                     android:id="@+id/mealsTotalCount"
-                    android:ems="3"
+                    android:ems="2"
                     android:layout_marginRight="5dp"
                     android:gravity="center"
                     android:textSize="18sp"
