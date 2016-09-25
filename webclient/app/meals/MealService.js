@@ -9,14 +9,14 @@ angular.module('app.meal').service('mealService', function ($http) {
               });
           },
           getStats: function(library,mealtype){
-              var url ="/weeklyMealReport?siteName="+library
-              if(mealtype != 'All')
-              url = url + "&meal.type="+mealtype
-            //   var url = "/api/mealstats-server.json"
+            //   var url ="/weeklyMealReport?siteName="+library
+            //   if(mealtype != 'All')
+            //   url = url + "&meal.type="+mealtype
+              var url = "/api/mealstats-server.json"
               return $http.get(url).then(function(result){
-                  var emptyArr = []
-                  if(mealtype == 'All')
-                      return emptyArr
+                //   var emptyArr = []
+                //   if(mealtype == 'All')
+                //       return emptyArr
                   return result.data
               })
           },
