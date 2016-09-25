@@ -191,9 +191,12 @@ class MainActivity : AppCompatActivity() {
         nextButton = sceneRoot.findViewById(R.id.nextButton) as Button
         nextArrowHelper = sceneRoot.findViewById(R.id.nextArrowTopHelper) as View
         nextButton2 = sceneRoot.findViewById(R.id.nextButton2) as Button
-        nextArrowHelper = sceneRoot.findV
 
         nextButton.onClick { goScene(currentScene, transition) }
+        nextButton2.onClick {
+            currentScene = formThree
+            goScene(currentScene, transition)
+        }
         nextArrowHelper.onClick { goScene(currentScene, transition) }
 
     }
