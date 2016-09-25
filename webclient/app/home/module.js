@@ -6,14 +6,14 @@ angular.module('app.home', ['ui.router'])
 
     $stateProvider
         .state('app.home', {
-            url: '/home',
+            url: '/logs',
             data: {
                 title: 'Blank'
             },
             views: {
                 "content@app": {
-                    templateUrl: 'app/home/views/home.html',
-                    controller: 'HomeController'
+                    templateUrl: 'app/home/views/logs.html',
+                    controller: 'HomeController as datatables'
                 }
             }
             // resolve: {
