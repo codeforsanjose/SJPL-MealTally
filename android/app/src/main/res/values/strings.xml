@@ -5,9 +5,9 @@
     <string name="form_location_label">Location:</string>
     <string name="form_meal_type_label">Meal Type:</string>
     <string name="form_meals_from_vendor_label">Meals from vendor:</string>
-    <string name="form_meals_leftover_label">Meals leftover from yesterday:</string>
-    <string name="form_meals_total_label">Total meals:</string>
-    <string name="form_meals_served_label">Meals served:</string>
+    <string name="form_meals_leftover_label">Meals leftover from yesterday</string>
+    <string name="form_meals_total_label">= Total meals</string>
+    <string name="form_meals_served_label">Meals served</string>
     <string name="form_adult_label">Adults:</string>
     <string name="form_children_label">Children:</string>
     <string name="form_staff_volunteer_label">Staff:</string>
