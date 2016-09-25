@@ -12,8 +12,8 @@ angular.module('app.graphs').directive('mealNormalBarGraph', function(){
         },
         link: function(scope, element){           
             scope.$watch('statsdata', function() {                
-                scope.leaveStayChart = null
-                if (scope.leaveStayChart == null && scope.statsdata.length>0) {
+                // scope.leaveStayChart = null
+                if (scope.statsdata.length>0) {
                     scope.leaveStayChart = Morris.Bar({
                         element : element,
                         data : scope.statsdata, 
