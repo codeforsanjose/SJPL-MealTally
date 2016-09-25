@@ -120,7 +120,7 @@
     "flot-time": "smartadmin-plugin/legacy/flot/jquery.flot.time.min.js",
     "flot-tooltip": "smartadmin-plugin/legacy/flot/jquery.flot.tooltip.min.js",
     "raphael": "bower_components/raphael/raphael.min.js",
-    "morris": "bower_components/morris.js/morris.js",
+    "morris": "bower_components/morris.js/morris.min.js",
     "dygraphs": "bower_components/dygraphs/dygraph-combined.js",
     "chartjs": "bower_components/Chart.js/Chart.min.js",
     "highcharts": "bower_components/highcharts/highcharts.js",

@@ -9,9 +9,11 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationSet
 import android.widget.Button
+import android.widget.TextView
 import com.github.kittinunf.fuel.Fuel
 import com.transitionseverywhere.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.food_counter.*
 import org.jetbrains.anko.enabled
 import org.jetbrains.anko.onClick
 import java.util.*
@@ -24,23 +26,25 @@ class MainActivity : AppCompatActivity() {
     lateinit var childrenMinusButton: Button
     lateinit var adultsMinusButton: Button
     lateinit var staffMinusButton: Button
+    lateinit var totalServedCount: TextView
 
     lateinit var nextButton: Button
+    lateinit var nextButton2: Button
     lateinit var nextArrowHelper: View
+    lateinit var nextArrowTop2: View
     lateinit var currentScene: Scene
     lateinit var formOne: Scene
     lateinit var formTwo: Scene
     lateinit var formThree: Scene
 
     companion object {
-
+        private val animationTimer = 100L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
                 submitForm("FROM JOHNNY", "AM Food", "23", "12", "123", "333", "1", "1", "2")
-
 
         // Scenes
         formOne = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_1, this)
@@ -68,8 +72,9 @@ class MainActivity : AppCompatActivity() {
         childrenMinusButton = sceneRoot.findViewById(R.id.childrenMinusButton) as Button
         adultsMinusButton = sceneRoot.findViewById(R.id.adultsMinusButton) as Button
         staffMinusButton = sceneRoot.findViewById(R.id.staffMinusButton) as Button
-
+        totalServedCount = sceneRoot.findViewById(R.id.totalServedText) as TextView
     }
+
     private fun setFoodCountListeners(isEnabled: Boolean) {
 
         bindFoodCounters()
@@ -88,11 +93,7 @@ class MainActivity : AppCompatActivity() {
             childrenMinusButton.enabled = false
             adultsMinusButton.enabled = false
             staffMinusButton.enabled = false
-
-
         }
-
-
     }
 
     private fun adjustForScenes() {
@@ -106,13 +107,45 @@ class MainActivity : AppCompatActivity() {
         staffButton.text = staff
     }
 
+    private fun calculateTotalServed() {
+        val childrenServed = childrenButton.text.toString().toInt()
+        val adultsServed = adultsButton.text.toString().toInt()
+        val staffServed = staffButton.text.toString().toInt()
+
+        totalServedCount.animate()
+            .setDuration(animationTimer)
+            .scaleX(1.3f)
+            .scaleY(1.3f)
+            .setListener(object: Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    totalServedCount.animate()
+                            .setDuration(animationTimer)
+                            .scaleY(1.0f)
+                            .scaleX(1.0f)
+                            .start()
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                }
+
+                override fun onAnimationStart(animation: Animator?) {
+                }
+            })
+        totalServedText.text = (childrenServed + adultsServed + staffServed).toString()
+
+    }
+
     private fun foodCountPlusListener() = View.OnClickListener {
         if (it is Button) {
             it.text = if (it.text.length == 0) "0" else (it.text.toString().toInt() + 1).toString()
         }
+        calculateTotalServed()
 
         it.animate()
-            .setDuration(100)
+            .setDuration(animationTimer)
             .scaleX(1.3f)
             .scaleY(1.3f)
             .setListener(object: Animator.AnimatorListener {
@@ -121,7 +154,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onAnimationEnd(animation: Animator?) {
                     it.animate()
-                        .setDuration(100)
+                        .setDuration(animationTimer)
                         .scaleY(1.0f)
                         .scaleX(1.0f)
                         .start()
@@ -140,12 +173,13 @@ class MainActivity : AppCompatActivity() {
 
         // Minus food count
         counter.text = if (counter.text.toString() <= "0") "0" else (counter.text.toString().toInt() - 1).toString()
+        calculateTotalServed()
 
         val counterButtonAnimation = counter.animate()
-                .setDuration(100)
+                .setDuration(animationTimer)
                 .scaleX(0.7f)
                 .scaleY(0.7f)
-                .setListener(object: Animator.AnimatorListener {
+                .setListener(object : Animator.AnimatorListener {
                     override fun onAnimationRepeat(animation: Animator?) {
                     }
 
@@ -163,12 +197,12 @@ class MainActivity : AppCompatActivity() {
                     override fun onAnimationStart(animation: Animator?) {
                     }
                 })
-
-        val minusButtonAnimation =  it.animate()
-                .setDuration(100)
+        // Run animations simultaneously using endWithAction { }
+        it.animate()
+                .setDuration(animationTimer)
                 .scaleX(1.1f)
                 .scaleY(1.1f)
-                .setListener(object: Animator.AnimatorListener {
+                .setListener(object : Animator.AnimatorListener {
                     override fun onAnimationRepeat(animation: Animator?) {
                     }
 
@@ -185,17 +219,23 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onAnimationStart(animation: Animator?) {
                     }
-                }).withEndAction { counterButtonAnimation.start() }.start() // Run animations simultaneously
-
+                }).withEndAction { counterButtonAnimation.start() }.start()
     }
 
     private fun setNextArrowListener(transition: Transition) {
-        nextButton = sceneRoot.findViewById(R.id.nextButton) as Button
-        nextArrowHelper = sceneRoot.findViewById(R.id.nextArrowTopHelper) as View
         currentScene = if (currentScene == formTwo) formOne else formTwo
-        nextButton.onClick { goScene(currentScene, transition) }
-        nextArrowHelper.onClick { goScene(currentScene, transition) }
 
+        nextButton = sceneRoot.findViewById(R.id.nextButton) as Button
+        nextButton2 = sceneRoot.findViewById(R.id.nextButton2) as Button
+        nextArrowHelper = sceneRoot.findViewById(R.id.nextArrowTopHelper) as View
+        nextArrowTop2 = sceneRoot.findViewById(R.id.nextArrowTop2) as View
+
+        nextButton.onClick { goScene(currentScene, transition) }
+        nextButton2.onClick {
+            currentScene = formThree
+            goScene(currentScene, transition)
+        }
+        nextArrowHelper.onClick { goScene(currentScene, transition) }
     }
 
     private fun goScene(scene: Scene, transition: Transition = ChangeBounds()) {
@@ -211,6 +251,7 @@ class MainActivity : AppCompatActivity() {
         setNextArrowListener(transition)
         adjustForScenes()
         setFoodCounts(childrenFoodCount, adultsFoodCount, staffFoodCount)
+        calculateTotalServed()
     }
 
     private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
@@ -245,4 +286,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    override fun onBackPressed() {
+        // Disable back
+    }
 }

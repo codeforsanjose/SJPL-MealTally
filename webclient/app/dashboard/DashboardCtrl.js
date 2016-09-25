@@ -6,16 +6,27 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
     // Live Stats Tab
     $scope.mealStats=[]
 
-
-    $scope.init = function(){
-        mealService.getStats().then(function(result){
+    $scope.getMealStats = function(){
+         mealService.getStats().then(function(result){
             $scope.mealStats = result
         })
+    }
+    $scope.init = function(){
+       $scope.getMealStats()
     }();
 
-    $scope.libName="DR.ROBERTO CRUZ-ALUM ROCK"
-    $scope.changeLib = function(libName){
-       $scope.libName = libName
+    
+
+    $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
+    $scope.allLibraries = ['DR.ROBERTO CRUZ-ALUM ROCK','BIBLIOTECA LATINOAMERICANA','EDUCATIONAL PARK','OYCE ELLINGTON','HILLVIEW','TULLY COMMUNITY']
+    $scope.selectedMeal='All'
+    $scope.mealTypes=['All','Breakfast','AM Snack','Lunch','PM Snack','Supper']
+
+    $scope.refreshCharts = function(){
+        $scope.getMealStats()
+    }
+    $scope.changeLib = function(index){
+       $scope.selectedLibrary = $scope.allLibraries[index]
     }
 
     // function getFakeItem(index, prevValue){
