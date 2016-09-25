@@ -22,7 +22,7 @@ angular.module('app.meal').controller('MealAddController', function ($scope,meal
     }
 
     $scope.addMeal = function(){
-        mealService.addMeal(meal).then(function(result){
+        mealService.addMeal($scope.ameal).then(function(result){
             $scope.isMealAdded = true
         })
     }
