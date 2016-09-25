@@ -20,6 +20,6 @@
         </shape>
 
     </item>
-    <item android:drawable="@drawable/ic_keyboard_arrow_down"/>
+    <item android:drawable="@drawable/ic_minus"/>
 
 </layer-list>

@@ -27,11 +27,10 @@
                 android:id="@+id/childrenLabel"
                 android:text="@string/form_children_label"
                 android:gravity="center_horizontal"
-                android:textSize="15sp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/FoodCountLabel"/>
+                style="@style/FoodCountLabelMini"/>
 
             <Button
                 android:id="@+id/childrenFoodButton"
@@ -61,10 +60,9 @@
                 android:text="@string/form_adult_label"
                 android:gravity="center_horizontal"
                 android:layout_weight="1"
-                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/FoodCountLabel"/>
+                style="@style/FoodCountLabelMini"/>
 
             <Button
                 android:id="@+id/adultsFoodButton"
@@ -93,11 +91,10 @@
                 android:id="@+id/staffLabel"
                 android:text="@string/form_staff_volunteer_label"
                 android:gravity="center_horizontal"
-                android:textSize="15sp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/FoodCountLabel"/>
+                style="@style/FoodCountLabelMini"/>
 
             <Button
                 android:id="@+id/staffFoodButton"
@@ -124,8 +121,8 @@
         android:layout_marginRight="16dp"
         android:orientation="horizontal"
         android:background="@color/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="0dp">
 
         <Button
             android:id="@+id/nextButton2"
@@ -136,17 +133,16 @@
             android:textColor="@color/white"
             android:lines="1"
             android:ems="10"
-            android:layout_width="0dp"
-            android:layout_height="0dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/nextArrowTop2"
-            android:src="@drawable/ic_keyboard_arrow_down"
+            android:src="@drawable/ic_keyboard_arrow_right"
             android:background="@color/colorAccentDark"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
+            android:layout_width="20dp"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
-
 
 </RelativeLayout>

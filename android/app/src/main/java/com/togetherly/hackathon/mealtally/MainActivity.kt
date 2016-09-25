@@ -137,10 +137,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun foodCountMinusListener(counter: Button) = View.OnClickListener {
-        counter.text = if (counter.text.length == 0) "0" else (counter.text.toString().toInt() - 1).toString()
 
-        val animationSet = AnimationSet()
-        it.animate()
+        // Minus food count
+        counter.text = if (counter.text.toString() <= "0") "0" else (counter.text.toString().toInt() - 1).toString()
+
+        val counterButtonAnimation = counter.animate()
+                .setDuration(100)
+                .scaleX(0.7f)
+                .scaleY(0.7f)
+                .setListener(object: Animator.AnimatorListener {
+                    override fun onAnimationRepeat(animation: Animator?) {
+                    }
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        counter.animate()
+                                .setDuration(100)
+                                .scaleY(1.0f)
+                                .scaleX(1.0f)
+                                .start()
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+                    }
+
+                    override fun onAnimationStart(animation: Animator?) {
+                    }
+                })
+
+        val minusButtonAnimation =  it.animate()
                 .setDuration(100)
                 .scaleX(1.1f)
                 .scaleY(1.1f)
@@ -161,9 +185,7 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onAnimationStart(animation: Animator?) {
                     }
-                })
-                .start()
-
+                }).withEndAction { counterButtonAnimation.start() }.start() // Run animations simultaneously
 
     }
 

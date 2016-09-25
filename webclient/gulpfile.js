@@ -44,7 +44,7 @@ var destinations = {
 gulp.task('clean:dist', function () {
   return del([
     'dist/api/*'
-  ],{force:true}).then(paths => {
+  ],{force:true}).then( function(paths) {
     console.log('Files and folders that would be deleted:\n', paths.join('\n'));
   });;
 });  
