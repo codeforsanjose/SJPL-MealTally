@@ -6,22 +6,26 @@
 		<!--<big-breadcrumbs items="['Dashboard', 'My Dashboard']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
 		<!--<div smart-include="app/layout/partials/sub-header.tpl.html"></div>-->
 		<article class="col-xs-12 col-sm-12 pull-right">
-			<span> <h2> {{selectedLibrary}} </h2> </span>
-			<span class="btn-group dropdown" data-dropdown>
-				<a class="btn btn-primary" href-void>Change Library</a>
-				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li ng-repeat="lib in allLibraries">
-						<a href-void ng-click="changeLib($index)">{{lib}}</a>
-					</li>
-				</ul>
-			</span><!-- /btn-group -->
+			<section>
+				    <label for="singleSelect"> Library: </label><br>
+					<label class="select">						
+						<select class="input-lg" ng-model="selectedLibrary" ng-change="refreshCharts()">
+							<option ng-repeat="lib in allLibraries">{{lib}}</option>
+						</select> <i></i> </label>	
+			</section>
+			<section>
+					<label for="mel"> Meal: </label><br>
+					<label class="select">
+						<select class="input-lg" ng-model="selectedMeal" ng-change="refreshCharts()">
+							<option ng-repeat="meal in mealTypes">{{meal}}</option>
+						</select> <i></i> </label>	
+			</section>
+			
 		</article>
 
 	</div>
 	<!-- widget grid -->
 	<section id="widget-grid1" widget-grid>
-
 		<!-- row -->
 		<div class="row">
 			  <article class="col-xs-12 col-sm-6">
