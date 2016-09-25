@@ -6,15 +6,20 @@ angular.module('app.home').controller('HomeController',
     $scope.refLogList
     $scope.foodLogList
     var vm = this;
+    
+    $scope.getLogs = function(){
+        var amoment = moment().startOf('week');        
+        var weekStart = amoment.format('YYYY-MM-DD')
 
-    var init = function(){
-        mealService.getRefLogs().then(function(result){
+        mealService.getRefLogs(weekStart).then(function(result){
             $scope.refLogList = result
         })
-        mealService.getFoodLogs().then(function(result){
+        mealService.getFoodLogs(weekStart).then(function(result){
             $scope.foodLogList = result
         })
-
+    }
+    var init = function(){
+        $scope.getLogs()
          vm.dtOptions1 = DTOptionsBuilder.newOptions()
           .withOption('aLengthMenu', [[-1], ['All']]) // Length of how many to show per pagination.
           .withOption('oLanguage',{"sSearch": "Search:"})
@@ -46,6 +51,10 @@ angular.module('app.home').controller('HomeController',
             }
         })
 
+        modalInstance.result.then(function () {
+            $scope.getLogs()
+        });  
+
     }
     $scope.showFoodDialog = function(index){
         var data = $scope.foodLogList[index]
@@ -59,6 +68,9 @@ angular.module('app.home').controller('HomeController',
                     } 
             }
         })
+         modalInstance.result.then(function () {
+            $scope.getLogs()
+        });
 
     }
 });
@@ -75,9 +87,11 @@ angular.module('app.home').controller('RefDialogModal',function($scope,item,$uib
           
     }()
     $scope.submit = function(){
-        alert("data submitted" +  $scope.isEditMode)
          mealService.saveRefLogs($scope.item).then(function(result){
             $scope.foodLogList = result
+            alert("Succesfully submitted")
+            $uibModalInstance.close()
+
         }) 
     }
     $scope.cancel = function(){
@@ -95,13 +109,13 @@ angular.module('app.home').controller('FoodDialogModal',function($scope,item,$ui
            $scope.isEditMode = true
         else
             $scope.isEditMode = false   
-        mealService.saveFoodLogs($scope.item).then(function(result){
-            $scope.foodLogList = result
-        }) 
-          
     }()
     $scope.submit = function(){
-        alert("data submitted" +  $scope.isEditMode)
+        mealService.saveFoodLogs($scope.item).then(function(result){
+            $scope.foodLogList = result
+            alert("Foodlog Succesfully submitted")
+        }) 
+        $uibModalInstance.close()
     }
     $scope.cancel = function(){
               $uibModalInstance.dismiss('cancel');

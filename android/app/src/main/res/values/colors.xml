@@ -15,6 +15,7 @@
     <color name="shadowColor">#9E9E9E</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="darkerGray">@android:color/darker_gray</color>
 
     <color name="overlayShadow">#88000000</color>
 </resources>

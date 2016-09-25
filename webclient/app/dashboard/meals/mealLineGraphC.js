@@ -8,14 +8,17 @@ angular.module('app.dashboard').directive('mealLineGraphC', function(mealService
         scope : {
             statsdata : '='
         },
-        link: function(scope, element){     
+        link: function(scope, element){ 
+                
             scope.$watch('statsdata', function() {
+                if(scope.statsdata.length ==0)
+                   return
                 Morris.Line({
                     element : element,
                     data : scope.statsdata,
-                    xkey : 'elapsed',
-                    ykeys : ['served', 'wasted'],
-                    labels : ['value'],
+                    xkey : 'date',
+                    ykeys : ['consumed', 'wasted'],
+                    labels : ['Total Consumed', 'Total Wasted'],
                     parseTime : false
                 });
             })

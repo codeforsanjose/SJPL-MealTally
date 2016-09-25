@@ -1,6 +1,7 @@
 package com.togetherly.hackathon.mealtally
 
 import android.animation.Animator
+import android.graphics.Typeface
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -104,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         AMSnackText = sceneRoot.findViewById(R.id.AMSnackText) as TextView
         lunchText = sceneRoot.findViewById(R.id.lunchText) as TextView
         PMSnackText = sceneRoot.findViewById(R.id.PMSnackText) as TextView
+        supperText = sceneRoot.findViewById(R.id.supperText) as TextView
         mealTypeText = sceneRoot.findViewById(R.id.mealTypeText) as TextView
         totalMeals = sceneRoot.findViewById(R.id.mealsTotalCount) as TextView
 
@@ -429,7 +431,23 @@ class MainActivity : AppCompatActivity() {
                 .start()
     }
 
-    fun selectMealType(target: TextView) {
+    fun selectMealType(view: View) {
+        bindViews()
 
+        resetMealType(breakfastText)
+        resetMealType(AMSnackText)
+        resetMealType(lunchText)
+        resetMealType(PMSnackText)
+        resetMealType(supperText)
+
+        (view as TextView).textColor = resources.getColor(R.color.white, null)
+        (view as TextView).backgroundColor = resources.getColor(R.color.colorPrimary, null)
+        (view as TextView).setTypeface(null, Typeface.BOLD)
+    }
+
+    private fun resetMealType(target: TextView) {
+        target.textColor = resources.getColor(R.color.darkerGray, null)
+        target.backgroundColor = resources.getColor(R.color.colorNeutral, null)
+        target.setTypeface(null, Typeface.NORMAL)
     }
 }

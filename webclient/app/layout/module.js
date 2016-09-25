@@ -13,7 +13,8 @@ angular.module('app.layout', ['ui.router'])
                 root: {
                     templateUrl: 'app/layout/layout.tpl.html'
                 }
-            }
+            },
+            controller:'MyRootController'
         });
     $urlRouterProvider.otherwise('/dashboard');
 
