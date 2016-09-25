@@ -1,34 +1,54 @@
 [
     {
-        "elapsed" : "2016-01-01 ",
-        "served" : 34,
-        "wasted" :22,
-        "carryover":33
+        "date" : "2016-01-01 ",
+        "meal": {
+            "type": "Breakfast",
+            "totalConsumed": 100,
+            "totalWasted": 4,
+            "totalCarryOver": 20,
+            "totalDamaged": 5
+        }        
     }, 
     {
-        "elapsed" : "Feb",
-        "served" : 24,
-        "wasted" : 19,
-        "carryover":22
+        "date" : "Feb",
+       "meal": {
+            "type": "Breakfast",
+            "totalConsumed": 100,
+            "totalWasted": 4,
+            "totalCarryOver": 20,
+            "totalDamaged": 5
+        }       
 
     }, 
     {
-        "elapsed" : "Mar",
-        "served" : 33,
-        "wasted" : 5,
-        "carryover":13
+        "date" : "Mar",
+        "meal": {
+            "type": "Breakfast",
+            "totalConsumed": 100,
+            "totalWasted": 4,
+            "totalCarryOver": 20,
+            "totalDamaged": 5
+        }       
 
     }, {
-        "elapsed" : "Apr",
-        "served" : 29,
-        "wasted" : 2,
-        "carryover":23
+        "date" : "Apr",
+       "meal": {
+            "type": "Breakfast",
+            "totalConsumed": 100,
+            "totalWasted": 4,
+            "totalCarryOver": 20,
+            "totalDamaged": 5
+        }       
 
     }, {
-        "elapsed" : "May",
-        "served" : 33,
-        "wasted" : 5,
-        "carryover":33
+        "date" : "May",
+       "meal": {
+            "type": "Breakfast",
+            "totalConsumed": 100,
+            "totalWasted": 4,
+            "totalCarryOver": 20,
+            "totalDamaged": 5
+        }       
 
     }
 ]

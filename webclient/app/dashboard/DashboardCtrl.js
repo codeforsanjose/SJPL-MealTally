@@ -8,7 +8,17 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
 
     $scope.getMealStats = function(){
          mealService.getStats().then(function(result){
-            $scope.mealStats = result
+             var resultStats =[]
+            angular.forEach(result, function(item) {
+                var stat = {
+                    date : item.date,
+                    consumed : item.meal.totalConsumed,
+                    wasted : item.meal.totalWasted,
+                    carryover : item.meal.totalCarryOver
+                }
+                resultStats.push(stat)
+            });
+            $scope.mealStats = resultStats
         })
     }
     $scope.init = function(){
