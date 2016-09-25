@@ -212,14 +212,13 @@
 
     </LinearLayout>
 
-
-    <include layout="@layout/food_counter"/>
-
     <View
         android:id="@+id/foodCounterOverlay"
         android:layout_below="@id/top"
         android:background="@color/overlayShadow"
         android:layout_width="match_parent"
         android:layout_height="8dp"/>
+
+    <include layout="@layout/food_counter"/>
 
 </RelativeLayout>

@@ -165,7 +165,7 @@
 
             <Button
                 android:id="@+id/nextButton"
-                android:text="NEXT"
+                android:text="@string/form_next_button"
                 android:padding="14dp"
                 android:background="@color/colorAccent"
                 android:textStyle="bold"
