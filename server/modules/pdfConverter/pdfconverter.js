@@ -4,11 +4,13 @@ var pdf = require('html-pdf');
 var html = fs.readFileSync('./public/templates/ymcaReport.html', 'utf8');
 var options = { format: 'Letter' };
 
-var pdfDate = "09_08"
-var pdfSite = "Tully"
+var createPDF = function(pdfDate, pdfSite) {
+  pdfSite.replace(/ /g, '_');
+  pdf.create(html, options).toFile('reports/Week_' + pdfDate + pdfSite +'.pdf', function(err, res) {
+    console.log('Creating pdf..');
+    if (err) return console.log(err);
+    console.log(res);
+  });
+}
 
-module.exports = pdf.create(html, options).toFile('reports/Week_' + pdfDate + pdfSite +'.pdf', function(err, res) {
-  console.log('Creating pdf..');
-  if (err) return console.log(err);
-  console.log(res);
-});
+module.exports = createPDF;

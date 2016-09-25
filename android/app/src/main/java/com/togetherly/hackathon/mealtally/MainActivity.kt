@@ -1,24 +1,44 @@
 package com.togetherly.hackathon.mealtally
 
 import android.animation.Animator
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AnimationSet
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import com.github.kittinunf.fuel.Fuel
 import com.transitionseverywhere.*
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
+import com.yalantis.contextmenu.lib.MenuObject
+import com.yalantis.contextmenu.lib.MenuParams
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.food_counter.*
-import org.jetbrains.anko.enabled
-import org.jetbrains.anko.onClick
+import org.jetbrains.anko.*
+import org.json.JSONObject
+import java.io.DataOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var mealsFromVendor: EditText
+    lateinit var mealsLeftover: EditText
+    lateinit var totalMeals: TextView
+    lateinit var breakfastText: TextView
+    lateinit var AMSnackText: TextView
+    lateinit var lunchText: TextView
+    lateinit var PMSnackText: TextView
+    lateinit var supperText: TextView
+    lateinit var mealTypeText: TextView
 
     lateinit var childrenButton: Button
     lateinit var adultsButton: Button
@@ -39,12 +59,23 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val animationTimer = 100L
+        private val transitionTimer = 300L
+
+        private val locationMenuObjects = arrayListOf(
+                MenuObject("Dr. Roberto Cruz Alum Rock"),
+                MenuObject("HillView"),
+                MenuObject("Biblioteca"),
+                MenuObject("Joyce Ellington"),
+                MenuObject("Tully Community"),
+                MenuObject("Educational Park"),
+                MenuObject("Other")
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-                submitForm("FROM JOHNNY", "AM Food", "23", "12", "123", "333", "1", "1", "2")
+        submitForm("FROM JOHNNY", "AM Food", "23", "12", "123", "333", "1", "1", "2")
 
         // Scenes
         formOne = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_1, this)
@@ -54,18 +85,28 @@ class MainActivity : AppCompatActivity() {
         val transitionSet = TransitionSet()
         transitionSet.addTransition(ChangeBounds())
         transitionSet.addTransition(ChangeTransform())
-        transitionSet.duration = 600
+        transitionSet.duration = transitionTimer
         transitionSet.interpolator = AccelerateDecelerateInterpolator()
 
         currentScene = formOne
         TransitionManager.go(currentScene)
 
         setNextArrowListener(transitionSet)
-        setFoodCountListeners(false)
+        setListeners(false)
         setFoodCounts()
     }
 
-    private fun bindFoodCounters() {
+    private fun bindViews() {
+
+        mealsFromVendor = sceneRoot.findViewById(R.id.mealsVendorCount) as EditText
+        mealsLeftover = sceneRoot.findViewById(R.id.mealsLeftoverCount) as EditText
+        breakfastText = sceneRoot.findViewById(R.id.breakfastText) as TextView
+        AMSnackText = sceneRoot.findViewById(R.id.AMSnackText) as TextView
+        lunchText = sceneRoot.findViewById(R.id.lunchText) as TextView
+        PMSnackText = sceneRoot.findViewById(R.id.PMSnackText) as TextView
+        mealTypeText = sceneRoot.findViewById(R.id.mealTypeText) as TextView
+        totalMeals = sceneRoot.findViewById(R.id.mealsTotalCount) as TextView
+
         childrenButton = sceneRoot.findViewById(R.id.childrenFoodButton) as Button
         adultsButton = sceneRoot.findViewById(R.id.adultsFoodButton) as Button
         staffButton = sceneRoot.findViewById(R.id.staffFoodButton) as Button
@@ -75,11 +116,14 @@ class MainActivity : AppCompatActivity() {
         totalServedCount = sceneRoot.findViewById(R.id.totalServedText) as TextView
     }
 
-    private fun setFoodCountListeners(isEnabled: Boolean) {
+    private fun setListeners(enableButtons: Boolean) {
 
-        bindFoodCounters()
+        bindViews()
 
-        if (isEnabled) {
+        mealsFromVendor.addTextChangedListener(mealsTextChangeListener())
+        mealsLeftover.addTextChangedListener(mealsTextChangeListener())
+
+        if (enableButtons) {
             childrenButton.setOnClickListener(foodCountPlusListener())
             adultsButton.setOnClickListener(foodCountPlusListener())
             staffButton.setOnClickListener(foodCountPlusListener())
@@ -98,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun adjustForScenes() {
         val isEnabled = if (currentScene != formTwo) true else false
-        setFoodCountListeners(isEnabled)
+        setListeners(isEnabled)
     }
 
     private fun setFoodCounts(children: String = "0", adults: String = "0", staff: String = "0") {
@@ -135,10 +179,10 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         totalServedText.text = (childrenServed + adultsServed + staffServed).toString()
-
+        Log.d("Total Served", (childrenServed + adultsServed + staffServed).toString())
     }
 
-    private fun foodCountPlusListener() = View.OnClickListener {
+    fun foodCountPlusListener() = View.OnClickListener {
         if (it is Button) {
             it.text = if (it.text.length == 0) "0" else (it.text.toString().toInt() + 1).toString()
         }
@@ -240,7 +284,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun goScene(scene: Scene, transition: Transition = ChangeBounds()) {
 
-        bindFoodCounters()
+        bindViews()
 
         // Save food count between scene transitions
         val childrenFoodCount = childrenButton.text.toString()
@@ -257,37 +301,135 @@ class MainActivity : AppCompatActivity() {
     private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
                            adultFoodCount: String, staffFoodCount: String, damaged: String, wasted: String) {
         // YYYY-MM-DD
-        val date = DateFormat.format("yyyy MMMM d", Date().time)
+        val date = DateFormat.format("yyyy-MM-d", Date().time)
         Log.d("Date", date.toString())
 
-        val body = """
-            "date": "2016-09-01T07:00:00.000Z",
-            "siteName": "$siteName",
-            "meal": {
-            "type": , "$mealType"
-            "vendorReceived": $vendorReceived,
-            "carryOver": $carryOver,
-            "consumed": {
-                "child": $childrenFoodCount,
-                "adult": $adultFoodCount,
-                "volunteer": $staffFoodCount
-            },
-            "damaged": $damaged,
-            "wasted": $wasted
-        }
-        """
-        Fuel.post("https://serene-chamber-33070.herokuapp.com/mealDev").body(body).response { request, response, result ->
-            when (response.httpStatusCode) {
-                500 -> Log.i("Status code 500", "Error")
-                200 -> Log.i("Status code 200", "Success")
+        val requestBody = """
+            {
+                "date": "$date.toString()",
+                "siteName": "$siteName",
+                "meal": {
+                "type": "$mealType",
+                "vendorReceived": $vendorReceived,
+                "carryOver": $carryOver,
+                "consumed": {
+                    "child": $childrenFoodCount,
+                    "adult": $adultFoodCount,
+                    "volunteer": $staffFoodCount
+                    },
+                "damaged": $damaged,
+                "wasted": $wasted
+                }
             }
-        }
+        """
 
+        val jsonObject = JSONObject(requestBody)
+
+        AsyncTask.execute {
+
+            val url = URL("https://serene-chamber-33070.herokuapp.com/mealDev")
+            val httpUrlConnection = url.openConnection() as HttpURLConnection
+            httpUrlConnection.setRequestMethod("POST")
+            httpUrlConnection.doInput = true
+            httpUrlConnection.connectTimeout = 10000
+            httpUrlConnection.doOutput = true
+            httpUrlConnection.useCaches = false
+            httpUrlConnection.setRequestProperty("Content-Type", "application/json")
+
+            val wr = DataOutputStream(httpUrlConnection.outputStream)
+            wr.writeBytes(jsonObject.toString())
+            wr.flush()
+            wr.close()
+
+            httpUrlConnection.connect()
+
+            Log.i("Status code", httpUrlConnection.responseCode.toString())
+        }
 
     }
 
-
     override fun onBackPressed() {
         // Disable back
+    }
+
+    // Set in XML
+    fun locationOnClick(view: View) {
+        for (menuObj in locationMenuObjects) {
+            menuObj.color = resources.getColor(R.color.colorPrimaryDarkHint, null)
+            menuObj.bgDrawable = resources.getDrawable(R.drawable.ic_keyboard_arrow_left)
+        }
+        val menuParams = MenuParams()
+        menuParams.setMenuObjects(locationMenuObjects)
+        supportActionBar?.let { menuParams.actionBarSize = it.height }
+        menuParams.setClosableOutside(true)
+
+        val dialogFragment = ContextMenuDialogFragment.newInstance(menuParams)
+        dialogFragment.show(supportFragmentManager, "ContextMenuDialogFragment")
+        dialogFragment.setItemClickListener { view, position ->
+            val locationText = sceneRoot.findViewById(R.id.locationText) as Button
+            locationText.setText(locationMenuObjects[position].title)
+            Log.d("Location", locationMenuObjects[position].title)
+        }
+    }
+
+    fun animateEditTextOnClick(view: View) {
+        view.animate()
+                .setDuration(animationTimer)
+                .scaleX(1.3f)
+                .scaleY(1.3f)
+                .setListener(object: Animator.AnimatorListener {
+                    override fun onAnimationRepeat(animation: Animator?) {
+                    }
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        view.animate()
+                                .setDuration(animationTimer)
+                                .scaleY(1.0f)
+                                .scaleX(1.0f)
+                                .start()
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+                    }
+
+                    override fun onAnimationStart(animation: Animator?) {
+                    }
+                })
+                .start()
+    }
+
+    fun mealsTextChangeListener() = object: TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            calculateTotalMeals()
+        }
+    }
+
+    fun calculateTotalMeals() {
+        val mealsVendor = if (mealsFromVendor.text.toString().isEmpty()) 0 else mealsFromVendor.text.toString().toInt()
+        val mealsLeft = if (mealsLeftover.text.toString().isEmpty()) 0 else mealsLeftover.text.toString().toInt()
+        val total = mealsVendor + mealsLeft
+        totalMeals.text = total.toString()
+
+        totalMeals.animate()
+            .setDuration(animationTimer)
+            .scaleX(1.4f)
+            .scaleY(1.4f)
+            .start()
+
+        totalMeals.animate()
+                .setDuration(animationTimer)
+                .scaleX(1.0f)
+                .scaleY(1.0f)
+                .start()
+    }
+
+    fun selectMealType(target: TextView) {
+
     }
 }
