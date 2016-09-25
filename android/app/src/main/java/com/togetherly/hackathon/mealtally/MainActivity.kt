@@ -1,6 +1,7 @@
 package com.togetherly.hackathon.mealtally
 
 import android.animation.Animator
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
@@ -11,10 +12,7 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.transitionseverywhere.*
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
 import com.yalantis.contextmenu.lib.MenuObject
@@ -57,12 +55,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var formOne: Scene
     lateinit var formTwo: Scene
 
-    lateinit var damagedEditText: EditText
-    lateinit var wastedEditText: EditText
-
     companion object {
         private val animationTimer = 100L
         private val transitionTimer = 300L
+        private val url = URL("https://serene-chamber-33070.herokuapp.com/meal")
 
         private val locationMenuObjects = arrayListOf(
                 MenuObject("Dr. Roberto Cruz Alum Rock"),
@@ -132,16 +128,14 @@ class MainActivity : AppCompatActivity() {
         adultsMinusButton = sceneRoot.findViewById(R.id.adultsMinusButton) as Button
         staffMinusButton = sceneRoot.findViewById(R.id.staffMinusButton) as Button
         totalServedCount = sceneRoot.findViewById(R.id.totalServedText) as TextView
-
-        wastedEditText = sceneRoot.findViewById(R.id.wasted) as EditText
     }
 
     private fun setListeners(enableButtons: Boolean) {
 
         bindViews()
 
-        mealsFromVendor.addTextChangedListener(mealsTextChangeListener())
-        mealsLeftover.addTextChangedListener(mealsTextChangeListener())
+        mealsFromVendor.addTextChangedListener(vendorTextChangeListener())
+        mealsLeftover.addTextChangedListener(carryOverTextChangeListener())
 
         if (enableButtons) {
             childrenButton.setOnClickListener(foodCountPlusListener())
@@ -331,8 +325,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
-                           adultFoodCount: String, staffFoodCount: String, damaged: String, wasted: String) {
+    fun submitForm(view: View) {
         // YYYY-MM-DD
         val date = DateFormat.format("yyyy-MM-d", Date().time)
         Log.d("Date", date.toString())
@@ -362,7 +355,6 @@ class MainActivity : AppCompatActivity() {
 
         AsyncTask.execute {
 
-            val url = URL("https://serene-chamber-33070.herokuapp.com/mealDev")
             val httpUrlConnection = url.openConnection() as HttpURLConnection
             httpUrlConnection.setRequestMethod("POST")
             httpUrlConnection.doInput = true
@@ -381,6 +373,10 @@ class MainActivity : AppCompatActivity() {
             Log.i("Status code", httpUrlConnection.responseCode.toString())
         }
 
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        showToast("Form submitted!", Toast.LENGTH_LONG)
+        finish()
     }
 
     override fun onBackPressed() {
@@ -434,7 +430,19 @@ class MainActivity : AppCompatActivity() {
                 .start()
     }
 
-    fun mealsTextChangeListener() = object: TextWatcher {
+    fun vendorTextChangeListener() = object: TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            calculateTotalMeals()
+        }
+    }
+
+    fun carryOverTextChangeListener() = object: TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
 
@@ -492,6 +500,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setDamaged(view: View) {
-        bindViews()
+        val damagedEditText = sceneRoot.findViewById(R.id.damaged)as EditText
+        mealCountForm.damaged = damagedEditText.text.toString()
+    }
+
+    fun setWasted(view: View) {
+        val wastedEditText = sceneRoot.findViewById(R.id.wasted) as EditText
+        mealCountForm.wasted = wastedEditText.text.toString()
+    }
+
+    fun setSignature(view: View) {
+        val signatureEditText = sceneRoot.findViewById(R.id.wasted) as EditText
     }
 }

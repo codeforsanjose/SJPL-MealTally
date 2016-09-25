@@ -52,6 +52,7 @@
                 android:id="@+id/locationText"
                 android:textStyle="bold"
                 android:textColor="@color/black"
+                android:padding="5dp"
                 android:lines="1"
                 android:textAllCaps="false"
                 android:maxLines="1"
