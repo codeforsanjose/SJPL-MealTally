@@ -27,7 +27,7 @@ angular.module('app', [
     'app.calendar',
     //'app.inbox',
     'app.graphs',
-    //'app.tables',
+    'app.tables',
     'app.forms',
     //'app.ui',
     //'app.widgets',
