@@ -11,15 +11,35 @@
 
 		<!-- row -->
 		<div class="row">
-			<article class="col-sm-6">
-						<meal-chart></meal-chart>
-				<!--<div smart-include="app/dashboard/live-feeds.tpl.html" class="placeholder-live-feeds"></div>-->
-			</article>
-			<article class="col-sm-6">			
-					 <h2> place holder </h2>
+			  <article class="col-xs-12 col-sm-6">
+                <div jarvis-widget id="meal-line-graph-c-widget" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+						<h2> Wasted / Consumed Meals </h2>	
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <meal-line-graph-c statsdata="mealStats"></meal-line-graph-c>
+                        </div>
+                    </div>
+                </div>
 
-				<!--<div smart-include="app/dashboard/live-feeds.tpl.html" class="placeholder-live-feeds"></div>-->
-			</article>
+            </article>
+			<article class="col-xs-12 col-sm-6">
+                <div jarvis-widget id="morris-normal-bar-graph-widget" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                        <h2>Consumed/Wasted/CarryOver Meals</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <meal-normal-bar-graph statsdata="mealStats"></meal-normal-bar-graph>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+			
 		</div>
 		<div class="row">
 			<article class="col-sm-6">

@@ -8,7 +8,9 @@
     <LinearLayout
         android:id="@+id/top"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -205,15 +207,15 @@
                 android:layout_gravity="bottom|right"
                 android:src="@drawable/ic_keyboard_arrow_down"
                 android:background="@color/colorAccent"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
 
-    <include layout="@layout/food_counter"/>
+    <include layout="@layout/food_counter_minimized_scene3"/>
 
     <View
         android:id="@+id/foodCounterOverlay"

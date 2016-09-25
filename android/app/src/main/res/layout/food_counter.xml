@@ -1,91 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_below="@id/top"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/colorNeutral"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
+    <LinearLayout
+        android:id="@+id/scene2_container"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:orientation="vertical"
+            <TextView
+                android:id="@+id/childrenLabel"
+                android:text="@string/form_children_label"
                 android:gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/childrenLabel"
-                    android:text="@string/form_children_label"
-                    android:gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/FoodCountLabel"/>
-
-                <Button
-                    android:id="@+id/childrenFoodButton"
-                    android:background="@drawable/food_counter_button_selector"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    style="@style/FoodCounterButton"/>
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                style="@style/FoodCountLabel"/>
 
-                <TextView
-                    android:id="@+id/adultsLabel"
-                    android:text="@string/form_adult_label"
-                    android:gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/FoodCountLabel"/>
+            <Button
+                android:id="@+id/childrenFoodButton"
+                android:background="@drawable/food_counter_button_selector"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                style="@style/FoodCounterButton"/>
 
-                <Button
-                    android:id="@+id/adultsFoodButton"
-                    android:background="@drawable/food_counter_button_selector"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/staffLabel"
-                    android:text="@string/form_staff_volunteer_label"
-                    android:gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/FoodCountLabel"/>
-
-                <Button
-                    android:id="@+id/staffFoodButton"
-                    android:background="@drawable/food_counter_button_selector"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/childrenMinusButton"
+                android:background="@drawable/food_counter_minus_selector"
+                android:layout_marginTop="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/adultsLabel"
+                android:text="@string/form_adult_label"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/FoodCountLabel"/>
+
+            <Button
+                android:id="@+id/adultsFoodButton"
+                android:background="@drawable/food_counter_button_selector"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                style="@style/FoodCounterButton"/>
+
+            <Button
+                android:id="@+id/adultsMinusButton"
+                android:background="@drawable/food_counter_minus_selector"
+                android:layout_marginTop="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/staffLabel"
+                android:text="@string/form_staff_volunteer_label"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/FoodCountLabel"/>
+
+            <Button
+                android:id="@+id/staffFoodButton"
+                android:background="@drawable/food_counter_button_selector"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                style="@style/FoodCounterButton"/>
+
+            <Button
+                android:id="@+id/staffMinusButton"
+                android:background="@drawable/food_counter_minus_selector"
+                android:layout_marginTop="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button2_container"
+        android:layout_below="@id/scene2_container"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:background="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/nextButton2"
+            android:text="NEXT"
+            android:padding="14dp"
+            android:background="@color/colorAccent"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:lines="1"
+            android:ems="10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/nextArrowTop2"
+            android:src="@drawable/ic_keyboard_arrow_right"
+            android:background="@color/colorAccentDark"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
