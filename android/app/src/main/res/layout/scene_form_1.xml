@@ -158,6 +158,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+            <View
+                android:id="@+id/nextArrowTopHelper"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
+
             <Button
                 android:id="@+id/nextButton"
                 android:text="NEXT"
@@ -173,7 +178,7 @@
             <ImageView
                 android:id="@+id/nextArrowTop"
                 android:src="@drawable/ic_keyboard_arrow_right"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorAccentDark"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"/>
 
