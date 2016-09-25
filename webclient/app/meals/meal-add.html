@@ -16,7 +16,7 @@
     <fieldset>
         <div class="row">
             <section class="col col-4">
-                <label class="input"> </i>
+                <label class="input"> Date</i>
                     <input type="date" name="username" placeholder="Date" ng-model="ameal.date">
             </section>  
             <section class="col col-4">
@@ -60,12 +60,14 @@
             
         <section class="col col-4">
             <label class="input">
+                Meals Recieved from Vendor
                 <input type="number" name="noofmeals" placeholder="Meals Recieved from Vendor" id="noofmeals" ng-model="ameal.meal.vendorReceived">
                 <b class="tooltip tooltip-bottom-right">Meals Recieved from Vendor</b>
              </label>
         </section>
         <section class="col col-4">
             <label class="input">
+            Carry Over from yesterday
                 <input type="number" name="carryovermeal" placeholder="Carry Over from Yesterday" id="carryovermeal" ng-model="ameal.meal.carryOver">
                 <b class="tooltip tooltip-bottom-right">Carry Over from yesterday</b>
              </label>
@@ -75,10 +77,12 @@
           <h5 style="margin:10px;"> Meals Consumed </h5>
            <section class="col col-4">
                 <label class="input"> </i>
+                Child meal count
                     <input type="number" name="childconsume" placeholder="Child meal count" ng-model="ameal.meal.consumed.child">
             </section>  
             <section class="col col-4">
                 <label class="input"> </i>
+                Adult meal count
                     <input type="number" name="adultconsume" placeholder="Adult meal count" ng-model="ameal.meal.consumed.adult">
             </section>
            
@@ -86,27 +90,38 @@
       <div class="row">
            <section class="col col-4">
                 <label class="input"> </i>
+                Volunteer meal count
                     <input type="number" name="volunteerconsume" placeholder="Volunteer meal count" ng-model="ameal.meal.consumed.volunteer">
             </section>
       </div>   
       <div class="row">
           <section class="col col-4">
                 <label class="input"> </i>
+                Damaged meal count
                     <input type="number" name="damaged" placeholder="Damaged meal count" ng-model="ameal.meal.damaged">
             </section>
            <section class="col col-4">
                 <label class="input"> </i>
+                Wasted meal count
                     <input type="number" name="wasted" placeholder="Wasted meal count" ng-model="ameal.meal.wasted">
             </section>
-      </div>          
+      </div>  
+      <div class="row">
+        <br>
+      </div>        
 
+      <div class="row">
+      <section class="col col-4">
+      </section>
+        <section class="col col-4">
+            <button type="submit" class="btn btn-lg btn-primary pull-left" ng-click="addMeal()">
+            Submit
+             </button>
+        </section>
+         <section class="col col-4">
+        </section>
+      </div>
         
     </fieldset>
-
-    <footer>
-        <button type="submit" class="btn btn-primary" ng-click="addMeal()">
-            Submit
-        </button>
-    </footer>
 </form>
 </div>

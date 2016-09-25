@@ -12,15 +12,8 @@ angular.module('app.library', ['ui.router'])
             },
             views: {
                 "content@app": {
-                    templateUrl: 'app/library/library-view.html',
-                    controller: 'LibraryController'
-                }
-            },
-            resolve: {
-                test: function(myTestService){
-                    return myTestService.getTest().then(function(result){
-                        return result.message
-                    })
+                    templateUrl: 'app/library/final-report.html',
+                    controller: 'FinalReportCtrl'
                 }
             }
         })
