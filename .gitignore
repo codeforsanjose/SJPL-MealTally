@@ -5,6 +5,7 @@ server/.DS_Store
 server/node_modules
 *.iml
 .gradle
+.idea
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
