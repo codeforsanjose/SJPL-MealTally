@@ -25,6 +25,20 @@ angular.module('app.meal').service('mealService', function ($http) {
                return $http.get(url).then(function(result){
                   return result.data
               })
-          }           
+          },
+          saveRefLogs : function(payload){
+              var url ="/api/reflogs"
+              return $http.post(url, payload)
+                .then(function (result) {
+                    return result.data;
+              });
+          },
+          saveFoodLogs : function(payload){
+              var url ="/api/foodlogs"
+              return $http.post(url, payload)
+                .then(function (result) {
+                    return result.data;
+              });
+          }         
       }
 });

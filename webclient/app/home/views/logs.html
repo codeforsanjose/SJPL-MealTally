@@ -1,7 +1,7 @@
-<di></di>v id="content">
-<div class="row">
+<div id="content">
+<!--<div class="row">
     <big-breadcrumbs items="['Page Header', 'Subtitle']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>
-</div>
+</div>-->
 <section widget-grid id="widget-grid">
     <div class="row">
 
@@ -57,6 +57,7 @@
                         <tr>
                             <th data-hide="phone">Date</th>
                             <th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Time</th>
+                            <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Temp</th>   
                             <th>Food Item Name</th>
                             <th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Corrective Action</th>
                             <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Action</th>   
@@ -67,8 +68,9 @@
                             <tr dt-rows ng-repeat="foodlog in foodLogList">
                                 <td> {{foodlog.date}}</td>    
                                 <td> {{foodlog.time}}</td>
+                                                                <td> {{foodlog.temp}}</td>
+
                                 <td> {{foodlog.foodName}}</td>
-                                <td> {{foodlog.temp}}</td>
                                 <td> {{foodlog.comments}}</td>
                                 <td>  <button type="button" class="btn btn-primary" ng-click="showFoodDialog($index)">Edit</button>
                             </tr>    
