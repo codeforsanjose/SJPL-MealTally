@@ -36,16 +36,16 @@
             <Button
                 android:id="@+id/childrenFoodButton"
                 android:background="@drawable/food_counter_button_selector"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 style="@style/FoodCounterButton"/>
 
             <Button
                 android:id="@+id/childrenMinusButton"
                 android:background="@drawable/food_counter_minus_selector"
                 android:layout_marginTop="15dp"
-                android:layout_width="10dp"
-                android:layout_height="10dp"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
 
         </LinearLayout>
 
@@ -69,16 +69,16 @@
             <Button
                 android:id="@+id/adultsFoodButton"
                 android:background="@drawable/food_counter_button_selector"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 style="@style/FoodCounterButton"/>
 
             <Button
                 android:id="@+id/adultsMinusButton"
                 android:background="@drawable/food_counter_minus_selector"
                 android:layout_marginTop="15dp"
-                android:layout_width="10dp"
-                android:layout_height="10dp"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
 
         </LinearLayout>
 
@@ -102,16 +102,16 @@
             <Button
                 android:id="@+id/staffFoodButton"
                 android:background="@drawable/food_counter_button_selector"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 style="@style/FoodCounterButton"/>
 
             <Button
                 android:id="@+id/staffMinusButton"
                 android:background="@drawable/food_counter_minus_selector"
                 android:layout_marginTop="15dp"
-                android:layout_width="10dp"
-                android:layout_height="10dp"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
 
         </LinearLayout>
 
