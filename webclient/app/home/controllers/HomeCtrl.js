@@ -114,8 +114,9 @@ angular.module('app.home').controller('FoodDialogModal',function($scope,item,$ui
         mealService.saveFoodLogs($scope.item).then(function(result){
             $scope.foodLogList = result
             alert("Foodlog Succesfully submitted")
+                    $uibModalInstance.close()
+
         }) 
-        $uibModalInstance.close()
     }
     $scope.cancel = function(){
               $uibModalInstance.dismiss('cancel');

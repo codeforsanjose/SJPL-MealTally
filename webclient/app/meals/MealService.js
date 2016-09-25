@@ -43,6 +43,7 @@ angular.module('app.meal').service('mealService', function ($http) {
           },
           saveFoodLogs : function(payload){
               var url ="/foodlogs"
+              
               return $http.post(url, payload)
                 .then(function (result) {
                     return result.data;
