@@ -22,7 +22,9 @@
     <LinearLayout
         android:id="@+id/top"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -46,11 +48,13 @@
 
 
             <Button
-                android:background="@color/colorPrimaryHint"
+                android:background="@drawable/text_field_border"
                 android:id="@+id/locationText"
                 android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:lines="1"
+                android:textAllCaps="false"
+                android:maxLines="1"
                 android:onClick="locationOnClick"
                 android:ems="12"
                 android:layout_width="wrap_content"
@@ -154,12 +158,12 @@
                     android:maxLength="3"
                     android:maxLines="1"
                     android:inputType="number"
-                    android:textColor="@color/white"
+                    android:imeOptions="actionDone"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:onClick="animateEditTextOnClick"
                     android:gravity="center"
-                    android:background="@color/colorPrimaryDarkHint"
+                    android:background="@drawable/text_field_border"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -186,11 +190,11 @@
                     android:maxLength="3"
                     android:maxLines="1"
                     android:gravity="center"
+                    android:imeOptions="actionDone"
                     android:onClick="animateEditTextOnClick"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:textColor="@color/white"
-                    android:background="@color/colorPrimaryDarkHint"
+                    android:background="@drawable/text_field_border"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

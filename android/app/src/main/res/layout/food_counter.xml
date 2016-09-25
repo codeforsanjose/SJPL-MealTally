@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_below="@id/top"
                 android:id="@+id/middle"
-                android:layout_marginTop="10dp"
+                android:paddingTop="50dp"
                 android:background="@color/colorNeutral"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -118,6 +118,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/totalMealsServedContainer"
         android:orientation="horizontal"
         android:layout_marginTop="25dp"
         android:layout_width="match_parent"
@@ -129,7 +130,7 @@
         <TextView
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="16dp"
             android:id="@+id/totalServedLabel"
             android:text="@string/form_total_meals_served"
             android:layout_width="wrap_content"
@@ -151,38 +152,16 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"/>
 
-        <LinearLayout
-            android:id="@+id/button2_container"
-            android:layout_below="@id/scene2_container"
-            android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
-            android:layout_gravity="right"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/nextButton2"
-                android:text="@string/form_next_button"
-                android:padding="16dp"
-                android:background="@color/colorAccent"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:lines="1"
-                android:ems="10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <ImageView
-                android:id="@+id/nextArrowTop2"
-                android:src="@drawable/ic_keyboard_arrow_right"
-                android:background="@color/colorAccentDark"
-                android:layout_width="20dp"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_below="@id/totalMealsServedContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/bottom_form"/>
+
+    </ScrollView>
 
 </RelativeLayout>
