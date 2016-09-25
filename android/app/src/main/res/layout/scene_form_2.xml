@@ -83,6 +83,7 @@
                     android:id="@+id/mealsVendorCount"
                     android:layout_width="0dp"
                     android:layout_height="0dp"/>
+
                 <EditText
                     android:id="@+id/mealsLeftoverCount"
                     android:layout_width="0dp"
@@ -185,7 +186,6 @@
 
                 <TextView
                     android:id="@+id/mealsTotalCount"
-                    android:text="0"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

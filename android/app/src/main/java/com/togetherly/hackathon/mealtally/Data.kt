@@ -1,5 +1,7 @@
 package com.togetherly.hackathon.mealtally
 
+import android.util.Log
+
 data class MealCountForm(
         var siteName: String = "Dr. Roberto Cruz Alu Rock",
         var mealType: String = "Breakfast",
@@ -16,6 +18,10 @@ data class MealCountForm(
         val vendor = vendorReceived.toString().toInt()
         val leftover = carryOver.toString().toInt()
 
+        Log.d("vendor", vendor.toString())
+        Log.d("leftOver", leftover.toString())
+        Log.d("total", (vendor + leftover).toString())
+
         return (vendor + leftover).toString()
     }
 
@@ -25,7 +31,7 @@ data class MealCountForm(
         val adults = adultFoodCount.toString().toInt()
         val staff = staffFoodCount.toString().toInt()
 
-        val total = children + adults + staff
+        val total = (children + adults + staff)
         return total.toString()
     }
 }

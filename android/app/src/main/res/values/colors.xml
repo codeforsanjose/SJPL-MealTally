@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#7B1FA2</color>
     <color name="colorAccent">#00B0FF</color>
     <color name="colorAccentDark">#0091EA</color>
-    <color name="colorNeutral">#E0E0E0</color>
-    <color name="colorNeutralLite">#F0EEEE</color>
+    <color name="colorNeutral">#F0EEEE</color>
+    <color name="colorNeutralLite">@color/white</color>
 
     <color name="colorPrimaryHint">#889C27B0</color>
     <color name="colorPrimaryDarkHint">#7B1FA2</color>

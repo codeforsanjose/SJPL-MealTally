@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private val animationTimer = 100L
         private val transitionTimer = 300L
-        private val url = URL("https://serene-chamber-33070.herokuapp.com/meal")
+        private val urlString = "https://pure-everglades-59666.herokuapp.com/meal"
 
         private val locationMenuObjects = arrayListOf(
                 MenuObject("Dr. Roberto Cruz Alum Rock"),
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val date = DateFormat.format("yyyy-MMMM-dd", Date().time)
+        val date = DateFormat.format("MM-dd-yyyy", Date().time)
         dateTextView.text = date.toString()
 
         // Scenes
@@ -134,8 +134,8 @@ class MainActivity : AppCompatActivity() {
 
         bindViews()
 
-        mealsFromVendor.addTextChangedListener(vendorTextChangeListener())
         mealsLeftover.addTextChangedListener(carryOverTextChangeListener())
+        mealsFromVendor.addTextChangedListener(vendorTextChangeListener())
 
         if (enableButtons) {
             childrenButton.setOnClickListener(foodCountPlusListener())
@@ -310,6 +310,14 @@ class MainActivity : AppCompatActivity() {
         setMealCountFormValues()
     }
 
+    private fun updateMealCounts() {
+        val meals_from_vendor = sceneRoot.findViewById(R.id.mealsVendorCount) as EditText
+        val meals_leftOver = sceneRoot.findViewById(R.id.mealsVendorCount) as EditText
+
+        mealCountForm.vendorReceived = meals_from_vendor.text.toString()
+        mealCountForm.carryOver = meals_leftOver.text.toString()
+    }
+
     // TODO: Complete this method. Save values across transitions
     private fun setMealCountFormValues() {
         bindViews()
@@ -330,10 +338,13 @@ class MainActivity : AppCompatActivity() {
         val date = DateFormat.format("yyyy-MM-d", Date().time)
         Log.d("Date", date.toString())
 
+        setDamaged(view)
+        setWasted(view)
+
         val requestBody = with(mealCountForm) {
                 """
                 {
-                    "date": "$date.toString()",
+                    "date": "$date",
                     "siteName": "$siteName",
                     "meal": {
                     "type": "$mealType",
@@ -351,10 +362,12 @@ class MainActivity : AppCompatActivity() {
                 """
         }
 
+
         val jsonObject = JSONObject(requestBody)
 
         AsyncTask.execute {
 
+            val url = URL(urlString)
             val httpUrlConnection = url.openConnection() as HttpURLConnection
             httpUrlConnection.setRequestMethod("POST")
             httpUrlConnection.doInput = true
@@ -371,6 +384,8 @@ class MainActivity : AppCompatActivity() {
             httpUrlConnection.connect()
 
             Log.i("Status code", httpUrlConnection.responseCode.toString())
+            Log.i("Status code reason", httpUrlConnection.responseMessage)
+            Log.i("url", httpUrlConnection.url.toString())
         }
 
         val intent = Intent(this, MainActivity::class.java)
@@ -455,26 +470,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun calculateTotalMeals() {
-        val mealsVendor = if (mealsFromVendor.text.toString().isEmpty()) 0 else mealsFromVendor.text.toString().toInt()
-        val mealsCarryOver = if (mealsLeftover.text.toString().isEmpty()) 0 else mealsLeftover.text.toString().toInt()
-        val total = mealsVendor + mealsCarryOver
-        totalMeals.text = total.toString()
-
-        totalMeals.animate()
-            .setDuration(animationTimer)
-            .scaleX(1.4f)
-            .scaleY(1.4f)
-            .start()
-
-        totalMeals.animate()
-                .setDuration(animationTimer)
-                .scaleX(1.0f)
-                .scaleY(1.0f)
-                .start()
+        val mealsVendor = if (mealsFromVendor.text.toString().isBlank()) "0" else mealsFromVendor.text.toString()
+        try {
+            Thread.sleep(100)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        val mealsCarryOver = if (mealsLeftover.text.toString().isBlank()) "0" else mealsLeftover.text.toString()
 
         // Update Meal Count Form
-        mealCountForm.vendorReceived = mealsVendor.toString()
-        mealCountForm.carryOver = mealsCarryOver.toString()
+        mealCountForm.vendorReceived = mealsVendor
+        mealCountForm.carryOver = mealsCarryOver
+        totalMeals.text = mealCountForm.getTotalMeals()
     }
 
     fun selectMealType(view: View) {

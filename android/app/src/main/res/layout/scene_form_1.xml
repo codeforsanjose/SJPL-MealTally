@@ -135,7 +135,7 @@
                 <TextView
                     android:id="@+id/mealTypeText"
                     android:layout_below="@id/AMSnackText"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/MealTypeTextView"/>
@@ -164,7 +164,6 @@
                     android:imeOptions="actionDone"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:onClick="animateEditTextOnClick"
                     android:gravity="center"
                     android:background="@drawable/text_field_border"
                     android:layout_width="50dp"
@@ -189,17 +188,17 @@
                 <EditText
                     android:id="@+id/mealsLeftoverCount"
                     android:ems="2"
-                    android:inputType="number"
                     android:maxLength="3"
                     android:maxLines="1"
-                    android:gravity="center"
+                    android:inputType="number"
                     android:imeOptions="actionDone"
-                    android:onClick="animateEditTextOnClick"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
+                    android:gravity="center"
                     android:background="@drawable/text_field_border"
                     android:layout_width="50dp"
                     android:layout_height="50dp"/>
+
 
                 <TextView
                     android:id="@+id/mealsLeftover"
