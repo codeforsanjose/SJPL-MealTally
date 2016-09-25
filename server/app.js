@@ -1,14 +1,17 @@
 //declaring express on the server.js file
 var express = require("express");
+var bodyParser = require('body-parser').json();
 var app = express();
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+if(!process.env.MLABURI) var config = require('./config/mongo');
 
 var mongoose = require('mongoose');
-var pdfconverter = require('pdfConverter')
 
-mongoose.connect( 'mongodb://togetherly:togetherly2016@ds046549.mlab.com:46549/mealtally', function (err) { //TODO: config
- if (err) console.log('Error: Failed to connect to mongoose!', err);
- else console.log('Connected to mongodb!');
-});
+var pdfConverter = require('./modules/pdfConverter/pdfconverter.js');
+
+var mongoUrl = process.env.MLABURI || config.mongoURI;
 
 var mealSchema = mongoose.Schema({
   "date": Date,
@@ -29,36 +32,67 @@ var mealSchema = mongoose.Schema({
 
 var meal = mongoose.model('meal', mealSchema);﻿
 
-app.get("/meal", function(req, res) {
-  meal.find({}, function(err, result) {
+
+app.listen(process.env.PORT || 3000);
+console.log("Server running on port 3000");
+
+app.get("/mealDev", function(req, res) {
+  var findMeal = function(db, callback) {
+    db.collection('meal').find(req.body, function(err, result) {
+     if(err) res.status(500).json(err);
+     else res.status(200).json(result);
+     assert.equal(err, null);
+     console.log("Inserted a document into the meal collection.");
+     callback();
+     });
+  };
+
+  MongoClient.connect(mongoUrl, function(err, db) {
     if(err) res.status(500).json(err);
     else res.status(200).json(result);
+    assert.equal(null, err);
+    findMeal(db, function() {
+      db.close();
+    });
   });
 });
 
-app.post("/meal", function(req, res) {
-  meal.insert({
-    "date": req.body.date,
-    "siteName": req.body.siteName,
-    "meal": {
-      "type": req.body.meal.type,
-      "vendorReceived": req.body.meal.vendorReceived,
-      "carryOver": req.body.meal.carryOver,
-      "consumed": {
-        "child": req.body.meal.consumed.child,
-        "adult": req.body.meal.consumed.adult,
-        "volunteer": req.body.meal.consumed.volunteer
-      },
-      "damaged": req.body.meal.damaged,
-      "wasted": req.body.meal.wasted
-    }
-  }, function(err, result) {
+app.post('/meal', bodyParser, function(req, res) {
+  var insertDocument = function(db, callback) {
+   db.collection('meal').insertOne(req.body, function(err, result) {
     if(err) res.status(500).json(err);
     else res.status(200).json(result);
+    assert.equal(err, null);
+    console.log("Inserted a document into the meal collection.");
+    callback();
+    });
+  };
+
+  MongoClient.connect(mongoUrl, function(err, db) {
+    assert.equal(null, err);
+    insertDocument(db, function() {
+      db.close();
+    });
+  });
+});
+
+app.post('/mealdev', bodyParser, function(req, res) {
+  var insertDocument = function(db, callback) {
+   db.collection('mealDev').insertOne(req.body, function(err, result) {
+    if(err) res.status(500).json(err);
+    else res.status(200).json(result);
+    assert.equal(err, null);
+    console.log("Inserted a document into the mealDev collection.");
+    callback();
+    });
+  };
+
+  MongoClient.connect(mongoUrl, function(err, db) {
+    assert.equal(null, err);
+    insertDocument(db, function() {
+      db.close();
+    });
   });
 });
 
 app.use(express.static(__dirname + "/public"));
-
-app.listen(3000);
-console.log("Server running on port 3000");

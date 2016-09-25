@@ -13,3 +13,5 @@ server/node_modules
 /build
 /captures
 .externalNativeBuild
+config
+server/config
