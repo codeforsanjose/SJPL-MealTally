@@ -8,8 +8,11 @@ angular.module('app.meal').service('mealService', function ($http) {
                     return result.data;
               });
           },
-          getStats: function(){
-              var url ="/api/mealstats.json"
+          getStats: function(library,mealtype){
+              var url ="/weeklyMealReport?siteName="+library
+              if(mealtype != 'All')
+              url = url + "&meal.type="+mealtype
+            //   url = "/api/mealstats-server.json"
               return $http.get(url).then(function(result){
                   return result.data
               })

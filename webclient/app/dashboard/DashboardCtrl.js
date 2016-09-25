@@ -5,11 +5,15 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
     // Live Feeds Widget Data And Display Controls
     // Live Stats Tab
     $scope.mealStats=[]
+    $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
+    $scope.allLibraries = ['DR.ROBERTO CRUZ-ALUM ROCK','BIBLIOTECA LATINOAMERICANA','EDUCATIONAL PARK','OYCE ELLINGTON','HILLVIEW','TULLY COMMUNITY']
+    $scope.selectedMeal='All'
+    $scope.mealTypes=['All','Breakfast','AM Snack','Lunch','PM Snack','Supper']
 
     $scope.getMealStats = function(){
-         mealService.getStats().then(function(result){
+         mealService.getStats($scope.selectedLibrary,$scope.selectedMeal).then(function(result){
              var resultStats =[]
-            angular.forEach(result, function(item) {
+            angular.forEach(result, function(item) {                
                 var stat = {
                     date : item.date,
                     consumed : item.meal.totalConsumed,
@@ -27,10 +31,7 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
 
     
 
-    $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
-    $scope.allLibraries = ['DR.ROBERTO CRUZ-ALUM ROCK','BIBLIOTECA LATINOAMERICANA','EDUCATIONAL PARK','OYCE ELLINGTON','HILLVIEW','TULLY COMMUNITY']
-    $scope.selectedMeal='All'
-    $scope.mealTypes=['All','Breakfast','AM Snack','Lunch','PM Snack','Supper']
+
 
     $scope.refreshCharts = function(){
         $scope.getMealStats()
