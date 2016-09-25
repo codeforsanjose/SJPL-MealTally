@@ -13,9 +13,10 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
         })
     }();
 
-    $scope.libName="DR.ROBERTO CRUZ-ALUM ROCK"
-    $scope.changeLib = function(libName){
-       $scope.libName = libName
+    $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
+    $scope.allLibraries = ['DR.ROBERTO CRUZ-ALUM ROCK','BIBLIOTECA LATINOAMERICANA','EDUCATIONAL PARK','OYCE ELLINGTON','HILLVIEW','TULLY COMMUNITY']
+    $scope.changeLib = function(index){
+       $scope.selectedLibrary = $scope.allLibraries[index]
     }
 
     // function getFakeItem(index, prevValue){
