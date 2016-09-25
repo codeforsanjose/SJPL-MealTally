@@ -9,19 +9,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.transitionseverywhere.*
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.MenuParams
-import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.food_counter.*
+import kotlinx.android.synthetic.main.scene_form_1.*
 import org.jetbrains.anko.*
 import org.json.JSONObject
 import java.io.DataOutputStream
@@ -30,6 +30,8 @@ import java.net.URL
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    val mealCountForm = MealCountForm()
 
     lateinit var mealsFromVendor: EditText
     lateinit var mealsLeftover: EditText
@@ -50,13 +52,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var totalServedCount: TextView
 
     lateinit var nextButton: Button
-    lateinit var nextButton2: Button
     lateinit var nextArrowHelper: View
-    lateinit var nextArrowTop2: View
     lateinit var currentScene: Scene
     lateinit var formOne: Scene
     lateinit var formTwo: Scene
-    lateinit var formThree: Scene
 
     companion object {
         private val animationTimer = 100L
@@ -76,12 +75,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        submitForm("FROM JOHNNY", "AM Food", "23", "12", "123", "333", "1", "1", "2")
+
+        val date = DateFormat.format("yyyy-MMMM-dd", Date().time)
+        dateTextView.text = date.toString()
 
         // Scenes
         formOne = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_1, this)
         formTwo = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_2, this)
-        formThree = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_3, this)
 
         val transitionSet = TransitionSet()
         transitionSet.addTransition(ChangeBounds())
@@ -91,6 +91,17 @@ class MainActivity : AppCompatActivity() {
 
         currentScene = formOne
         TransitionManager.go(currentScene)
+
+        // B-e-a-u-t-i-f-u-l
+        val top = sceneRoot.findViewById(R.id.top) as LinearLayout
+        top.animate()
+                .scaleY(0.0f)
+                .setDuration(0)
+                .start()
+        top.animate()
+                .scaleY(1.0f)
+                .setDuration(200)
+                .start()
 
         setNextArrowListener(transitionSet)
         setListeners(false)
@@ -181,7 +192,10 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         totalServedText.text = (childrenServed + adultsServed + staffServed).toString()
-        Log.d("Total Served", (childrenServed + adultsServed + staffServed).toString())
+
+        mealCountForm.childrenFoodCount = childrenServed.toString()
+        mealCountForm.adultFoodCount = adultsServed.toString()
+        mealCountForm.staffFoodCount = staffServed.toString()
     }
 
     fun foodCountPlusListener() = View.OnClickListener {
@@ -272,15 +286,9 @@ class MainActivity : AppCompatActivity() {
         currentScene = if (currentScene == formTwo) formOne else formTwo
 
         nextButton = sceneRoot.findViewById(R.id.nextButton) as Button
-        nextButton2 = sceneRoot.findViewById(R.id.nextButton2) as Button
         nextArrowHelper = sceneRoot.findViewById(R.id.nextArrowTopHelper) as View
-        nextArrowTop2 = sceneRoot.findViewById(R.id.nextArrowTop2) as View
 
         nextButton.onClick { goScene(currentScene, transition) }
-        nextButton2.onClick {
-            currentScene = formThree
-            goScene(currentScene, transition)
-        }
         nextArrowHelper.onClick { goScene(currentScene, transition) }
     }
 
@@ -298,6 +306,13 @@ class MainActivity : AppCompatActivity() {
         adjustForScenes()
         setFoodCounts(childrenFoodCount, adultsFoodCount, staffFoodCount)
         calculateTotalServed()
+        setMealCountFormValues()
+    }
+
+    private fun setMealCountFormValues() {
+        bindViews()
+
+
     }
 
     private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
@@ -362,6 +377,7 @@ class MainActivity : AppCompatActivity() {
         }
         val menuParams = MenuParams()
         menuParams.setMenuObjects(locationMenuObjects)
+        menuParams.animationDuration = animationTimer.toInt()
         supportActionBar?.let { menuParams.actionBarSize = it.height }
         menuParams.setClosableOutside(true)
 
@@ -370,7 +386,7 @@ class MainActivity : AppCompatActivity() {
         dialogFragment.setItemClickListener { view, position ->
             val locationText = sceneRoot.findViewById(R.id.locationText) as Button
             locationText.setText(locationMenuObjects[position].title)
-            Log.d("Location", locationMenuObjects[position].title)
+            mealCountForm.siteName = locationMenuObjects[position].title
         }
     }
 
@@ -429,6 +445,9 @@ class MainActivity : AppCompatActivity() {
                 .scaleX(1.0f)
                 .scaleY(1.0f)
                 .start()
+
+        mealCountForm.vendorReceived = mealsVendor.toString()
+        mealCountForm.carryOver = mealsLeft.toString()
     }
 
     fun selectMealType(view: View) {
@@ -441,8 +460,10 @@ class MainActivity : AppCompatActivity() {
         resetMealType(supperText)
 
         (view as TextView).textColor = resources.getColor(R.color.white, null)
-        (view as TextView).backgroundColor = resources.getColor(R.color.colorPrimary, null)
-        (view as TextView).setTypeface(null, Typeface.BOLD)
+        view.backgroundColor = resources.getColor(R.color.colorPrimary, null)
+        view.setTypeface(null, Typeface.BOLD)
+
+        mealCountForm.mealType = view.text.toString()
     }
 
     private fun resetMealType(target: TextView) {

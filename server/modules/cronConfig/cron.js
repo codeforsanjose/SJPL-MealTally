@@ -3,8 +3,8 @@ var convertPDF = require('../pdfConverter/pdfconverter.js');
 var http = require('http');
 var fs = require('fs');
 var nodemailer = require('nodemailer');
-var config = require('../../config/mail');
-var transporter = nodemailer.createTransport(config.mail);
+if(!process.env.MAILURI) var config = require('../../config/mail');
+var transporter = nodemailer.createTransport(process.env.MAILURI || config.mail);
 
 var cronTask = function() {
   var cronTime = new Date(),
@@ -120,7 +120,6 @@ var cronTask = function() {
           weeklyMealsStr+= body.toString();
 
           var weeklyMealsObj = JSON.parse(weeklyMealsStr);
-          console.log(weeklyMealsObj);
           for(var key in weeklyMealsObj) weeklyMealsArr.push(weeklyMealsObj[key]);
 
           weeklyMealsArr.forEach(function(entry) {

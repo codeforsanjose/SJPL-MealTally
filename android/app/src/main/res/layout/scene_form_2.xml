@@ -5,12 +5,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/foodCounterOverlay"
+        android:layout_below="@id/top"
+        android:background="@color/overlayShadow"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+
     <LinearLayout
         android:id="@+id/top"
         android:orientation="vertical"
         android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -39,6 +49,7 @@
                     android:layout_height="0dp"/>
 
                 <TextView
+                    android:text="Some library"
                     android:id="@+id/locationText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -61,6 +72,7 @@
 
                 <TextView
                     android:id="@+id/mealLabel"
+                    android:layout_gravity="center"
                     android:textSize="20sp"
                     android:text="@string/form_meal_type_label"
                     android:layout_width="wrap_content"
@@ -78,6 +90,7 @@
 
                 <TextView
                     android:text="0"
+                    android:layout_gravity="center"
                     android:id="@+id/mealTypeText"
                     android:layout_below="@id/AMSnackText"
                     android:layout_width="wrap_content"
@@ -127,6 +140,7 @@
                             style="@style/MealTypeTextView"/>
 
                         <TextView
+                            android:id="@+id/supperText"
                             android:text="Supper"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
@@ -149,7 +163,8 @@
                 <TextView
                     android:id="@+id/mealsTotal"
                     android:textSize="20sp"
-                    android:text="@string/form_meals_total_label"
+                    android:layout_gravity="center"
+                    android:text="@string/form_meals_total_label2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/FormLabelTextView"/>
@@ -170,6 +185,8 @@
                 <TextView
                     android:id="@+id/mealsTotalCount"
                     android:text="0"
+                    android:layout_gravity="center"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -212,15 +229,24 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/overlayShadow"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"/>
+
     </LinearLayout>
 
-    <View
-        android:id="@+id/foodCounterOverlay"
-        android:layout_below="@id/top"
-        android:background="@color/overlayShadow"
+    <ScrollView
+        android:layout_below="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="8dp"/>
+        android:layout_height="match_parent">
 
-    <include layout="@layout/food_counter"/>
+        <include layout="@layout/food_counter"
+                 android:layout_alignParentBottom="true"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true"/>
+
+    </ScrollView>
 
 </RelativeLayout>
