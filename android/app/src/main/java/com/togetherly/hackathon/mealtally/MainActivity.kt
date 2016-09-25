@@ -301,7 +301,6 @@ class MainActivity : AppCompatActivity() {
         val adultsFoodCount = adultsButton.text.toString()
         val staffFoodCount = staffButton.text.toString()
 
-        updateMealCounts()
         TransitionManager.go(scene, transition)
         setNextArrowListener(transition)
         adjustForScenes()
@@ -310,13 +309,6 @@ class MainActivity : AppCompatActivity() {
         setMealCountFormValues()
     }
 
-    private fun updateMealCounts() {
-        val meals_from_vendor = sceneRoot.findViewById(R.id.mealsVendorCount) as EditText
-        val meals_leftOver = sceneRoot.findViewById(R.id.mealsVendorCount) as EditText
-
-        mealCountForm.vendorReceived = meals_from_vendor.text.toString()
-        mealCountForm.carryOver = meals_leftOver.text.toString()
-    }
 
     // TODO: Complete this method. Save values across transitions
     private fun setMealCountFormValues() {
