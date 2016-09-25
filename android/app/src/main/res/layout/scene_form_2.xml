@@ -179,6 +179,7 @@
 
 
         <LinearLayout
+            android:id="@+id/nextArrowTopHelper"
             android:layout_gravity="right"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
@@ -195,11 +196,14 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"/>
 
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+
             <ImageView
                 android:id="@+id/nextArrowTop"
-                android:rotation="180"
                 android:layout_gravity="bottom|right"
-                android:src="@drawable/ic_keyboard_arrow_up"
+                android:src="@drawable/ic_keyboard_arrow_down"
                 android:background="@color/colorAccent"
                 android:layout_width="30dp"
                 android:layout_height="30dp"/>
@@ -208,13 +212,14 @@
 
     </LinearLayout>
 
+
+    <include layout="@layout/food_counter"/>
+
     <View
         android:id="@+id/foodCounterOverlay"
         android:layout_below="@id/top"
         android:background="@color/overlayShadow"
         android:layout_width="match_parent"
         android:layout_height="8dp"/>
-
-    <include layout="@layout/food_counter"/>
 
 </RelativeLayout>
