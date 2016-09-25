@@ -1,10 +1,8 @@
 <div jarvis-widget data-widget-color="blueDark" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-colorbutton="false">
    <header>
-        <pre> {{barChartData}} </pre>
         <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
         <h2> Meals Stats </h2>
         <div class="widget-toolbar">
-            <!-- add: non-hidden - to disable auto hide -->
             <div class="btn-group dropdown" dropdown >
 
                 <button class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
@@ -28,9 +26,10 @@
     </header>
      <div>
         <div class="widget-body no-padding">
-            <flot-sales-chart data="salesChartData"></flot-sales-chart>
+                    <meal-line-graph-c></meal-line-graph-c>
         </div>
 
     </div>
 
 </div>
+ 

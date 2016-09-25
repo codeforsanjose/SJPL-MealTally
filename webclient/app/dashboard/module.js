@@ -17,6 +17,13 @@ angular.module('app.dashboard', [
             },
             data:{
                 title: 'Dashboard'
+            },
+            resolve: {
+                scripts: function(lazyScript){
+                    return lazyScript.register([
+                        'build/vendor.graphs.js'
+                    ]);
+                }
             }
         })
         .state('app.dashboard-social', {
