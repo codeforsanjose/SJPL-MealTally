@@ -9,6 +9,8 @@ var cronTask = function() {
       mealsStr = '',
       mealsArr = [],
       locations = {},
+      weeklyMealsStr = '',
+      weeklyMealsArr = [],
       monthsArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   console.log('Running 1 minute cron at', cronTime, weekBegin.substr(0,10));
 
@@ -59,7 +61,6 @@ var cronTask = function() {
 
       for(var location in locations) {
         for(var mealType in locations[location]) {
-          //console.log('each', locations[location][mealType]);
 
           var postData = JSON.stringify({
           	"date": cronTime.toISOString(),
@@ -89,25 +90,38 @@ var cronTask = function() {
               "content-type": "application/json",
             }
           };
-
-          var req = http.request(options, function(res) {
-            console.log(`STATUS: ${res.statusCode}`);
-            console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-            res.setEncoding('utf8');
-            res.on('data', function(chunk) {
-              console.log(`BODY: ${chunk}`);
-            });
-            res.on('end', function() {
-              console.log('No more data in response.');
-            });
-          });
-          req.on('error', function(e) {
-            console.log(`problem with request: ${e.message}`);
-          });
-          req.write(postData);
-            req.end();
+//uncomment when ready to set cron to weekly
+          // var req = http.request(options, function(res) {
+          //   res.setEncoding('utf8');
+          //   res.on('end', function() {
+          //     console.log('Finished reading response.');
+          //   });
+          // });
+          // req.on('error', function(e) {
+          //   console.log(`problem with request: ${e.message}`);
+          // });
+          // req.write(postData);
+          // req.end();
           }
       }
+
+      //get latest weekly reports to make PDFs
+      http.get('http://localhost:3000/weeklyMealReport?DATEFROM=2016-08-05', function(res) {
+        var chunks = [];
+        res.on('data', function(chunk) {
+          chunks.push(chunk);
+        });
+        res.on('end', function() {
+          var body = Buffer.concat(chunks);
+          weeklyMealsStr+= body.toString();
+
+          var weeklyMealsObj = JSON.parse(weeklyMealsStr);
+          console.log(weeklyMealsObj);
+        });
+      }).on('error', function(e) {
+        console.log(`Got error: ${e.message}`);
+      });
+
     });
   }).on('error', function(e) {
     console.log(`Got error: ${e.message}`);

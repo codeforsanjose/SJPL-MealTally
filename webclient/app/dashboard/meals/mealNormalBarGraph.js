@@ -18,9 +18,9 @@ angular.module('app.graphs').directive('mealNormalBarGraph', function(){
                         element : element,
                         data : scope.statsdata, 
                         parseTime : false,
-                        xkey : 'elapsed',
-                        ykeys : ['served', 'wasted', 'carryover'],
-                        labels : ['Served', 'Wasted', 'Carryover']
+                        xkey : 'date',
+                        ykeys : ['consumed', 'wasted', 'carryover'],
+                        labels : ['Consumed', 'Wasted', 'Carryover']
                     });
                 }
             })
