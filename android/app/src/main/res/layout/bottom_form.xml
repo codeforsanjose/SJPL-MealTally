@@ -17,6 +17,7 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/damaged"
             android:layout_marginRight="5dp"
             android:gravity="center_horizontal"
             android:background="@drawable/text_field_border"
@@ -42,6 +43,7 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/wasted"
             android:layout_marginRight="5dp"
             android:background="@drawable/text_field_border"
             android:gravity="center_horizontal"

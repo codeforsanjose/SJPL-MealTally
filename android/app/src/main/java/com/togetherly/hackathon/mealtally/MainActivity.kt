@@ -57,6 +57,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var formOne: Scene
     lateinit var formTwo: Scene
 
+    lateinit var damagedEditText: EditText
+    lateinit var wastedEditText: EditText
+
     companion object {
         private val animationTimer = 100L
         private val transitionTimer = 300L
@@ -129,6 +132,8 @@ class MainActivity : AppCompatActivity() {
         adultsMinusButton = sceneRoot.findViewById(R.id.adultsMinusButton) as Button
         staffMinusButton = sceneRoot.findViewById(R.id.staffMinusButton) as Button
         totalServedCount = sceneRoot.findViewById(R.id.totalServedText) as TextView
+
+        wastedEditText = sceneRoot.findViewById(R.id.wasted) as EditText
     }
 
     private fun setListeners(enableButtons: Boolean) {
@@ -193,7 +198,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onAnimationStart(animation: Animator?) {
                 }
             })
-        totalServedText.text = (childrenServed + adultsServed + staffServed).toString()
+        totalServedCount.text = (childrenServed + adultsServed + staffServed).toString()
 
         mealCountForm.childrenFoodCount = childrenServed.toString()
         mealCountForm.adultFoodCount = adultsServed.toString()
@@ -314,6 +319,7 @@ class MainActivity : AppCompatActivity() {
     // TODO: Complete this method. Save values across transitions
     private fun setMealCountFormValues() {
         bindViews()
+
         val libraryText = sceneRoot.findViewById(R.id.locationText) as TextView
 
         libraryText.text = mealCountForm.siteName
@@ -322,6 +328,7 @@ class MainActivity : AppCompatActivity() {
         mealsLeftover.setText(mealCountForm.carryOver)
         totalMeals.text = mealCountForm.getTotalMeals()
         totalServedCount.text = mealCountForm.getTotalServed()
+
     }
 
     private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
@@ -441,8 +448,8 @@ class MainActivity : AppCompatActivity() {
 
     fun calculateTotalMeals() {
         val mealsVendor = if (mealsFromVendor.text.toString().isEmpty()) 0 else mealsFromVendor.text.toString().toInt()
-        val mealsLeft = if (mealsLeftover.text.toString().isEmpty()) 0 else mealsLeftover.text.toString().toInt()
-        val total = mealsVendor + mealsLeft
+        val mealsCarryOver = if (mealsLeftover.text.toString().isEmpty()) 0 else mealsLeftover.text.toString().toInt()
+        val total = mealsVendor + mealsCarryOver
         totalMeals.text = total.toString()
 
         totalMeals.animate()
@@ -457,8 +464,9 @@ class MainActivity : AppCompatActivity() {
                 .scaleY(1.0f)
                 .start()
 
+        // Update Meal Count Form
         mealCountForm.vendorReceived = mealsVendor.toString()
-        mealCountForm.carryOver = mealsLeft.toString()
+        mealCountForm.carryOver = mealsCarryOver.toString()
     }
 
     fun selectMealType(view: View) {
@@ -481,5 +489,9 @@ class MainActivity : AppCompatActivity() {
         target.textColor = resources.getColor(R.color.darkerGray, null)
         target.backgroundColor = resources.getColor(R.color.colorNeutral, null)
         target.setTypeface(null, Typeface.NORMAL)
+    }
+
+    fun setDamaged(view: View) {
+        bindViews()
     }
 }
