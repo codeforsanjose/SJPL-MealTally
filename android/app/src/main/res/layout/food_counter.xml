@@ -2,11 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_below="@id/top"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
                 android:background="@color/colorNeutral"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-
 
         <LinearLayout
             android:orientation="horizontal"
@@ -58,7 +57,8 @@
                     android:id="@+id/adultsFoodButton"
                     android:background="@drawable/food_counter_button_selector"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"/>
+                    android:layout_height="100dp"
+                    style="@style/FoodCounterButton"/>
 
             </LinearLayout>
 
@@ -82,7 +82,8 @@
                     android:id="@+id/staffFoodButton"
                     android:background="@drawable/food_counter_button_selector"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"/>
+                    android:layout_height="100dp"
+                    style="@style/FoodCounterButton"/>
 
             </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.togetherly.hackathon.mealtally
 
+import android.animation.Animator
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var currentScene: Scene
     lateinit var formOne: Scene
     lateinit var formTwo: Scene
+    lateinit var formThree: Scene
 
     companion object {
 
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         // Scenes
         formOne = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_1, this)
         formTwo = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_2, this)
+        formThree = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_3, this)
 
         val transitionSet = TransitionSet()
         transitionSet.addTransition(ChangeBounds())
@@ -41,19 +44,27 @@ class MainActivity : AppCompatActivity() {
         transitionSet.interpolator = AccelerateDecelerateInterpolator()
 
         currentScene = formOne
-        goScene(currentScene)
+        TransitionManager.go(currentScene)
 
         setNextArrowListener(transitionSet)
-
+        setFoodCountListeners(false)
+        setFoodCounts()
     }
 
-    private fun setFoodCountListeners(isEnabled: Boolean) {
-
+    private fun bindFoodCounters() {
         childrenButton = sceneRoot.findViewById(R.id.childrenFoodButton) as Button
         adultsButton = sceneRoot.findViewById(R.id.adultsFoodButton) as Button
         staffButton = sceneRoot.findViewById(R.id.staffFoodButton) as Button
+    }
+    private fun setFoodCountListeners(isEnabled: Boolean) {
+
+        bindFoodCounters()
 
         if (isEnabled) {
+            childrenButton.enabled = true
+            adultsButton.enabled = true
+            staffButton.enabled = true
+
             childrenButton.setOnClickListener(foodCountPlusListener())
             adultsButton.setOnClickListener(foodCountPlusListener())
             staffButton.setOnClickListener(foodCountPlusListener())
@@ -62,17 +73,49 @@ class MainActivity : AppCompatActivity() {
             adultsButton.enabled = false
             staffButton.enabled = false
         }
+
+
+    }
+
+    private fun adjustForScenes() {
+        val isEnabled = if (currentScene != formTwo) true else false
+        setFoodCountListeners(isEnabled)
+    }
+
+    private fun setFoodCounts(children: String = "0", adults: String = "0", staff: String = "0") {
+        childrenButton.text = children
+        adultsButton.text = adults
+        staffButton.text = staff
     }
 
     private fun foodCountPlusListener() = View.OnClickListener {
         if (it is Button) {
             it.text = if (it.text.length == 0) "0" else (it.text.toString().toInt() + 1).toString()
         }
-    }
 
-    private fun adjustForScenes() {
-        val isEnabled = if (currentScene != formTwo) false else true
-        setFoodCountListeners(isEnabled)
+        it.animate()
+            .setDuration(100)
+            .scaleX(1.3f)
+            .scaleY(1.2f)
+            .setListener(object: Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    it.animate()
+                        .setDuration(100)
+                        .scaleX(1.0f)
+                        .scaleY(1.0f)
+                        .start()
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                }
+
+                override fun onAnimationStart(animation: Animator?) {
+                }
+            })
+            .start()
     }
 
     private fun setNextArrowListener(transition: Transition) {
@@ -85,14 +128,21 @@ class MainActivity : AppCompatActivity() {
         nextButton.onClick {
             goScene(currentScene, transition)
         }
-
-        setFoodCountListeners(true)
     }
 
     private fun goScene(scene: Scene, transition: Transition = ChangeBounds()) {
+
+        bindFoodCounters()
+
+        // Save food count between scene transitions
+        val childrenFoodCount = childrenButton.text.toString()
+        val adultsFoodCount = adultsButton.text.toString()
+        val staffFoodCount = staffButton.text.toString()
+
         TransitionManager.go(scene, transition)
         setNextArrowListener(transition)
         adjustForScenes()
+        setFoodCounts(childrenFoodCount, adultsFoodCount, staffFoodCount)
     }
 
 }

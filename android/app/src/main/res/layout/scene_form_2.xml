@@ -197,9 +197,8 @@
 
             <ImageView
                 android:id="@+id/nextArrowTop"
-                android:rotation="180"
                 android:layout_gravity="bottom|right"
-                android:src="@drawable/ic_keyboard_arrow_up"
+                android:src="@drawable/ic_keyboard_arrow_down"
                 android:background="@color/colorAccent"
                 android:layout_width="30dp"
                 android:layout_height="30dp"/>

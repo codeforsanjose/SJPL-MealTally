@@ -58,7 +58,8 @@
                 android:id="@+id/adultsFoodButton"
                 android:background="@drawable/food_counter_button_selector"
                 android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                style="@style/FoodCounterButton"/>
 
         </LinearLayout>
 
@@ -82,7 +83,8 @@
                 android:id="@+id/staffFoodButton"
                 android:background="@drawable/food_counter_button_selector"
                 android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                style="@style/FoodCounterButton"/>
 
         </LinearLayout>
 

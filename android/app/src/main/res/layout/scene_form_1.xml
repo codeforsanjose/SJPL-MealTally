@@ -172,7 +172,7 @@
 
             <ImageView
                 android:id="@+id/nextArrowTop"
-                android:src="@drawable/ic_keyboard_arrow_up"
+                android:src="@drawable/ic_keyboard_arrow_right"
                 android:background="@color/colorPrimaryDark"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"/>
