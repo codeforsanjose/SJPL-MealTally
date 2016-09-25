@@ -6,7 +6,7 @@ angular.module('app.meal', ['ui.router'])
         .state('app.meal', {
             url: '/meal',
             data: {
-                title: 'Blank'
+                title: 'Meals'
             },
             views: {
                 "content@app": {

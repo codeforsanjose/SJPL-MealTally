@@ -175,6 +175,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     style="@style/FormLabelTextView"/>
+
                 <TextView
                     android:id="@+id/mealsLeftover"
                     android:text="@string/form_meals_leftover_label"
@@ -186,7 +187,6 @@
                     android:id="@+id/mealsTotalCount"
                     android:text="0"
                     android:layout_gravity="center"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

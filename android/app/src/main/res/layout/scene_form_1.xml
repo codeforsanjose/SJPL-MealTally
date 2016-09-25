@@ -52,11 +52,12 @@
                 android:id="@+id/locationText"
                 android:textStyle="bold"
                 android:textColor="@color/black"
+                android:padding="5dp"
                 android:lines="1"
                 android:textAllCaps="false"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:onClick="locationOnClick"
-                android:ems="12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -82,6 +83,9 @@
 
                 <TextView
                     android:id="@+id/breakfastText"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:text="Breakfast"
                     android:onClick="selectMealType"
                     android:layout_width="wrap_content"
@@ -129,7 +133,6 @@
                     style="@style/MealTypeTextView"/>
 
                 <TextView
-                    android:text="Hidden Meal"
                     android:id="@+id/mealTypeText"
                     android:layout_below="@id/AMSnackText"
                     android:visibility="invisible"
@@ -164,8 +167,8 @@
                     android:onClick="animateEditTextOnClick"
                     android:gravity="center"
                     android:background="@drawable/text_field_border"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
 
                 <TextView
                     android:id="@+id/mealsVendor"
@@ -195,8 +198,8 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/text_field_border"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
 
                 <TextView
                     android:id="@+id/mealsLeftover"
@@ -205,9 +208,12 @@
                     android:layout_height="wrap_content"
                     style="@style/FormLabelTextView"/>
 
-
-
             </LinearLayout>
+
+            <View
+                android:background="@color/overlayShadow"
+                android:layout_width="50dp"
+                android:layout_height="2dp"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -216,10 +222,10 @@
 
                 <TextView
                     android:id="@+id/mealsTotalCount"
-                    android:ems="3"
+                    android:ems="2"
                     android:layout_marginRight="5dp"
                     android:gravity="center"
-                    android:textSize="18sp"
+                    android:textSize="30sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/FormLabelTextView"/>

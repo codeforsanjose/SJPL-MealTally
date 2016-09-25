@@ -12,10 +12,31 @@ angular.module('app.home').controller('HomeController',
         var weekStart = amoment.format('YYYY-MM-DD')
 
         mealService.getRefLogs(weekStart).then(function(result){
-            $scope.refLogList = result
+            var resultStats = []
+            angular.forEach(result, function(item) {                
+                var stat = {
+                    date : moment(item.date).format('YYYY-MM-DD'),
+                    time : item.time,
+                    temp : item.temp
+                }
+                resultStats.push(stat)
+            });
+            $scope.refLogList = resultStats
+
         })
         mealService.getFoodLogs(weekStart).then(function(result){
-            $scope.foodLogList = result
+            var resultStats = []
+            angular.forEach(result, function(item) {                
+                var stat = {
+                    date : moment(item.date).format('YYYY-MM-DD'),
+                    time : item.time,
+                    temp : item.temp,
+                    foodName : item.foodName,
+                    comments : item.comments
+                }
+                resultStats.push(stat)
+            });
+            $scope.foodLogList = resultStats
         })
     }
     var init = function(){
@@ -39,11 +60,13 @@ angular.module('app.home').controller('HomeController',
     }()
 
     $scope.showRefDialog = function(index){
-        var data = $scope.refLogList[index]
+        var data = null
+        if(index >0)
+             data = $scope.refLogList[index]
         var modalInstance = $uibModal.open({
             templateUrl: 'app/home/refmodal.html',
             controller:'RefDialogModal',
-            size: 'md',
+            size: 'sm',
             resolve:{
                  item : function () {
                     return data;
@@ -57,11 +80,13 @@ angular.module('app.home').controller('HomeController',
 
     }
     $scope.showFoodDialog = function(index){
-        var data = $scope.foodLogList[index]
+        var data = null
+        if(index >0)
+             data = $scope.foodLogList[index]
         var modalInstance = $uibModal.open({
             templateUrl: 'app/home/foodmodal.html',
             controller:'FoodDialogModal',
-            size: 'md',
+            size: 'sm',
             resolve:{
                  item : function () {
                     return data;
@@ -114,8 +139,9 @@ angular.module('app.home').controller('FoodDialogModal',function($scope,item,$ui
         mealService.saveFoodLogs($scope.item).then(function(result){
             $scope.foodLogList = result
             alert("Foodlog Succesfully submitted")
+                    $uibModalInstance.close()
+
         }) 
-        $uibModalInstance.close()
     }
     $scope.cancel = function(){
               $uibModalInstance.dismiss('cancel');

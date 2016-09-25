@@ -4,10 +4,57 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
                         ×
                     </button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title">Food Temperature</h4>
                 </div>
                 <div class="modal-body">
-                    <fieldset>
+
+                     <div class="control-group">
+                        <!-- Username -->
+                        <label class="control-label"  for="username">Recording Date</label>
+                        <div class="controls">
+                            <input type="date" class="input-lg" id="username" name="username" placeholder="" class="input-xlarge" ng-model="item.date">
+                        </div>
+                        </div>
+                        <br>
+                        <div class="control-group">
+                        <!-- E-mail -->
+                        <label class="control-label" for="email">Time (e.g 1PM or 3PM)</label>
+                        <div class="controls">
+                            <input type="text"  class="input-lg" id="email" name="email" placeholder="" class="input-xlarge" ng-model="item.time">
+                        </div>
+                        </div>
+                    <br>
+                        <div class="control-group">
+                        <!-- Password-->
+                        <label class="control-label" for="password1">Temperature(degree F e.g 23)</label>
+                        <div class="input-group">
+                            <input type="number" class="input-lg" id="password1" name="password" placeholder="enter temp" class="input-xlarge" ng-model="item.temp">
+                            <!--<span class="input-group-addon"><i class="fa fa-tachometer"></i></span>-->
+                        </div>
+                    </div>
+                      <br>  
+                    <div class="control-group">
+                        <!-- Password-->
+                        <label class="control-label" for="password2">Food Name(e.g pasta)</label>
+                        <div class="input-group">
+                            <input type="text" class="input-lg" id="password2" name="password" placeholder="enter foodname" class="input-xlarge" ng-model="item.foodName">
+                            <!--<span class="input-group-addon"><i class="fa fa-tachometer"></i></span>-->
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="control-group">
+                        <!-- Password-->
+                        <label class="control-label" for="password3">Corrective Action</label>
+                        <div class="input-group">
+                            <textarea class="input-lg" id="password3" name="password" placeholder="corrective action" class="input-xlarge" ng-model="item.comments">
+                            <!--<span class="input-group-addon"><i class="fa fa-tachometer"></i></span>-->
+                            </textarea> 
+                        </div>
+                    </div>
+
+
+                    <!--<fieldset>
                         <section>
                             <label>Date</label>
                             <label class="input-lg">
@@ -41,14 +88,14 @@
                             </label>
                         </section>
                         
-                    </fieldset>    
+                    </fieldset>    -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
                         Close
                     </button>
                     <button type="button" class="btn btn-primary" ng-click="submit()">
-                        Save changes1
+                        Save
                     </button>
                 </div>
             <!--</div> /.modal-content -->

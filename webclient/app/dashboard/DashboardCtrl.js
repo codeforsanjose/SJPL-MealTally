@@ -6,7 +6,7 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
     // Live Stats Tab
     $scope.mealStats=[]
     $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
-    $scope.allLibraries = ['DR.ROBERTO CRUZ-ALUM ROCK','BIBLIOTECA LATINOAMERICANA','EDUCATIONAL PARK','OYCE ELLINGTON','HILLVIEW','TULLY COMMUNITY']
+    $scope.allLibraries = ['DR.ROBERTO CRUZ-ALUM ROCK','BIBLIOTECA LATINOAMERICANA','EDUCATIONAL PARK','JOYCE ELLINGTON','HILLVIEW','TULLY COMMUNITY']
     $scope.selectedMeal = 'All'
     $scope.mealTypes=['All','Breakfast','AM Snack','Lunch','PM Snack','Supper']
 
@@ -16,7 +16,7 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
             $scope.mealStats = []             
             angular.forEach(result, function(item) {                
                 var stat = {
-                    date : item.date,
+                    date : moment(item.date).format('YYYY-MM-DD'),
                     consumed : item.meal.totalConsumed,
                     wasted : item.meal.totalWasted,
                     carryover : item.meal.totalCarryOver
@@ -40,7 +40,7 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
     $scope.init = function(){        
        $scope.selectedLibrary = localStorage.getItem('library')
        if(!$scope.selectedLibrary)
-        $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
+        $scope.selectedLibrary="TULLY COMMUNITY"
 
        $scope.selectedMeal = localStorage.getItem('mealType')
        if(!$scope.selectedMeal)

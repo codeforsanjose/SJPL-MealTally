@@ -14,9 +14,9 @@ angular.module('app.meal').service('mealService', function ($http) {
               url = url + "&meal.type="+mealtype
             //   var url = "/api/mealstats-server.json"
               return $http.get(url).then(function(result){
-                  var emptyArr = []
-                  if(mealtype == 'All')
-                      return emptyArr
+                //   var emptyArr = []
+                //   if(mealtype == 'All')
+                //       return emptyArr
                   return result.data
               })
           },
@@ -43,6 +43,7 @@ angular.module('app.meal').service('mealService', function ($http) {
           },
           saveFoodLogs : function(payload){
               var url ="/foodlogs"
+              
               return $http.post(url, payload)
                 .then(function (result) {
                     return result.data;

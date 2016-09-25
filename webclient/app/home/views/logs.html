@@ -7,7 +7,7 @@
 
             <article class="col-sm-12 col-md-6">
                     <button type="button" class="btn btn-primary" ng-click="showRefDialog(-1)" style="margin:10px;">
-                        Record Refrigerator temp
+                        Add Refrigerator Temperature
                     </button>
                     <br></br>
                 <div jarvis-widget id="standard-datatable-widget-refrigerator" data-widget-color="darken" data-widget-editbutton="false">
@@ -23,7 +23,7 @@
                                 <th>Date</th>
                                 <th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Time</th>
                                 <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Temp</th>   
-                                <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Action</th>   
+                                <!--<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Action</th>   -->
                                                          
                             </tr>
                         </thead>
@@ -32,7 +32,7 @@
                                 <td> {{reflog.date}}</td>    
                                 <td> {{reflog.time}}</td>    
                                 <td> {{reflog.temp}}</td>    
-                                <td>  <button type="button" class="btn btn-primary" ng-click="showRefDialog($index)">Edit</button>
+                                <!--<td>  <button type="button" class="btn btn-primary" ng-click="showRefDialog($index)">Edit</button>-->
                             </tr>    
                         </tbody>    
                         </table>
@@ -42,7 +42,7 @@
             </article>
             <article class="col-sm-12 col-md-6">   
                 <button type="button" class="btn btn-primary" ng-click="showFoodDialog(-1)" style="margin:10px;">
-                        Record Food temp
+                        Add Food Temperature
                     </button>
                     <br></br> 
                  <div jarvis-widget id="standard-datatable-widget-food" data-widget-color="darken" data-widget-editbutton="false">
@@ -60,7 +60,7 @@
                             <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Temp</th>   
                             <th>Food Item Name</th>
                             <th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Corrective Action</th>
-                            <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Action</th>   
+                            <!--<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Action</th>   -->
 
                         </tr>
                         </thead>
@@ -72,7 +72,7 @@
 
                                 <td> {{foodlog.foodName}}</td>
                                 <td> {{foodlog.comments}}</td>
-                                <td>  <button type="button" class="btn btn-primary" ng-click="showFoodDialog($index)">Edit</button>
+                                <!--<td>  <button type="button" class="btn btn-primary" ng-click="showFoodDialog($index)">Edit</button>-->
                             </tr>    
                         </tbody> 
 

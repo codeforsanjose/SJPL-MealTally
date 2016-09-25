@@ -1,6 +1,7 @@
 package com.togetherly.hackathon.mealtally
 
 import android.animation.Animator
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
@@ -11,10 +12,7 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.transitionseverywhere.*
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
 import com.yalantis.contextmenu.lib.MenuObject
@@ -33,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     val mealCountForm = MealCountForm()
 
+    lateinit var mealTypeText: TextView
     lateinit var mealsFromVendor: EditText
     lateinit var mealsLeftover: EditText
     lateinit var totalMeals: TextView
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var lunchText: TextView
     lateinit var PMSnackText: TextView
     lateinit var supperText: TextView
-    lateinit var mealTypeText: TextView
 
     lateinit var childrenButton: Button
     lateinit var adultsButton: Button
@@ -60,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private val animationTimer = 100L
         private val transitionTimer = 300L
+        private val url = URL("https://serene-chamber-33070.herokuapp.com/meal")
 
         private val locationMenuObjects = arrayListOf(
                 MenuObject("Dr. Roberto Cruz Alum Rock"),
@@ -95,12 +94,14 @@ class MainActivity : AppCompatActivity() {
         // B-e-a-u-t-i-f-u-l
         val top = sceneRoot.findViewById(R.id.top) as LinearLayout
         top.animate()
+                .scaleX(0.0f)
                 .scaleY(0.0f)
                 .setDuration(0)
                 .start()
         top.animate()
+                .scaleX(1.0f)
                 .scaleY(1.0f)
-                .setDuration(200)
+                .setDuration(500)
                 .start()
 
         setNextArrowListener(transitionSet)
@@ -133,8 +134,8 @@ class MainActivity : AppCompatActivity() {
 
         bindViews()
 
-        mealsFromVendor.addTextChangedListener(mealsTextChangeListener())
-        mealsLeftover.addTextChangedListener(mealsTextChangeListener())
+        mealsFromVendor.addTextChangedListener(vendorTextChangeListener())
+        mealsLeftover.addTextChangedListener(carryOverTextChangeListener())
 
         if (enableButtons) {
             childrenButton.setOnClickListener(foodCountPlusListener())
@@ -191,7 +192,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onAnimationStart(animation: Animator?) {
                 }
             })
-        totalServedText.text = (childrenServed + adultsServed + staffServed).toString()
+        totalServedCount.text = (childrenServed + adultsServed + staffServed).toString()
 
         mealCountForm.childrenFoodCount = childrenServed.toString()
         mealCountForm.adultFoodCount = adultsServed.toString()
@@ -309,42 +310,51 @@ class MainActivity : AppCompatActivity() {
         setMealCountFormValues()
     }
 
+    // TODO: Complete this method. Save values across transitions
     private fun setMealCountFormValues() {
         bindViews()
 
+        val libraryText = sceneRoot.findViewById(R.id.locationText) as TextView
+
+        libraryText.text = mealCountForm.siteName
+        mealTypeText.text = mealCountForm.mealType
+        mealsFromVendor.setText(mealCountForm.vendorReceived)
+        mealsLeftover.setText(mealCountForm.carryOver)
+        totalMeals.text = mealCountForm.getTotalMeals()
+        totalServedCount.text = mealCountForm.getTotalServed()
 
     }
 
-    private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
-                           adultFoodCount: String, staffFoodCount: String, damaged: String, wasted: String) {
+    fun submitForm(view: View) {
         // YYYY-MM-DD
         val date = DateFormat.format("yyyy-MM-d", Date().time)
         Log.d("Date", date.toString())
 
-        val requestBody = """
-            {
-                "date": "$date.toString()",
-                "siteName": "$siteName",
-                "meal": {
-                "type": "$mealType",
-                "vendorReceived": $vendorReceived,
-                "carryOver": $carryOver,
-                "consumed": {
-                    "child": $childrenFoodCount,
-                    "adult": $adultFoodCount,
-                    "volunteer": $staffFoodCount
-                    },
-                "damaged": $damaged,
-                "wasted": $wasted
+        val requestBody = with(mealCountForm) {
+                """
+                {
+                    "date": "$date.toString()",
+                    "siteName": "$siteName",
+                    "meal": {
+                    "type": "$mealType",
+                    "vendorReceived": $vendorReceived,
+                    "carryOver": $carryOver,
+                    "consumed": {
+                        "child": $childrenFoodCount,
+                        "adult": $adultFoodCount,
+                        "volunteer": $staffFoodCount
+                        },
+                    "damaged": $damaged,
+                    "wasted": $wasted
+                    }
                 }
-            }
-        """
+                """
+        }
 
         val jsonObject = JSONObject(requestBody)
 
         AsyncTask.execute {
 
-            val url = URL("https://serene-chamber-33070.herokuapp.com/mealDev")
             val httpUrlConnection = url.openConnection() as HttpURLConnection
             httpUrlConnection.setRequestMethod("POST")
             httpUrlConnection.doInput = true
@@ -363,6 +373,10 @@ class MainActivity : AppCompatActivity() {
             Log.i("Status code", httpUrlConnection.responseCode.toString())
         }
 
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        showToast("Form submitted!", Toast.LENGTH_LONG)
+        finish()
     }
 
     override fun onBackPressed() {
@@ -416,7 +430,19 @@ class MainActivity : AppCompatActivity() {
                 .start()
     }
 
-    fun mealsTextChangeListener() = object: TextWatcher {
+    fun vendorTextChangeListener() = object: TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            calculateTotalMeals()
+        }
+    }
+
+    fun carryOverTextChangeListener() = object: TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
 
@@ -430,8 +456,8 @@ class MainActivity : AppCompatActivity() {
 
     fun calculateTotalMeals() {
         val mealsVendor = if (mealsFromVendor.text.toString().isEmpty()) 0 else mealsFromVendor.text.toString().toInt()
-        val mealsLeft = if (mealsLeftover.text.toString().isEmpty()) 0 else mealsLeftover.text.toString().toInt()
-        val total = mealsVendor + mealsLeft
+        val mealsCarryOver = if (mealsLeftover.text.toString().isEmpty()) 0 else mealsLeftover.text.toString().toInt()
+        val total = mealsVendor + mealsCarryOver
         totalMeals.text = total.toString()
 
         totalMeals.animate()
@@ -446,8 +472,9 @@ class MainActivity : AppCompatActivity() {
                 .scaleY(1.0f)
                 .start()
 
+        // Update Meal Count Form
         mealCountForm.vendorReceived = mealsVendor.toString()
-        mealCountForm.carryOver = mealsLeft.toString()
+        mealCountForm.carryOver = mealsCarryOver.toString()
     }
 
     fun selectMealType(view: View) {
@@ -470,5 +497,19 @@ class MainActivity : AppCompatActivity() {
         target.textColor = resources.getColor(R.color.darkerGray, null)
         target.backgroundColor = resources.getColor(R.color.colorNeutral, null)
         target.setTypeface(null, Typeface.NORMAL)
+    }
+
+    fun setDamaged(view: View) {
+        val damagedEditText = sceneRoot.findViewById(R.id.damaged)as EditText
+        mealCountForm.damaged = damagedEditText.text.toString()
+    }
+
+    fun setWasted(view: View) {
+        val wastedEditText = sceneRoot.findViewById(R.id.wasted) as EditText
+        mealCountForm.wasted = wastedEditText.text.toString()
+    }
+
+    fun setSignature(view: View) {
+        val signatureEditText = sceneRoot.findViewById(R.id.wasted) as EditText
     }
 }

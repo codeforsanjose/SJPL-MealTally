@@ -14,6 +14,7 @@
     </style>
 
     <style name="MealTypeTextView" parent="AppTheme">
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:ems">10</item>
         <item name="android:layout_weight">1</item>
@@ -23,7 +24,7 @@
 
     <style name="FoodCountLabel" parent="AppTheme">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="FoodCountLabelMini" parent="FoodCountLabel">
