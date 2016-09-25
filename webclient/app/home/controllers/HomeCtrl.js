@@ -12,10 +12,31 @@ angular.module('app.home').controller('HomeController',
         var weekStart = amoment.format('YYYY-MM-DD')
 
         mealService.getRefLogs(weekStart).then(function(result){
-            $scope.refLogList = result
+            var resultStats = []
+            angular.forEach(result, function(item) {                
+                var stat = {
+                    date : moment(item.date).format('YYYY-MM-DD'),
+                    time : item.time,
+                    temp : item.temp
+                }
+                resultStats.push(stat)
+            });
+            $scope.refLogList = resultStats
+
         })
         mealService.getFoodLogs(weekStart).then(function(result){
-            $scope.foodLogList = result
+            var resultStats = []
+            angular.forEach(result, function(item) {                
+                var stat = {
+                    date : moment(item.date).format('YYYY-MM-DD'),
+                    time : item.time,
+                    temp : item.temp,
+                    foodName : item.foodName,
+                    comments : item.comments
+                }
+                resultStats.push(stat)
+            });
+            $scope.foodLogList = resultStats
         })
     }
     var init = function(){

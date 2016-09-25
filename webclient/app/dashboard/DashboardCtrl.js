@@ -16,7 +16,7 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
             $scope.mealStats = []             
             angular.forEach(result, function(item) {                
                 var stat = {
-                    date : item.date,
+                    date : moment(item.date).format('YYYY-MM-DD'),
                     consumed : item.meal.totalConsumed,
                     wasted : item.meal.totalWasted,
                     carryover : item.meal.totalCarryOver
