@@ -5,48 +5,37 @@ angular.module('app.dashboard').directive('mealLineGraphC', function(){
         restrict: 'E',
         replace: true,
         template: '<div class="chart no-padding"></div>',
-        link: function(scope, element){
-
-            var day_data = [{
-                "elapsed" : "I",
-                "value" : 1004
+        link: function(scope, element){            
+            var served_data = [{
+                "elapsed" : "Jan",
+                "served" : 34,
+                "wasted" :22,
             }, {
-                "elapsed" : "II",
-                "value" : 24
+                "elapsed" : "Feb",
+                "served" : 24,
+                "wasted" : 19
             }, {
-                "elapsed" : "III",
-                "value" : 3
+                "elapsed" : "Mar",
+                "served" : 33,
+                "wasted" : 5
             }, {
-                "elapsed" : "IV",
-                "value" : 12
+                "elapsed" : "Apr",
+                "served" : 29,
+                "wasted" : 2
             }, {
-                "elapsed" : "V",
-                "value" : 13
-            }, {
-                "elapsed" : "VI",
-                "value" : 22
-            }, {
-                "elapsed" : "VII",
-                "value" : 5
-            }, {
-                "elapsed" : "VIII",
-                "value" : 26
-            }, {
-                "elapsed" : "IX",
-                "value" : 12
-            }, {
-                "elapsed" : "X",
-                "value" : 19
+                "elapsed" : "May",
+                "served" : 33,
+                "wasted" : 5
             }];
             Morris.Line({
                 element : element,
-                data : day_data,
+                data : served_data,
                 xkey : 'elapsed',
-                ykeys : ['value'],
+                ykeys : ['served', 'wasted'],
                 labels : ['value'],
                 parseTime : false
             });
-
+            
         }
     }
 });
