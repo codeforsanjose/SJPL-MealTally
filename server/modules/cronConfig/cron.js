@@ -2,6 +2,9 @@
 var convertPDF = require('../pdfConverter/pdfconverter.js');
 var http = require('http');
 var fs = require('fs');
+var nodemailer = require('nodemailer');
+var config = require('../../config/mail');
+var transporter = nodemailer.createTransport(config.mail);
 
 var cronTask = function() {
   var cronTime = new Date(),
@@ -11,7 +14,8 @@ var cronTask = function() {
       locations = {},
       weeklyMealsStr = '',
       weeklyMealsArr = [],
-      monthsArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      monthsArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      prettyCronTime = cronTime.getDate() + ' ' + monthsArr[cronTime.getMonth()] + ' ' + cronTime.getFullYear();
   console.log('Running 1 minute cron at', cronTime, weekBegin.substr(0,10));
 
   http.get('http://localhost:3000/meal?DATEFROM=2016-08-05', function(res) {
@@ -117,54 +121,84 @@ var cronTask = function() {
 
           var weeklyMealsObj = JSON.parse(weeklyMealsStr);
           console.log(weeklyMealsObj);
-        });
-      }).on('error', function(e) {
-        console.log(`Got error: ${e.message}`);
-      });
+          for(var key in weeklyMealsObj) weeklyMealsArr.push(weeklyMealsObj[key]);
 
+          weeklyMealsArr.forEach(function(entry) {
+            var outputName = entry.siteName.replace(/ /g, '').replace('.', '') + entry.meal.type.replace(/ /g, '') + '.html'
+            // set the temp files back to default template
+            fs.truncate('modules/pdfConverter/' + outputName, 0);
+            var cbCalled = false,
+                rd = fs.createReadStream('public/templates/ymcaReport.html'),
+                wr = fs.createWriteStream('modules/pdfConverter/' + outputName),
+                cb = function(e){return(e)};
+            rd.on("error", function(err) {
+              done(err);
+            });
+            wr.on("error", function(err) {
+              done(err);
+            });
+            wr.on("close", function(ex) {
+              done();
+            });
+            rd.pipe(wr);
+
+            function done(err) {
+              if (!cbCalled) {
+                cb(err);
+                cbCalled = true;
+              }
+            }
+
+            // replace custom fields in temp file
+            fs.readFile('modules/pdfConverter/' + outputName, 'utf8', function (err,data) {
+              if (err) {
+                return console.log(err);
+              }
+              var result = data.replace('$Month$Year', monthsArr[cronTime.getMonth()] + ' ' + cronTime.getFullYear())
+                                .replace('$SiteName', entry.siteName)
+                                .replace('$MealType', entry.meal.type)
+                                .replace('$WeekDateAndYear', prettyCronTime)
+                                .replace('$MonConsumed', (entry.consumptionBreakdown.day1 || 0))
+                                .replace('$TueConsumed', (entry.consumptionBreakdown.day2 || 0))
+                                .replace('$WedConsumed', (entry.consumptionBreakdown.day3 || 0))
+                                .replace('$ThuConsumed', (entry.consumptionBreakdown.day4 || 0))
+                                .replace('$FriConsumed', (entry.consumptionBreakdown.day5 || 0))
+                                .replace('$SatConsumed', (entry.consumptionBreakdown.day6 || 0))
+                                .replace('$TotalConsumed', entry.meal.totalConsumed);
+
+              fs.writeFile('modules/pdfConverter/' + outputName, result, 'utf8', function (err) {
+                 if (err) return console.log(err);
+                 var pdfName = convertPDF(outputName, prettyCronTime.replace(/ /g, '-'), entry.siteName.replace(/ /g, '_').replace('.', ''), entry.meal.type.replace(/ /g, ''),function(){
+                   var mailOptions = {
+                       from: '"MLK Library" <mlktestemail@gmail.com>', // sender address
+                       to: 'mlktestemail@gmail.com', // list of receivers
+                       subject: 'PDF ' + entry.siteName + ' ' + entry.meal.type + ' for week ending ' + prettyCronTime, // Subject line
+                       text: 'PDF attached', // plaintext body
+                       attachments: [{
+                           path: pdfName
+                       },]
+                   };
+
+                   transporter.sendMail(mailOptions, function(error, info){
+                     if(error){
+                         return console.log(error);
+                     }
+                     console.log('Message sent: ' + info.response);
+                   });
+                 });
+              });
+
+            });
+          });
+
+        });
+          }).on('error', function(e) {
+            console.log(`Got error: ${e.message}`);
+          });
     });
   }).on('error', function(e) {
     console.log(`Got error: ${e.message}`);
   });
 };
-
-
-// for(var location in locations) {
-//   // set the temp files back to default template
-//   var cbCalled = false,
-//       rd = fs.createReadStream('public/templates/ymcaReport.html'),
-//       wr = fs.createWriteStream('modules/pdfConverter/tempReport.html'),
-//       cb = function(e){console.log(e)};
-//   rd.on("error", function(err) {
-//     done(err);
-//   });
-//   wr.on("error", function(err) {
-//     done(err);
-//   });
-//   wr.on("close", function(ex) {
-//     done();
-//   });
-//   rd.pipe(wr);
-//
-//   function done(err) {
-//     if (!cbCalled) {
-//       cb(err);
-//       cbCalled = true;
-//     }
-//   }
-// }
-// // replace custom fields in temp file
-// fs.readFile('modules/pdfConverter/tempReport.html', 'utf8', function (err,data) {
-//   if (err) {
-//     return console.log(err);
-//   }
-//   var result = function(){
-//     data.replace('$Month$Year', monthsArr[cronTime.getMonth()] + ' ' + cronTime.getYear());
-//   };
-//
-//   fs.writeFile('modules/pdfConverter/tempReport.html', result, 'utf8', function (err) {
-//      if (err) return console.log(err);
-//   });
-// });
 
 module.exports = cronTask;
