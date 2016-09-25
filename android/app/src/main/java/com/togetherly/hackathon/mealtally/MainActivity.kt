@@ -1,21 +1,23 @@
 package com.togetherly.hackathon.mealtally
 
 import android.animation.Animator
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AnimationSet
 import android.widget.Button
 import android.widget.TextView
-import com.github.kittinunf.fuel.Fuel
 import com.transitionseverywhere.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.food_counter.*
-import org.jetbrains.anko.enabled
-import org.jetbrains.anko.onClick
+import org.jetbrains.anko.*
+import org.json.JSONObject
+import java.io.DataOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -39,12 +41,13 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val animationTimer = 100L
+        private val transitionTimer = 300L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-                submitForm("FROM JOHNNY", "AM Food", "23", "12", "123", "333", "1", "1", "2")
+        submitForm("FROM JOHNNY", "AM Food", "23", "12", "123", "333", "1", "1", "2")
 
         // Scenes
         formOne = Scene.getSceneForLayout(sceneRoot, R.layout.scene_form_1, this)
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         val transitionSet = TransitionSet()
         transitionSet.addTransition(ChangeBounds())
         transitionSet.addTransition(ChangeTransform())
-        transitionSet.duration = 600
+        transitionSet.duration = transitionTimer
         transitionSet.interpolator = AccelerateDecelerateInterpolator()
 
         currentScene = formOne
@@ -257,32 +260,50 @@ class MainActivity : AppCompatActivity() {
     private fun submitForm(siteName: String, mealType: String, vendorReceived: String, carryOver: String, childrenFoodCount: String,
                            adultFoodCount: String, staffFoodCount: String, damaged: String, wasted: String) {
         // YYYY-MM-DD
-        val date = DateFormat.format("yyyy MMMM d", Date().time)
+        val date = DateFormat.format("yyyy-MM-d", Date().time)
         Log.d("Date", date.toString())
 
-        val body = """
-            "date": "2016-09-01T07:00:00.000Z",
-            "siteName": "$siteName",
-            "meal": {
-            "type": , "$mealType"
-            "vendorReceived": $vendorReceived,
-            "carryOver": $carryOver,
-            "consumed": {
-                "child": $childrenFoodCount,
-                "adult": $adultFoodCount,
-                "volunteer": $staffFoodCount
-            },
-            "damaged": $damaged,
-            "wasted": $wasted
-        }
-        """
-        Fuel.post("https://serene-chamber-33070.herokuapp.com/mealDev").body(body).response { request, response, result ->
-            when (response.httpStatusCode) {
-                500 -> Log.i("Status code 500", "Error")
-                200 -> Log.i("Status code 200", "Success")
+        val requestBody = """
+            {
+                "date": "$date.toString()",
+                "siteName": "$siteName",
+                "meal": {
+                "type": "$mealType",
+                "vendorReceived": $vendorReceived,
+                "carryOver": $carryOver,
+                "consumed": {
+                    "child": $childrenFoodCount,
+                    "adult": $adultFoodCount,
+                    "volunteer": $staffFoodCount
+                    },
+                "damaged": $damaged,
+                "wasted": $wasted
+                }
             }
-        }
+        """
 
+        val jsonObject = JSONObject(requestBody)
+
+        AsyncTask.execute {
+
+            val url = URL("https://serene-chamber-33070.herokuapp.com/mealDev")
+            val httpUrlConnection = url.openConnection() as HttpURLConnection
+            httpUrlConnection.setRequestMethod("POST")
+            httpUrlConnection.doInput = true
+            httpUrlConnection.connectTimeout = 10000
+            httpUrlConnection.doOutput = true
+            httpUrlConnection.useCaches = false
+            httpUrlConnection.setRequestProperty("Content-Type", "application/json")
+
+            val wr = DataOutputStream(httpUrlConnection.outputStream)
+            wr.writeBytes(jsonObject.toString())
+            wr.flush()
+            wr.close()
+
+            httpUrlConnection.connect()
+
+            Log.i("Status code", httpUrlConnection.responseCode.toString())
+        }
 
     }
 
