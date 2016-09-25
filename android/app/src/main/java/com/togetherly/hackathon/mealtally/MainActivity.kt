@@ -29,8 +29,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    val mealCountForm = MealCountForm()
-
     lateinit var mealTypeText: TextView
     lateinit var mealsFromVendor: EditText
     lateinit var mealsLeftover: EditText
@@ -56,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var formTwo: Scene
 
     companion object {
+        var mealCountForm = MealCountForm()
         private val animationTimer = 100L
         private val transitionTimer = 300L
         private val urlString = "https://pure-everglades-59666.herokuapp.com/meal"
@@ -302,6 +301,7 @@ class MainActivity : AppCompatActivity() {
         val adultsFoodCount = adultsButton.text.toString()
         val staffFoodCount = staffButton.text.toString()
 
+        updateMealCounts()
         TransitionManager.go(scene, transition)
         setNextArrowListener(transition)
         adjustForScenes()
@@ -323,14 +323,14 @@ class MainActivity : AppCompatActivity() {
         bindViews()
 
         val libraryText = sceneRoot.findViewById(R.id.locationText) as TextView
+        val mealsLeftOver = sceneRoot.findViewById(R.id.mealsLeftoverCount) as EditText
 
         libraryText.text = mealCountForm.siteName
         mealTypeText.text = mealCountForm.mealType
         mealsFromVendor.setText(mealCountForm.vendorReceived)
-        mealsLeftover.setText(mealCountForm.carryOver)
+        mealsLeftOver.setText(mealCountForm.carryOver)
         totalMeals.text = mealCountForm.getTotalMeals()
         totalServedCount.text = mealCountForm.getTotalServed()
-
     }
 
     fun submitForm(view: View) {
@@ -471,11 +471,6 @@ class MainActivity : AppCompatActivity() {
 
     fun calculateTotalMeals() {
         val mealsVendor = if (mealsFromVendor.text.toString().isBlank()) "0" else mealsFromVendor.text.toString()
-        try {
-            Thread.sleep(100)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
         val mealsCarryOver = if (mealsLeftover.text.toString().isBlank()) "0" else mealsLeftover.text.toString()
 
         // Update Meal Count Form
