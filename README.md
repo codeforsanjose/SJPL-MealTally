@@ -1,2 +1,0 @@
-# MealTally
-Meal Tally

@@ -1,8 +1,3 @@
-web/build
-web/node_modules
-web/bower_components
-server/.DS_Store
-server/node_modules
 *.iml
 .gradle
 /local.properties
