@@ -7,6 +7,12 @@ angular.module('app.meal').service('mealService', function ($http) {
                 .then(function (result) {
                     return result.data;
               });
+          },
+          getStats: function(){
+              var url ="/api/mealstats.json"
+              return $http.get(url).then(function(result){
+                  return result.data
+              })
           }         
       }
 });
