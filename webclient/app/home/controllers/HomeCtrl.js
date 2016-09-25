@@ -60,11 +60,13 @@ angular.module('app.home').controller('HomeController',
     }()
 
     $scope.showRefDialog = function(index){
-        var data = $scope.refLogList[index]
+        var data = null
+        if(index >0)
+             data = $scope.refLogList[index]
         var modalInstance = $uibModal.open({
             templateUrl: 'app/home/refmodal.html',
             controller:'RefDialogModal',
-            size: 'md',
+            size: 'sm',
             resolve:{
                  item : function () {
                     return data;
@@ -78,11 +80,13 @@ angular.module('app.home').controller('HomeController',
 
     }
     $scope.showFoodDialog = function(index){
-        var data = $scope.foodLogList[index]
+        var data = null
+        if(index >0)
+             data = $scope.foodLogList[index]
         var modalInstance = $uibModal.open({
             templateUrl: 'app/home/foodmodal.html',
             controller:'FoodDialogModal',
-            size: 'md',
+            size: 'sm',
             resolve:{
                  item : function () {
                     return data;
