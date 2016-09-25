@@ -95,7 +95,4 @@ class MainActivity : AppCompatActivity() {
         adjustForScenes()
     }
 
-    private fun saveFoodCounts(): Array<Int> {
-        return arrayOf(1,2,3)
-    }
 }
