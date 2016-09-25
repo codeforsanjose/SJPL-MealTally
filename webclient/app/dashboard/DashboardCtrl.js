@@ -13,6 +13,7 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
     $scope.getMealStats = function(){
          mealService.getStats($scope.selectedLibrary,$scope.selectedMeal).then(function(result){
              var resultStats =[]
+            $scope.mealStats = [] 
             angular.forEach(result, function(item) {                
                 var stat = {
                     date : item.date,
