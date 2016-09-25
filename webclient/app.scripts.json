@@ -81,7 +81,7 @@
     ]
   },
   "paths": {
-    "jquery": "bower_components/jquery/dist/jquery.min.js",
+    "jquery": "bower_components/jquery/jquery.min.js",
     "jquery-ui": "bower_components/jquery-ui/jquery-ui.min.js",
     "bootstrap": "bower_components/bootstrap/dist/js/bootstrap.min.js",
     "angular": "bower_components/angular/angular.min.js",

@@ -1,19 +1,19 @@
 'use strict';
 
-angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, mealService) {
+angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, mealService,$state,$rootScope) {
 
     // Live Feeds Widget Data And Display Controls
     // Live Stats Tab
     $scope.mealStats=[]
     $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
     $scope.allLibraries = ['DR.ROBERTO CRUZ-ALUM ROCK','BIBLIOTECA LATINOAMERICANA','EDUCATIONAL PARK','OYCE ELLINGTON','HILLVIEW','TULLY COMMUNITY']
-    $scope.selectedMeal='All'
+    $scope.selectedMeal = 'All'
     $scope.mealTypes=['All','Breakfast','AM Snack','Lunch','PM Snack','Supper']
 
-    $scope.getMealStats = function(){
+    $scope.getMealStats = function(isReload){
          mealService.getStats($scope.selectedLibrary,$scope.selectedMeal).then(function(result){
              var resultStats =[]
-            $scope.mealStats = [] 
+            $scope.mealStats = []             
             angular.forEach(result, function(item) {                
                 var stat = {
                     date : item.date,
@@ -23,22 +23,40 @@ angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, me
                 }
                 resultStats.push(stat)
             });
+            if(resultStats.length == 0){
+                var stat1 = {
+                    date : 'There was no data found for past 12 weeks',
+                    consumed : 0,
+                    wasted : 0,
+                    carryover : 0
+                }
+                resultStats.push(stat1)
+            }
             $scope.mealStats = resultStats
+            if(isReload)
+               $state.reload();            
         })
     }
-    $scope.init = function(){
-       $scope.getMealStats()
+    $scope.init = function(){        
+       $scope.selectedLibrary = localStorage.getItem('library')
+       if(!$scope.selectedLibrary)
+        $scope.selectedLibrary="DR.ROBERTO CRUZ-ALUM ROCK"
+
+       $scope.selectedMeal = localStorage.getItem('mealType')
+       if(!$scope.selectedMeal)
+        $scope.selectedMeal="All"
+       $scope.getMealStats(false)
     }();
 
-    
-
-
-
     $scope.refreshCharts = function(){
-        $scope.getMealStats()
+        localStorage.setItem('library', $scope.selectedLibrary);
+        localStorage.setItem('mealType', $scope.selectedMeal);
+        $scope.getMealStats(true)
+
     }
     $scope.changeLib = function(index){
-       $scope.selectedLibrary = $scope.allLibraries[index]
+       var selectedLibrary = $scope.allLibraries[index]
+        localStorage.setItem('library', selectedLibrary);
     }
 
     // function getFakeItem(index, prevValue){

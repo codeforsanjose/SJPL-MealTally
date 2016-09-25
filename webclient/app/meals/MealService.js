@@ -12,8 +12,11 @@ angular.module('app.meal').service('mealService', function ($http) {
               var url ="/weeklyMealReport?siteName="+library
               if(mealtype != 'All')
               url = url + "&meal.type="+mealtype
-            //   url = "/api/mealstats-server.json"
+            //   var url = "/api/mealstats-server.json"
               return $http.get(url).then(function(result){
+                  var emptyArr = []
+                  if(mealtype == 'All')
+                      return emptyArr
                   return result.data
               })
           },
