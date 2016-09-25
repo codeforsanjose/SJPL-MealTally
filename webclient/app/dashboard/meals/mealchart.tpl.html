@@ -1,47 +1,35 @@
-<div jarvis-widget data-widget-color="blueDark">
+<div jarvis-widget data-widget-color="blueDark" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-colorbutton="false">
    <header>
         <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-        <h2> Meal </h2>
+        <h2> Meals Stats </h2>
         <div class="widget-toolbar">
-            <!-- add: non-hidden - to disable auto hide -->
             <div class="btn-group dropdown" dropdown >
+
                 <button class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
                     Showing <i class="fa fa-caret-down"></i>
                 </button>
                 <ul class="dropdown-menu js-status-update pull-right">
                     <li>
-                        <a ng-click="changeView('month')">All</a>
+                        <a ng-click="changeView('DR.ROBERTO CRUZ-ALUM ROCK')">DR.ROBERTO CRUZ-ALUM ROCK</a>
                     </li>
                     <li>
-                        <a ng-click="changeView('agendaWeek')">Library1</a>
+                        <a ng-click="changeView('BIBLIOTECA LATINOAMERICANA')">BIBLIOTECA LATINOAMERICANA</a>
                     </li>
                     <li>
-                        <a ng-click="changeView('agendaDay')">Library1</a>
+                        <a ng-click="changeView('EDUCATIONAL PARK')">EDUCATIONAL PARK</a>
                     </li>
                 </ul>
             </div>
+            <h2> {{libName}} </h2>
+
         </div>
     </header>
      <div>
         <div class="widget-body no-padding">
-            <!-- content goes here -->
-            <div class="widget-body-toolbar">
-
-                <div id="calendar-buttons">
-
-                    <div class="btn-group">
-                        <a ng-click="prev()" class="btn btn-default btn-xs"><i
-                                class="fa fa-chevron-left"></i></a>
-                        <a ng-click="next()" class="btn btn-default btn-xs"><i
-                                class="fa fa-chevron-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div id="test"></div>
-
-            <!-- end content -->
+                    <meal-line-graph-c></meal-line-graph-c>
         </div>
 
     </div>
 
 </div>
+ 

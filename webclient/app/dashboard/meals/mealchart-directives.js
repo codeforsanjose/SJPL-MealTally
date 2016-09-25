@@ -5,6 +5,7 @@ angular.module('app.calendar').directive('mealChart', function ($log, $timeout) 
         restrict: 'E',
         replace: true,
         templateUrl: 'app/dashboard/meals/mealchart.tpl.html',
+        controller:'MealChartLineCtrl',
         scope: {
             //events: "=events"
         },

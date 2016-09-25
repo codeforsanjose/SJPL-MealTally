@@ -1,7 +1,7 @@
-<div>
+<div class="container">
     <form id="smart-form-register" class="smart-form" data-smart-registration-form>
     <header>
-        Add Meal
+        <!--Add Meal {{ameal}}-->
         <div class="alert alert-success fade in" ng-show="isMealAdded">
             <button class="close" data-dismiss="alert">
                 ×
@@ -15,23 +15,35 @@
 
     <fieldset>
         <div class="row">
-            <section class="col col-6">
+            <section class="col col-4">
                 <label class="input"> </i>
                     <input type="date" name="username" placeholder="Date" ng-model="ameal.date">
             </section>  
-            <section class="col col-6">
-                <label class="input"> </i>
-                    <input type="sitename" name="sitename" placeholder="Site Name" ng-model="ameal.siteName">
+            <section class="col col-4">
+                 Select Site Name
+                <label class="select">
+                    <select name="budget" ng-model="ameal.siteName">
+                        <!--<option value="0" selected="" disabled="">Mealtype</option>-->
+                        <option value="DR.ROBERTO CRUZ-ALUM ROCK">DR.ROBERTO CRUZ-ALUM ROCK</option>
+                        <option value="BIBLIOTECA LATINOAMERICANA">BIBLIOTECA LATINOAMERICANA</option>
+                        <option value="EDUCATIONAL PARK">EDUCATIONAL PARK</option>
+                        <option value="OYCE ELLINGTON">JOYCE ELLINGTON</option>
+                        <option value="HILLVIEW">HILLVIEW</option>
+                        <option value="TULLY COMMUNITY">TULLY COMMUNITY</option>
+                    </select> <i></i> </label>
+                <!--<label class="input"> </i>-->
+                    <!--<input type="sitename" name="sitename" placeholder="Site Name" ng-model="ameal.siteName">-->
             </section>
         </div>
                 
     <!--<fieldset>-->
     <!--<fieldset>-->
         <div class="row">
-            <section class="col col-6">
+            <section class="col col-4">
+                 Select Meal Type
                 <label class="select">
                     <select name="budget" ng-model="ameal.meal.type">
-                        <option value="0" selected="" disabled="">Mealtype</option>
+                        <!--<option value="0" selected="" disabled="">Mealtype</option>-->
                         <option value="Breakfast">Breakfast</option>
                         <option value="AM Snack">AM Snack</option>
                         <option value="Lunch">Lunch</option>
@@ -46,13 +58,13 @@
     <!--<fieldset>          -->
       <div class="row">
             
-        <section class="col col-6">
+        <section class="col col-4">
             <label class="input">
-                <input type="number" name="noofmeals" placeholder="Number Of Meals" id="noofmeals" ng-model="ameal.meal.vendorReceived">
+                <input type="number" name="noofmeals" placeholder="Meals Recieved from Vendor" id="noofmeals" ng-model="ameal.meal.vendorReceived">
                 <b class="tooltip tooltip-bottom-right">Meals Recieved from Vendor</b>
              </label>
         </section>
-        <section class="col col-6">
+        <section class="col col-4">
             <label class="input">
                 <input type="number" name="carryovermeal" placeholder="Carry Over from Yesterday" id="carryovermeal" ng-model="ameal.meal.carryOver">
                 <b class="tooltip tooltip-bottom-right">Carry Over from yesterday</b>
@@ -69,17 +81,20 @@
                 <label class="input"> </i>
                     <input type="number" name="adultconsume" placeholder="Adult meal count" ng-model="ameal.meal.consumed.adult">
             </section>
-            <section class="col col-4">
+           
+      </div> 
+      <div class="row">
+           <section class="col col-4">
                 <label class="input"> </i>
                     <input type="number" name="volunteerconsume" placeholder="Volunteer meal count" ng-model="ameal.meal.consumed.volunteer">
             </section>
-      </div> 
+      </div>   
       <div class="row">
-          <section class="col col-6">
+          <section class="col col-4">
                 <label class="input"> </i>
                     <input type="number" name="damaged" placeholder="Damaged meal count" ng-model="ameal.meal.damaged">
             </section>
-           <section class="col col-6">
+           <section class="col col-4">
                 <label class="input"> </i>
                     <input type="number" name="wasted" placeholder="Wasted meal count" ng-model="ameal.meal.wasted">
             </section>
