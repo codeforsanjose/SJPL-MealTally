@@ -126,6 +126,58 @@ app.post('/reflogs', bodyParser, function(req,res) {
   });
 });
 
+app.get('/reflogs', function(req,res) {
+  var findMeals = function(db, callback) {
+   var mealArr = [];
+   if(req.query.DATEFROM) {
+     var cursor =db.collection('reflogs').find({"date": { $gte : req.query.DATEFROM }});
+   }
+   else var cursor =db.collection('reflogs').find(req.query);
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         mealArr.push(doc);
+      } else {
+         callback(mealArr);
+      }
+   });
+  };
+  MongoClient.connect(mongoUrl, function(err, db) {
+    assert.equal(null, err);
+    findMeals(db, function(result) {
+      if(err) res.status(500).json(err);
+      else res.status(200).json(result);
+      db.close();
+    });
+  });
+});
+
+app.get('/foodlogs', function(req,res) {
+  var findMeals = function(db, callback) {
+   var mealArr = [];
+   if(req.query.DATEFROM) {
+     var cursor =db.collection('foodlogs').find({"date": { $gte : req.query.DATEFROM }});
+   }
+   else var cursor =db.collection('foodlogs').find(req.query);
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         mealArr.push(doc);
+      } else {
+         callback(mealArr);
+      }
+   });
+  };
+  MongoClient.connect(mongoUrl, function(err, db) {
+    assert.equal(null, err);
+    findMeals(db, function(result) {
+      if(err) res.status(500).json(err);
+      else res.status(200).json(result);
+      db.close();
+    });
+  });
+});
+
 app.post('/foodlogs', bodyParser, function(req,res) {
   var insertDocument = function(db, callback) {
    db.collection('foodlogs').insertOne(req.body, function(err, result) {
