@@ -3,7 +3,7 @@
 	<div>
 		<strong>Summer Food Service Program:</strong> SFSP
 		<br>
-		<br>	
+		<br>
 		<strong>Summer Reporting Sheet for $Month$Year </strong>
 		<br>
 		<br>
@@ -14,9 +14,9 @@
 	</div>
 
 	<br>
-	<table border="1">
+	<table border="1" cell-padding="10" width="100%">
 		<tr>
-		  <th>Week ending $WeekDateAndYear</th>
+		  <th>Week ending</th>
 		  <th>Mon</th>
 		  <th>Tue</th>
 		  <th>Wed</th>
@@ -25,19 +25,19 @@
 		  <th>Sat</th>
 		</tr>
 	    <tr>
+	      <td>$WeekDateAndYear</td>
 	      <td>$MonConsumed</td>
-	      <td>$MonConsumed</td>
-	      <td>$MonConsumed</td>
-	      <td>$MonConsumed</td>
-	      <td>$MonConsumed</td>
-	      <td>$MonConsumed</td>
-	      <td>$MonConsumed</td>
+	      <td>$TueConsumed</td>
+	      <td>$WedConsumed</td>
+	      <td>$ThuConsumed</td>
+	      <td>$FriConsumed</td>
+	      <td>$SatConsumed</td>
 	    </tr>
 	</table>
 <br>
 <br>
 <div>
 <strong>Weekly Total Consumed:</strong> $TotalConsumed
+<p>This report was automatically generated.</p>
 </div>
-
 </html>
