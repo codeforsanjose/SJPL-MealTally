@@ -9,5 +9,23 @@ data class MealCountForm(
         var adultFoodCount: String = "0",
         var staffFoodCount: String = "0",
         var damaged: String = "0",
-        var wasted: String = "0"
-)
+        var wasted: String = "0") {
+
+    fun getTotalMeals(): String {
+
+        val vendor = vendorReceived.toString().toInt()
+        val leftover = carryOver.toString().toInt()
+
+        return (vendor + leftover).toString()
+    }
+
+    fun getTotalServed(): String {
+
+        val children = childrenFoodCount.toString().toInt()
+        val adults = adultFoodCount.toString().toInt()
+        val staff = staffFoodCount.toString().toInt()
+
+        val total = children + adults + staff
+        return total.toString()
+    }
+}
