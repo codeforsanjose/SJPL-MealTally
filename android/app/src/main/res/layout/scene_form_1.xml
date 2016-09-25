@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/formContainer"
-              android:background="@color/colorNeutral"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                android:background="@color/colorNeutral"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity">
+
+
+    <include layout="@layout/food_counter_minimized"/>
+
+    <View
+        android:id="@+id/foodCounterOverlay"
+        android:background="@color/overlayShadow"
+        android:layout_below="@id/top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:id="@+id/top"
         android:orientation="vertical"
         android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:id="@+id/locationLabel"
@@ -27,23 +44,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView
+
+            <Button
+                android:background="@color/colorPrimaryHint"
                 android:id="@+id/locationText"
-                android:text="MLK LIBRARY"
-                android:padding="14dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:lines="1"
-                android:ems="10"
+                android:onClick="locationOnClick"
+                android:ems="12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-            <ImageView
-                android:id="@+id/locationButton"
-                android:src="@drawable/ic_enter_arrow"
-                android:background="@color/colorPrimaryDark"
-                android:layout_width="20dp"
-                android:layout_height="match_parent"/>
 
         </LinearLayout>
 
@@ -74,8 +85,6 @@
 
                 <TextView
                     android:id="@+id/AMSnackText"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/white"
                     android:text="AM Snack"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
@@ -105,6 +114,7 @@
                     style="@style/MealTypeTextView"/>
 
                 <TextView
+                    android:id="@+id/supperText"
                     android:text="Supper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,25 +139,85 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/mealsVendor"
-                android:text="@string/form_meals_from_vendor_label"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/FormLabelTextView"/>
-            <TextView
-                android:id="@+id/mealsLeftover"
-                android:text="@string/form_meals_leftover_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/FormLabelTextView"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/mealsTotal"
-                android:text="@string/form_meals_total_label"
+                <TextView
+                    android:id="@+id/mealsVendor"
+                    android:text="@string/form_meals_from_vendor_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/FormLabelTextView"/>
+
+                <EditText
+                    android:id="@+id/mealsVendorCount"
+                    android:ems="2"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="5dp"
+                    android:onClick="animateEditTextOnClick"
+                    android:gravity="center"
+                    android:background="@color/colorPrimaryDarkHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/FormLabelTextView"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/mealsLeftover"
+                    android:text="@string/form_meals_leftover_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/FormLabelTextView"/>
+
+                <EditText
+                    android:id="@+id/mealsLeftoverCount"
+                    android:ems="2"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:gravity="center"
+                    android:onClick="animateEditTextOnClick"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimaryDarkHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/mealsTotal"
+                    android:text="@string/form_meals_total_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/FormLabelTextView"/>
+
+                <TextView
+                    android:id="@+id/mealsTotalCount"
+                    android:ems="3"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/FormLabelTextView"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -185,17 +255,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-    <include layout="@layout/food_counter_minimized"/>
-
-    <View
-        android:id="@+id/foodCounterOverlay"
-        android:background="@color/overlayShadow"
-        android:layout_below="@id/top"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>
