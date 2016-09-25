@@ -13,9 +13,9 @@ var mongoUrl = process.env.MLABURI || config.mongoURI;
 app.listen(process.env.PORT || 3000);
 console.log("Server running on port 3000");
 
-// cron.schedule('* * * * *', function() {
-//   cronTask();
-// });
+//cron.schedule('* * * * *', function() {
+  cronTask();
+//});
 
 app.post('/meal', bodyParser, function(req, res) {
   var insertDocument = function(db, callback) {
