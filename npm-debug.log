@@ -1,33 +1,12 @@
 0 info it worked if it ends with ok
-<<<<<<< HEAD
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'dev' ]
-2 info using npm@3.8.9
-3 info using node@v4.4.0
-4 verbose stack Error: ENOENT: no such file or directory, open '/Users/mak/projects/paypal-hackathon/MealTally/package.json'
-4 verbose stack     at Error (native)
-5 verbose cwd /Users/mak/projects/paypal-hackathon/MealTally
-6 error Darwin 15.5.0
-7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dev"
-8 error node v4.4.0
-9 error npm  v3.8.9
-10 error path /Users/mak/projects/paypal-hackathon/MealTally/package.json
-11 error code ENOENT
-12 error errno -2
-13 error syscall open
-14 error enoent ENOENT: no such file or directory, open '/Users/mak/projects/paypal-hackathon/MealTally/package.json'
-15 error enoent ENOENT: no such file or directory, open '/Users/mak/projects/paypal-hackathon/MealTally/package.json'
-15 error enoent This is most likely not a problem with npm itself
-15 error enoent and is related to npm not being able to find a file.
-16 verbose exit [ -2, true ]
-=======
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'run', 'dev' ]
 2 info using npm@2.11.3
 3 info using node@v0.12.7
 4 verbose stack Error: ENOENT, open '/Users/gmaheshwari/Documents/Gagan/site/MealTally/package.json'
 4 verbose stack     at Error (native)
 5 verbose cwd /Users/gmaheshwari/Documents/Gagan/site/MealTally
 6 error Darwin 14.5.0
-7 error argv "node" "/usr/local/bin/npm" "start"
+7 error argv "node" "/usr/local/bin/npm" "run" "dev"
 8 error node v0.12.7
 9 error npm  v2.11.3
 10 error path /Users/gmaheshwari/Documents/Gagan/site/MealTally/package.json
@@ -37,4 +16,3 @@
 13 error enoent This is most likely not a problem with npm itself
 13 error enoent and is related to npm not being able to find a file.
 14 verbose exit [ -2, true ]
->>>>>>> 5a20405fdcb203747e5b43e78b4b85a6461a19a2

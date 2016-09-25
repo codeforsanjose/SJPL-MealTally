@@ -3,6 +3,7 @@ var express = require("express");
 var app = express();
 
 var mongoose = require('mongoose');
+var pdfconverter = require('pdfConverter')
 
 mongoose.connect( 'mongodb://togetherly:togetherly2016@ds046549.mlab.com:46549/mealtally', function (err) { //TODO: config
  if (err) console.log('Error: Failed to connect to mongoose!', err);
