@@ -1,5 +1,6 @@
 <div jarvis-widget data-widget-color="blueDark" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-colorbutton="false">
    <header>
+        <pre> {{barChartData}} </pre>
         <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
         <h2> Meals Stats </h2>
         <div class="widget-toolbar">
@@ -27,22 +28,7 @@
     </header>
      <div>
         <div class="widget-body no-padding">
-            <!-- content goes here -->
-            <div class="widget-body-toolbar">
-
-                <div id="calendar-buttons">
-
-                    <div class="btn-group">
-                        <a ng-click="prev()" class="btn btn-default btn-xs"><i
-                                class="fa fa-chevron-left"></i></a>
-                        <a ng-click="next()" class="btn btn-default btn-xs"><i
-                                class="fa fa-chevron-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div id="test"></div>
-
-            <!-- end content -->
+            <flot-sales-chart data="salesChartData"></flot-sales-chart>
         </div>
 
     </div>
