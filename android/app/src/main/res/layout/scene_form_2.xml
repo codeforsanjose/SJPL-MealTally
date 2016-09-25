@@ -67,8 +67,17 @@
                     android:layout_height="wrap_content"
                     style="@style/FormLabelTextView"/>
 
+                <EditText
+                    android:id="@+id/mealsVendorCount"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"/>
+                <EditText
+                    android:id="@+id/mealsLeftoverCount"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"/>
+
                 <TextView
-                    android:text="MEAL TYPE"
+                    android:text="0"
                     android:id="@+id/mealTypeText"
                     android:layout_below="@id/AMSnackText"
                     android:layout_width="wrap_content"
@@ -159,8 +168,8 @@
                     style="@style/FormLabelTextView"/>
 
                 <TextView
-                    android:id="@+id/mealsTotalText"
-                    android:text="10"
+                    android:id="@+id/mealsTotalCount"
+                    android:text="0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
