@@ -42,7 +42,7 @@ app.get('/meal', function(req,res) {
    if(req.query.DATEFROM) {
      var cursor =db.collection('meal').find({"date": { $gte : req.query.DATEFROM }});
    }
-   else var cursor =db.collection('meal').find(req.query);
+   else var cursor =db.collection('meal').find(req.query).sort({date:1});
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
@@ -84,18 +84,49 @@ app.post('/weeklyMealReport', bodyParser, function(req,res) {
 app.get('/weeklyMealReport', function(req,res) {
   var findMeals = function(db, callback) {
    var mealArr = [];
+   var rollup = false;
    if(req.query.DATEFROM) {
      var cursor =db.collection('weeklyMealReport').find({"date": { $gte : req.query.DATEFROM }});
    }
    else if(req.query.siteName && req.query.meal) var cursor =db.collection('weeklyMealReport').find(req.query).sort({date:1}).limit(12);
-   else if(req.query) var cursor =db.collection('weeklyMealReport').find(req.query);
-   else var cursor =db.collection('weeklyMealReport').find();
+   else if(req.query.siteName){
+     rollup = true;
+     var cursor =db.collection('weeklyMealReport').find(req.query).sort({date:1}).limit(12);
+   }
+   else if(req.query) var cursor =db.collection('weeklyMealReport').find(req.query).sort({date:1});
+   else var cursor =db.collection('weeklyMealReport').find().sort({date:1});
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
          mealArr.push(doc);
       } else {
-         callback(mealArr);
+        if(rollup){
+          var dateObj = {},
+              dateArr = [];
+
+          mealArr.forEach(function(entry) {
+            if(!dateObj[entry.date.substr(0,10)]) {
+              dateObj[entry.date.substr(0,10)] = {
+                date: entry.date.substr(0,10),
+                siteName: entry.siteName,
+                meal: {
+                  totalConsumed: 0,
+                  totalWasted: 0,
+                  totalCarryOver: 0,
+                  totalDamaged: 0
+                }
+              }
+            }
+
+            dateObj[entry.date.substr(0,10)].meal.totalConsumed+= entry.meal.totalConsumed;
+            dateObj[entry.date.substr(0,10)].meal.totalWasted+= entry.meal.totalWasted;
+            dateObj[entry.date.substr(0,10)].meal.totalCarryOver+= entry.meal.totalCarryOver;
+            dateObj[entry.date.substr(0,10)].meal.totalDamaged+= entry.meal.totalDamaged;
+          });
+          for(var key in dateObj) dateArr.push(dateObj[key]);
+          callback(dateArr);
+        }
+        else callback(mealArr);
       }
    });
   };
@@ -132,9 +163,9 @@ app.get('/reflogs', function(req,res) {
   var findMeals = function(db, callback) {
    var mealArr = [];
    if(req.query.DATEFROM) {
-     var cursor =db.collection('reflogs').find({"date": { $gte : req.query.DATEFROM }});
+     var cursor =db.collection('reflogs').find({"date": { $gte : req.query.DATEFROM }}).sort({date:1});
    }
-   else var cursor =db.collection('reflogs').find(req.query);
+   else var cursor =db.collection('reflogs').find(req.query).sort({date:1});
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
@@ -160,7 +191,7 @@ app.get('/foodlogs', function(req,res) {
    if(req.query.DATEFROM) {
      var cursor =db.collection('foodlogs').find({"date": { $gte : req.query.DATEFROM }});
    }
-   else var cursor =db.collection('foodlogs').find(req.query);
+   else var cursor =db.collection('foodlogs').find(req.query).sort({date:1});
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
