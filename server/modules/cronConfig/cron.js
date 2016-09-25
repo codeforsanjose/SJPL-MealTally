@@ -120,7 +120,6 @@ var cronTask = function() {
           weeklyMealsStr+= body.toString();
 
           var weeklyMealsObj = JSON.parse(weeklyMealsStr);
-          console.log(weeklyMealsObj);
           for(var key in weeklyMealsObj) weeklyMealsArr.push(weeklyMealsObj[key]);
 
           weeklyMealsArr.forEach(function(entry) {

@@ -87,7 +87,9 @@ app.get('/weeklyMealReport', function(req,res) {
    if(req.query.DATEFROM) {
      var cursor =db.collection('weeklyMealReport').find({"date": { $gte : req.query.DATEFROM }});
    }
-   else var cursor =db.collection('weeklyMealReport').find(req.query);
+   else if(req.query.siteName && req.query.meal) var cursor =db.collection('weeklyMealReport').find(req.query).sort({date:1}).limit(12);
+   else if(req.query) var cursor =db.collection('weeklyMealReport').find(req.query);
+   else var cursor =db.collection('weeklyMealReport').find();
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
