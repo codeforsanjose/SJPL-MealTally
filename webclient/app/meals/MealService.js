@@ -35,14 +35,14 @@ angular.module('app.meal').service('mealService', function ($http) {
               })
           },
           saveRefLogs : function(payload){
-              var url ="/api/reflogs"
+              var url ="/reflogs"
               return $http.post(url, payload)
                 .then(function (result) {
                     return result.data;
               });
           },
           saveFoodLogs : function(payload){
-              var url ="/api/foodlogs"
+              var url ="/foodlogs"
               return $http.post(url, payload)
                 .then(function (result) {
                     return result.data;
