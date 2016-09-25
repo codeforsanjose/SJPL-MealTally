@@ -5,8 +5,6 @@
 set -e
 
 # configurable values
-SITE_NAME=MealTally
-HOME=/Users/gmaheshwari/Documents/Gagan/site/$SITE_NAME
 GITHUB_REPO="https://github.com/gaganmaheshwari/MealTally.git"
 
 # code origin
@@ -15,14 +13,11 @@ BRANCH_NAME="master"
 GIT_USER_NAME="gaganmaheshwari"
 
 if [ -z "$1" ]; then
-  printf "\nUsage: Provide a commit message to push $SITE_NAME to LIVE (PRODUCTION)."
+  printf "\nUsage: Provide a commit message to push repo to LIVE (PRODUCTION)."
   exit -1
 else
   commit_msg="$@"
 fi
-
-# Go to the appropriate website to be pushed
-cd $HOME
 
 git status
 printf "\n\n"
@@ -38,8 +33,13 @@ git commit -m "$commit_msg"
 printf "\n\nCommitting changes locally....."
 
 # Push only the _site contents to the repo
-git push $ORIGIN_NAME $BRANCH_NAME
+git push -f origin master
 printf "\n\nPushing changes to remote repo...."
+
+git push heroku master
+printf "\n\nPushing changes to heroku repo...."
+
+heroku open
 
 # Remove remote after the push is done
 # git remote rm $ORIGIN_NAME
