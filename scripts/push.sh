@@ -38,7 +38,7 @@ git commit -m "$commit_msg"
 printf "\n\nCommitting changes locally....."
 
 # Push only the _site contents to the repo
-git push $ORIGIN_NAME $BRANCH_NAME
+git push -f $ORIGIN_NAME $BRANCH_NAME
 printf "\n\nPushing changes to remote repo...."
 
 # Remove remote after the push is done
