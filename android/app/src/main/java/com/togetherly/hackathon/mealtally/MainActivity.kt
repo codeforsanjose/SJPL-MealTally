@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var staffMinusButton: Button
 
     lateinit var nextButton: Button
+    lateinit var nextButton2: Button
     lateinit var nextArrowHelper: View
     lateinit var currentScene: Scene
     lateinit var formOne: Scene
@@ -68,8 +69,8 @@ class MainActivity : AppCompatActivity() {
         childrenMinusButton = sceneRoot.findViewById(R.id.childrenMinusButton) as Button
         adultsMinusButton = sceneRoot.findViewById(R.id.adultsMinusButton) as Button
         staffMinusButton = sceneRoot.findViewById(R.id.staffMinusButton) as Button
-
     }
+
     private fun setFoodCountListeners(isEnabled: Boolean) {
 
         bindFoodCounters()
@@ -88,11 +89,7 @@ class MainActivity : AppCompatActivity() {
             childrenMinusButton.enabled = false
             adultsMinusButton.enabled = false
             staffMinusButton.enabled = false
-
-
         }
-
-
     }
 
     private fun adjustForScenes() {
@@ -145,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                 .setDuration(100)
                 .scaleX(0.7f)
                 .scaleY(0.7f)
-                .setListener(object: Animator.AnimatorListener {
+                .setListener(object : Animator.AnimatorListener {
                     override fun onAnimationRepeat(animation: Animator?) {
                     }
 
@@ -163,12 +160,12 @@ class MainActivity : AppCompatActivity() {
                     override fun onAnimationStart(animation: Animator?) {
                     }
                 })
-
-        val minusButtonAnimation =  it.animate()
+        // Run animations simultaneously using endWithAction { }
+        it.animate()
                 .setDuration(100)
                 .scaleX(1.1f)
                 .scaleY(1.1f)
-                .setListener(object: Animator.AnimatorListener {
+                .setListener(object : Animator.AnimatorListener {
                     override fun onAnimationRepeat(animation: Animator?) {
                     }
 
@@ -185,15 +182,21 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onAnimationStart(animation: Animator?) {
                     }
-                }).withEndAction { counterButtonAnimation.start() }.start() // Run animations simultaneously
-
+                }).withEndAction { counterButtonAnimation.start() }.start()
     }
 
     private fun setNextArrowListener(transition: Transition) {
+        currentScene = if (currentScene == formTwo) formOne else formTwo
+
         nextButton = sceneRoot.findViewById(R.id.nextButton) as Button
         nextArrowHelper = sceneRoot.findViewById(R.id.nextArrowTopHelper) as View
-        currentScene = if (currentScene == formTwo) formOne else formTwo
+        nextButton2 = sceneRoot.findViewById(R.id.nextButton2) as Button
+
         nextButton.onClick { goScene(currentScene, transition) }
+        nextButton2.onClick {
+            currentScene = formThree
+            goScene(currentScene, transition)
+        }
         nextArrowHelper.onClick { goScene(currentScene, transition) }
 
     }
