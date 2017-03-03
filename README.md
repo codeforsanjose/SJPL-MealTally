@@ -11,7 +11,7 @@ Clone the project and cd into SJPL-MealTally/server.
 
 You will need to either add a ../../config folder with a MongoLabs URI and an email URI OR create two new environment variables:
 
-**MLABURI** = mongodb://\<dbUser\>:\<dbPassword\>@ds046549.mlab.com:46549/mealtally
+**MLABURI** = mongodb://\<dbUser\>:\<dbPassword\>@ds0\<port\>.mlab.com:\<port\>/mealtally
 
 **MAILURI** = smtps://\<emailAddress\>:\<password\>@smtp.gmail.com/?pool=true
 
