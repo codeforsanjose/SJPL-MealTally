@@ -15,3 +15,4 @@ server/node_modules
 .externalNativeBuild
 config
 server/config
+npm-debug.log
