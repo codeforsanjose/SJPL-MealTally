@@ -6,7 +6,7 @@ You will need to either add a ../../config folder with a MongoLabs URI and an em
 
 **MLABURI** = mongodb://\<dbUser\>:\<dbPassword\>@ds0\<port\>.mlab.com:\<port\>/mealtally
 
-**MAILURI** = smtps://\<emailAddress\>:\<password\>@smtp.gmail.com/?pool=true
+**MAILURI** = smtps://\<emailAddress\>:\<password\>@smtp.gmail.com/?pool=true (if you're using gmail, you will have to change some settings - you'll get an email about it the first time you try to run the app with your URI)
 
 NOTE: If you go with the config file option, please make sure to add it to your .gitignore so that your sensitive information is not accidentally posted to github.
 
