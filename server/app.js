@@ -1,3 +1,4 @@
+var fs = require('fs');
 var express = require("express");
 var bodyParser = require('body-parser').json();
 var app = express();
@@ -7,8 +8,8 @@ var ObjectId = require('mongodb').ObjectID;
 var cron = require('node-cron');
 var cronTask = require('./modules/cronConfig/cron')
 
-if(!process.env.MLABURI) var config = require('./config/mongo');
-var mongoUrl = process.env.MLABURI || config.mongoURI;
+var config = fs.existsSync('./config/index.json') ? require('./config') : {};
+var mongoUrl = process.env.MLABURI || config.MLABURI;
 
 app.listen(process.env.PORT || 3000);
 console.log("Server running on port 3000");
