@@ -1,19 +1,19 @@
 web/build
 web/node_modules
 web/bower_components
-server/.DS_Store
 server/node_modules
 *.iml
 .gradle
 .idea
 .vscode
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
 /build
 /captures
 .externalNativeBuild
+
+# Config files
 config
-server/config
+server/config/index.json
+
+# npm
 npm-debug.log
