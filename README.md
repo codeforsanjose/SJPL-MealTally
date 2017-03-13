@@ -18,9 +18,9 @@ Last October, some friends and I hacked together a software [solution](https://g
   * **MAILURI** = smtps://\<emailAddress\>:\<password\>@smtp.gmail.com/?pool=true (if you're using gmail, you will have to change some settings - you'll get an email about it the first time you try to run the app with your URI)
   * NOTE: If you go with the config file option, please make sure to add it to your .gitignore so that your sensitive information is not accidentally posted to github.
 
-3. `npm install`
+3. `DocumentRoot\SJPL-MealTally\server>npm install`
 
-4. `node app`
+4. `DocumentRoot\SJPL-MealTally\server>node app`
 
 The app should connect to the database and be running at localhost:3000
 
