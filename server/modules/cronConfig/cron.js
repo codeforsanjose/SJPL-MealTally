@@ -3,8 +3,8 @@ var convertPDF = require('../pdfConverter/pdfconverter.js');
 var http = require('http');
 var fs = require('fs');
 var nodemailer = require('nodemailer');
-if(!process.env.MAILURI) var config = require('../../config/mail');
-var transporter = nodemailer.createTransport(process.env.MAILURI || config.mail);
+var config = fs.existsSync('../../config/index.json') ? require('../../config') : {};
+var transporter = nodemailer.createTransport(process.env.MAILURI || config.MAILURI);
 
 var cronTask = function() {
   var cronTime = new Date(),
