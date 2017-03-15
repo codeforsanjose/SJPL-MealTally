@@ -164,6 +164,7 @@ var cronTask = function() {
                                 .replace('$FriConsumed', (entry.consumptionBreakdown.day5 || 0))
                                 .replace('$SatConsumed', (entry.consumptionBreakdown.day6 || 0))
                                 .replace('$TotalConsumed', entry.meal.totalConsumed);
+                                .replace('$TotalWasted', entry.meal.totalWasted);
 
               fs.writeFile('modules/pdfConverter/' + outputName, result, 'utf8', function (err) {
                  if (err) return console.log(err);
