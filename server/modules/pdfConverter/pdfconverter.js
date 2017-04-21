@@ -7,12 +7,14 @@ var createPDF = function(htmlName, pdfDate, pdfSite, pdfMeal, callback) {
   var html = fs.readFileSync('modules/pdfConverter/' + htmlName, 'utf8');
   var pdfName = 'reports/Week_' + pdfDate + pdfSite + '_' + pdfMeal +'.pdf';
   pdfSite.replace(/ /g, '_');
-  pdf.create(html, options).toFile(pdfName, function(err, res) {
+  
+  if(html.length) {pdf.create(html, options).toFile(pdfName, function(err, res) {
     console.log('Creating pdf..');
     if (err) return console.log(err);
     console.log(res);
     callback();
-  });
+  });}
+
   return pdfName;
 }
 

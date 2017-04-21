@@ -13,6 +13,7 @@ server/node_modules
 
 # Config files
 config
+server/config/*.json
 
 server/config/index.json
 
