@@ -10,7 +10,7 @@ var cronTask = require('./modules/cronConfig/cron')
 
 var config = fs.existsSync('./config/index.json') ? require('./config') : {};
 var mongoUrl = process.env.MLABURI || config.MLABURI;
-console.log(' uri:', config.MLABURI);
+
 app.listen(process.env.PORT || 3000);
 console.log("Server running on port 3000");
 
