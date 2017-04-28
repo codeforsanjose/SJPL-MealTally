@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar primary *navbar>
+    <ion-title>
+      SJPL Meal Tally
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home" padding>
+
+  <ion-card>
+    <ion-card-header>Meal Info</ion-card-header>
+    <ion-list>
+      <!-- Library select -->
+      <ion-item>
+        <ion-label>Library</ion-label>
+        <ion-select multiple="false" [(ngModel)]="selectedLibrary">
+          <ion-option *ngFor="let library of libraries">{{library.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <!-- Meal type select -->
+      <ion-item>
+        <ion-label>Meal type</ion-label>
+        <ion-select multiple="false" [(ngModel)]="selectedMealType">
+          <ion-option *ngFor="let mealType of mealTypes">{{mealType}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <!-- Datetime -->
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime displayFormat="DDD MMM DD, YYYY hh:mm a" [(ngModel)]="selectedDate"></ion-datetime>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Inventory</ion-card-header>
+    <ion-list>
+      <ion-item *ngFor="let mealInv of mealInventories">
+        <button ion-button item-left large="true" (click)="setCount(mealInv)">{{mealInv.count}}</button>
+        <h2>{{mealInv.name}}</h2>
+        <button ion-button item-right large="true" (click)="increaseCount(mealInv)">+</button>
+        <button ion-button item-right large="true" (click)="decreaseCount(mealInv)">-</button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Categories</ion-card-header>
+    <ion-list>
+      <ion-item *ngFor="let tally of tallies">
+        <button ion-button item-left large="true">{{tally.count}}</button>
+        <h2>{{tally.name}}</h2>
+        <button ion-button item-right large="true" (click)="increaseCount(tally)">+</button>
+        <button ion-button item-right large="true" (click)="decreaseCount(tally)">-</button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>User Input</ion-card-header>
+    <ion-label>Signature</ion-label>
+    <ion-input placeholder="Type signature here" [(ngModel)]="signature"></ion-input>
+    <button ion-button large="true" (click)="resetCounts()">Reset counts</button>
+    <button ion-button large="true" (click)="addMeal()">Add meal</button>
+  </ion-card>
+
+</ion-content>

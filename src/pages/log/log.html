@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Log
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>Log Info</ion-card-header>
+    <ion-list>
+      <!-- Library select -->
+      <ion-item>
+        <ion-label>Library</ion-label>
+        <ion-select multiple="false" [(ngModel)]="selectedLibrary">
+          <ion-option *ngFor="let library of libraries">{{library.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <!-- Log type select -->
+      <ion-item>
+        <ion-label>Log type</ion-label>
+        <ion-select multiple="false" [(ngModel)]="selectedLogType">
+          <ion-option *ngFor="let logType of logTypes">{{logType}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <!-- Datetime -->
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime displayFormat="DDD MMM DD, YYYY hh:mm a" [(ngModel)]="selectedDate"></ion-datetime>
+      </ion-item>
+      <!-- Description input -->
+      <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-input [(ngModel)]="description"></ion-input>
+      </ion-item>
+      <!-- Temperature input -->
+      <ion-item>
+        <ion-label>Temperature (F)</ion-label>
+        <ion-input type="tel" [(ngModel)]="temperature"></ion-input>
+      </ion-item>
+      <!-- Comment text area -->
+      <ion-item>
+        <ion-label>Comment</ion-label>
+        <ion-textarea [(ngModel)]="comment"></ion-textarea>
+      </ion-item>
+      <!-- 'Add log' button -->
+      <ion-item>
+        <button ion-button large="true" (click)="addLog()">Add log</button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+</ion-content>
