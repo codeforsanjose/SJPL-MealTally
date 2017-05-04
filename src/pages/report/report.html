@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Report
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <!-- Date start -->
+    <ion-item>
+      <ion-label>Date start</ion-label>
+      <ion-datetime displayFormat="DDD MMM DD YYYY" [(ngModel)]="startDate"></ion-datetime>
+    </ion-item>
+    <!-- Date end -->
+    <ion-item>
+      <ion-label>Date end</ion-label>
+      <ion-datetime displayFormat="DDD MMM DD YYYY" [(ngModel)]="endDate"></ion-datetime>
+    </ion-item>
+    <!-- User input -->
+    <button ion-button (click)="getMeals()">Get meals</button>
+  </ion-card>
+
+  <!-- PDF preview and save button -->
+  <ion-card *ngIf="report">
+    <ion-item>Total received meals: {{report.totalReceived}}</ion-item>
+    <ion-item>Total leftover meals: {{report.totalLeftover}}</ion-item>
+    <ion-item>Total staff meals: {{report.totalStaff}}</ion-item>
+    <ion-item>Total children meals: {{report.totalChildren}}</ion-item>
+    <ion-item>Total adult meals: {{report.totalAdult}}</ion-item>
+    <ion-item>Total volunteer meals: {{report.totalReceived}}</ion-item>
+    <ion-item>Total wasted meals: {{report.totalWasted}}</ion-item>
+    <ion-label>PDF File name</ion-label>
+    <ion-input [(ngModel)]="pdfFileName"></ion-input>
+    <button ion-button large="true" (click)="savePDF()">Save PDF</button>
+  </ion-card>
+
+</ion-content>
