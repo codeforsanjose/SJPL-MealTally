@@ -15,21 +15,20 @@ Last October, some friends and I hacked together a software [solution](https://g
 The dashboard allows the meal coordinator to keep an eye on meal trends at each library.
 ![dashboard screenshot](https://raw.githubusercontent.com/codeforsanjose/SJPL-MealTally/master/assets/dashboard.png)
 
-### Adding a meal
+### Mobile Web App
 
-This is the current UI for adding a meal.
-![meal add screenshot](https://github.com/codeforsanjose/SJPL-MealTally/blob/master/assets/addmeals.png?raw=true)
-Ideally we would like it to look more like the mobile app UI so that volunteers can quickly add meals served on the go.
+This is the current UI to add meals, record logs and generate pdf reports.
+![](https://raw.githubusercontent.com/wiki/codeforsanjose/SJPL-MealTally/images/home-log-report.png)
 
-Before each meal, the volunteer selects the library and enter some information.
-
-<img src="https://github.com/codeforsanjose/SJPL-MealTally/blob/master/assets/Photo1.png?raw=true" width="180">
+Before each meal, the volunteer selects the library and enters some information.
 
 During the meal, the volunteer adds each meal as it is served by tapping the relevant button.
 
-<img src="https://github.com/codeforsanjose/SJPL-MealTally/blob/master/assets/Photo2.png?raw=true" width="180">
+See [the live Heroku demo](https://sjpl-meal-tally.herokuapp.com); read [this wiki article](https://github.com/codeforsanjose/SJPL-MealTally/wiki/Proof-of-concept-for-modern-web-app) for development details.
 
 ## Running the web app locally
+
+**NOTE: These instructions still need an update as a result of pull request, [Update to modern web app.](https://github.com/codeforsanjose/SJPL-MealTally/pull/16)**
 
 1. Clone the project and cd into SJPL-MealTally/server.
 2. You will need to either:
