@@ -1,3 +1,4 @@
+import { IonicPage } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
@@ -5,6 +6,7 @@ import { MealService } from '../../providers/meal-service';
 import { Report } from '../../schema/report';
 
 
+@IonicPage()
 @Component({
   selector: 'page-report',
   templateUrl: 'report.html'

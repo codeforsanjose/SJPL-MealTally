@@ -1,3 +1,4 @@
+import { IonicPage } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
@@ -9,6 +10,7 @@ import { Meal } from '../../schema/meal';
 import { ObjectID } from 'bson';
 
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

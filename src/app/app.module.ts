@@ -5,11 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { LogPage } from '../pages/log/log';
-import { ReportPage } from '../pages/report/report';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -20,11 +15,7 @@ import { LogService } from '../providers/log-service';
 
 @NgModule({
   declarations: [
-    MyApp,
-    LogPage,
-    ReportPage,
-    HomePage,
-    TabsPage
+    MyApp
   ],
   imports: [
     FormsModule,
@@ -34,11 +25,7 @@ import { LogService } from '../providers/log-service';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    LogPage,
-    ReportPage,
-    HomePage,
-    TabsPage
+    MyApp
   ],
   providers: [
     StatusBar,

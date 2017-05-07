@@ -1,3 +1,4 @@
+import { IonicPage } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
@@ -8,6 +9,7 @@ import { Log } from '../../schema/log';
 
 import { ObjectID } from 'bson';
 
+@IonicPage()
 @Component({
   selector: 'page-log',
   templateUrl: 'log.html'
