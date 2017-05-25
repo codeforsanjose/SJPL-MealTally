@@ -1,6 +1,7 @@
 import { IonicPage } from 'ionic-angular';
 import { Component } from '@angular/core';
 
+import { LibraryService } from '../../providers/library-service';
 
 @IonicPage()
 @Component({
@@ -12,7 +13,14 @@ export class TabsPage {
   tab2Root = 'LogPage';
   tab3Root = 'ReportPage';
 
-  constructor() {
+  constructor(private libraryService: LibraryService) {
+  }
 
+  ionViewDidLoad() {
+    this.libraryService.loadLibraries().subscribe(data => {
+        this.libraryService.libraries = data;
+      }, err => {
+        console.log(err);
+      });
   }
 }

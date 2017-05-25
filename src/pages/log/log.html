@@ -15,14 +15,14 @@
       <ion-item>
         <ion-label>Library</ion-label>
         <ion-select multiple="false" [(ngModel)]="selectedLibrary">
-          <ion-option *ngFor="let library of libraries">{{library.name}}</ion-option>
+          <ion-option *ngFor="let library of libraryService.libraries">{{library.name}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- Log type select -->
       <ion-item>
         <ion-label>Log type</ion-label>
         <ion-select multiple="false" [(ngModel)]="selectedLogType">
-          <ion-option *ngFor="let logType of logTypes">{{logType}}</ion-option>
+          <ion-option *ngFor="let logType of logService.logTypes">{{logType}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- Datetime -->

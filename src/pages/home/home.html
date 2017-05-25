@@ -15,14 +15,14 @@
       <ion-item>
         <ion-label>Library</ion-label>
         <ion-select multiple="false" [(ngModel)]="selectedLibrary">
-          <ion-option *ngFor="let library of libraries">{{library.name}}</ion-option>
+          <ion-option *ngFor="let library of libraryService.libraries">{{library.name}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- Meal type select -->
       <ion-item>
         <ion-label>Meal type</ion-label>
         <ion-select multiple="false" [(ngModel)]="selectedMealType">
-          <ion-option *ngFor="let mealType of mealTypes">{{mealType}}</ion-option>
+          <ion-option *ngFor="let mealType of mealService.mealTypes">{{mealType}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- Datetime -->

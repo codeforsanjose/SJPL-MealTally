@@ -10,6 +10,7 @@ import { Report } from '../schema/report';
 @Injectable()
 export class MealService {
   mealsUrl = "/api/meals"
+  mealTypes = ['Breakfast', 'AM Snack', 'Lunch', 'PM Snack', 'Supper'];
 
   constructor(public http: Http) {
   }

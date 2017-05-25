@@ -17,13 +17,8 @@ import { ObjectID } from 'bson';
 })
 export class HomePage {
 
-  // TODO Make mealTypes accessible to other components (similar to loadLibraries() problem).
-  mealTypes = ['Breakfast', 'AM Snack', 'Lunch', 'PM Snack', 'Supper'];
-  selectedMealType = this.mealTypes[0];
-
-  libraries: Library[];
-
   selectedLibrary: Library;
+  selectedMealType: string;
   // TODO Update selectedDate to show local US/Pacific time.
   selectedDate = new Date().toISOString();
 
@@ -46,16 +41,6 @@ export class HomePage {
               public alertCtrl: AlertController,
               private libraryService: LibraryService,
               private mealService: MealService) {
-  }
-
-  ionViewDidLoad() {
-    // TODO Replace these redundant loadLibraries() calls to the server.
-    this.libraryService.loadLibraries().subscribe(data => {
-      this.libraries = data;
-      this.selectedLibrary = this.libraries[0];
-    }, err => {
-      console.log(err);
-    });
   }
 
   setCount(mealItem) {
