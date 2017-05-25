@@ -43,10 +43,6 @@ export class HomePage {
               private mealService: MealService) {
   }
 
-  setCount(mealItem) {
-    // TODO Open number input to set custom count; OR replace buttons with ion-input?
-  }
-
   increaseCount(mealItem) {
     mealItem.count++;
   }
