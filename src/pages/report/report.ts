@@ -37,8 +37,8 @@ export class ReportPage {
     now = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     var weekAgo = new Date(now.getTime());
     weekAgo.setDate(weekAgo.getDate() - 6);
-    this.endDate = now.toISOString();
-    this.startDate = weekAgo.toISOString();
+    this.endDate = now.toString();
+    this.startDate = weekAgo.toString();
   }
 
   getMeals() {
