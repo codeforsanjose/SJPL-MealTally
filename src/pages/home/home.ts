@@ -23,7 +23,7 @@ export class HomePage {
 
   selectedLibrary: Library;
   // TODO Update selectedDate to show local US/Pacific time.
-  selectedDate = new Date().toISOString();
+  selectedDate = new Date().toString();
 
   //  TODO Organize mealInventory and tallies into more legible objects.
   mealInventories = [

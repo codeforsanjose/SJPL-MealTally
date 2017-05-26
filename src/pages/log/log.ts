@@ -25,7 +25,7 @@ export class LogPage {
   libraries: Library[];
   selectedLibrary: Library;
   // TODO Update selectedDate to print local US/Pacific time.
-  selectedDate = new Date().toISOString();
+  selectedDate = new Date().toString();
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
