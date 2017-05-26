@@ -52,7 +52,7 @@ export class HomePage {
       this.libraries = data;
       this.selectedLibrary = this.libraries[0];
     }, err => {
-      console.log(err);
+      this.showPageErrorAlert();
     });
   }
 
@@ -90,16 +90,34 @@ export class HomePage {
     } as Meal;
 
     this.mealService.add(meal).subscribe(data => {
-        this.showMealAlert();
+        this.showMealSavedAlert();
       }, err => {
-        console.log(err);
+        this.showMealErrorAlert();
     });
   }
 
-  showMealAlert() {
+  showMealSavedAlert() {
     let alert = this.alertCtrl.create({
-      title: 'Meal posted!',
-      subTitle: 'New mongodb document added in "meals" collection.',
+      title: 'Meals Saved',
+      subTitle: 'We\'ve added these meals to the tally. Thanks for helping out!',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  showMealErrorAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Error Saving Meals',
+      subTitle: 'There was an error while adding these meals to the tally. Could you try again?',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  showPageErrorAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Error',
+      subTitle: 'There was an error loading the home page. Please try refreshing the page again.',
       buttons: ['OK']
     });
     alert.present();
