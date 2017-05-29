@@ -20,7 +20,7 @@ export class ReportPage {
   start: string;
   end: string
 
-  report: Report;
+  reports: Report[];
 
   pdfFileName = "test.pdf";
 
@@ -46,23 +46,23 @@ export class ReportPage {
   getMeals() {
     this.start = this.startDate.slice(0, 10);
     this.end = this.endDate.slice(0, 10);
-    this.mealService.get(this.start, this.end).subscribe(report => this.report = report);
+    this.mealService.get(this.start, this.end).subscribe(reports => this.reports = reports);
   }
 
-  savePDF() {
+  savePDF(report: Report) {
     // Create a pdf named this.pdfFileName from results loaded into this.report.
     var jsPDF = require('jspdf');
     var doc = new jsPDF();
     // TODO Identify pdf layout requirements for actual weekly report.
     doc.text(20, 20, "SJPL Weekly Meal Report (All libraries)");
     doc.text(20, 30, `Date: ${this.start} to ${this.end}`);
-    doc.text(20, 60, `Total received meals: ${this.report.totalReceived}`),
-    doc.text(20, 70, `Total leftover meals: ${this.report.totalLeftover}`),
-    doc.text(20, 80, `Total staff meals: ${this.report.totalStaff}`),
-    doc.text(20, 90, `Total children meals: ${this.report.totalChildren}`),
-    doc.text(20, 100, `Total adult meals: ${this.report.totalAdult}`),
-    doc.text(20, 110, `Total volunteer meals: ${this.report.totalReceived}`),
-    doc.text(20, 120, `Total wasted meals: ${this.report.totalWasted}`)
+    doc.text(20, 60, `Total received meals: ${report.totalReceived}`),
+    doc.text(20, 70, `Total leftover meals: ${report.totalLeftover}`),
+    doc.text(20, 80, `Total staff meals: ${report.totalStaff}`),
+    doc.text(20, 90, `Total children meals: ${report.totalChildren}`),
+    doc.text(20, 100, `Total adult meals: ${report.totalAdult}`),
+    doc.text(20, 110, `Total volunteer meals: ${report.totalReceived}`),
+    doc.text(20, 120, `Total wasted meals: ${report.totalWasted}`)
     doc.save(this.pdfFileName);
 
     this.showReportAlert();

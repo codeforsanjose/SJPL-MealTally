@@ -66,7 +66,7 @@ app.get("/api/meals/:start/:end", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get meals in date range");
     } else {
-      res.status(200).json(docs.length == 1 ? docs[0] : docs);
+      res.status(200).json(docs);
     }
   });
 });
