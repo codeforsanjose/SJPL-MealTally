@@ -9,6 +9,7 @@ import { Meal } from '../../schema/meal';
 
 import { ObjectID } from 'bson';
 
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -19,8 +20,7 @@ export class HomePage {
 
   selectedLibrary: Library;
   selectedMealType: string;
-  // TODO Update selectedDate to show local US/Pacific time.
-  selectedDate = new Date().toISOString();
+  selectedDate = moment().format();
 
   //  TODO Organize mealInventory and tallies into more legible objects.
   mealInventories = [
