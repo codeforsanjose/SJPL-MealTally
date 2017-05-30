@@ -8,6 +8,7 @@ import { LogService } from '../../providers/log-service';
 import { Log } from '../../schema/log';
 
 import { ObjectID } from 'bson';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,7 @@ export class LogPage {
   selectedLibrary: Library;
   selectedLogType: string;
   // TODO Update selectedDate to print local US/Pacific time.
-  selectedDate = new Date().toISOString();
+  selectedDate = moment().format();
   description: string;
   temperature: number;  // Fahrenheit
   comment: string;
@@ -41,16 +42,34 @@ export class LogPage {
     } as Log;
 
     this.logService.add(log).subscribe(data => {
-        this.showLogAlert();
+        this.showLogSavedAlert();
       }, err => {
-        console.log(err);
+        this.showLogErrorAlert();
     });
   }
 
-  showLogAlert() {
+  showLogSavedAlert() {
     let alert = this.alertCtrl.create({
-      title: 'Log posted!',
-      subTitle: 'New mongodb document added in "logs" collection.',
+      title: 'Logs Saved',
+      subTitle: 'We\'ve added these logs to the tally. Thanks for helping out!',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  showLogErrorAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Error Saving Logs',
+      subTitle: 'There was an error while adding these logs to the tally. Could you try again?',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  showPageErrorAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Error',
+      subTitle: 'There was an error loading the logs page. Please try refreshing the page again.',
       buttons: ['OK']
     });
     alert.present();
