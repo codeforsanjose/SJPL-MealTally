@@ -52,7 +52,7 @@ app.get("/api/libraries", function(req, res) {
 app.get("/api/meals/:start/:end", function(req, res) {
   var cursor = db.collection("meals").aggregate([
     { $match: { date: {$gte: req.params.start, $lte: req.params.end}}},
-    { $group: { _id: null,
+    { $group: { _id: { library: "$library", mealType: "$mealType" },
                 totalReceived: { $sum: "$numReceivedMeals"},
                 totalLeftover: { $sum: "$numLeftoverMeals"},
                 totalStaff: { $sum: "$numStaffMeals"},

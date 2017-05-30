@@ -28,7 +28,7 @@ export class MealService {
   // Get meals in start-end date range.
   get(start: string, end: string): Observable<Report[]> {
     return this.http.get(`${this.mealsUrl}/${start}/${end}`)
-      .map(r => r.json() as Report[])
+      .map(r => r.json())
       .catch(this.handleError);
   }
 

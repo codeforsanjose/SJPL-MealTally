@@ -3,11 +3,8 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
 import { LibraryService } from '../../providers/library-service';
-import { Library } from '../../schema/library';
 import { MealService } from '../../providers/meal-service';
 import { Meal } from '../../schema/meal';
-
-import { ObjectID } from 'bson';
 
 import * as moment from 'moment';
 
@@ -18,7 +15,7 @@ import * as moment from 'moment';
 })
 export class HomePage {
 
-  selectedLibrary: Library;
+  selectedLibrary: string;
   selectedMealType: string;
   selectedDate = moment().format();
 
@@ -60,7 +57,7 @@ export class HomePage {
   addMeal() {
     var meal = {
       date: this.selectedDate,
-      library_id: new ObjectID(this.selectedLibrary._id),
+      library: this.selectedLibrary,
       mealType: this.selectedMealType,
       numReceivedMeals: this.mealInventories.find(x => x.name === 'Received').count,
       numLeftoverMeals: this.mealInventories.find(x => x.name === 'Leftovers').count,
