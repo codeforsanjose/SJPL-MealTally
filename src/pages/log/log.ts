@@ -1,3 +1,4 @@
+import { IonicPage } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
@@ -7,39 +8,27 @@ import { LogService } from '../../providers/log-service';
 import { Log } from '../../schema/log';
 
 import { ObjectID } from 'bson';
+import * as moment from 'moment';
 
+@IonicPage()
 @Component({
   selector: 'page-log',
   templateUrl: 'log.html'
 })
 export class LogPage {
 
-  logTypes = ['Food', 'Refrigerator'];
-  selectedLogType = this.logTypes[0];
-
-  description = '';
-  temperature = 0;  // Fahrenheit
-  comment = '';
-
-  // TODO Remove redundant library code; store library vars in controller or service?
-  libraries: Library[];
   selectedLibrary: Library;
+  selectedLogType: string;
   // TODO Update selectedDate to print local US/Pacific time.
-  selectedDate = new Date().toString();
+  selectedDate = moment().format();
+  description: string;
+  temperature: number;  // Fahrenheit
+  comment: string;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
               private libraryService: LibraryService,
               private logService: LogService) {
-  }
-
-  ionViewDidLoad() {
-    this.libraryService.loadLibraries().subscribe(data => {
-      this.libraries = data;
-      this.selectedLibrary = this.libraries[0];
-    }, err => {
-      this.showPageErrorAlert();
-    });
   }
 
   addLog() {

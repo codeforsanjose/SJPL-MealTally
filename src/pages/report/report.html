@@ -19,21 +19,29 @@
       <ion-datetime displayFormat="DDD MMM DD YYYY" [(ngModel)]="endDate"></ion-datetime>
     </ion-item>
     <!-- User input -->
-    <button ion-button (click)="getMeals()">Get meals</button>
+    <button ion-button (click)="getMealReport()">Get Meal Report</button>
   </ion-card>
 
   <!-- PDF preview and save button -->
-  <ion-card *ngIf="report">
-    <ion-item>Total received meals: {{report.totalReceived}}</ion-item>
-    <ion-item>Total leftover meals: {{report.totalLeftover}}</ion-item>
-    <ion-item>Total staff meals: {{report.totalStaff}}</ion-item>
-    <ion-item>Total children meals: {{report.totalChildren}}</ion-item>
-    <ion-item>Total adult meals: {{report.totalAdult}}</ion-item>
-    <ion-item>Total volunteer meals: {{report.totalReceived}}</ion-item>
-    <ion-item>Total wasted meals: {{report.totalWasted}}</ion-item>
-    <ion-label>PDF File name</ion-label>
-    <ion-input [(ngModel)]="pdfFileName"></ion-input>
-    <button ion-button large="true" (click)="savePDF()">Save PDF</button>
-  </ion-card>
+  <div *ngIf="reports">
+    <ion-card *ngFor="let report of reports">
+      <ion-label>
+        <strong>{{report._id.library}}</strong><br>
+        <em>{{report._id.mealType}}</em>
+      </ion-label>
+      <ion-item>Total received meals: {{report.totalReceived}}</ion-item>
+      <ion-item>Total leftover meals: {{report.totalLeftover}}</ion-item>
+      <ion-item>Total staff meals: {{report.totalStaff}}</ion-item>
+      <ion-item>Total children meals: {{report.totalChildren}}</ion-item>
+      <ion-item>Total adult meals: {{report.totalAdult}}</ion-item>
+      <ion-item>Total volunteer meals: {{report.totalReceived}}</ion-item>
+      <ion-item>Total wasted meals: {{report.totalWasted}}</ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-label>PDF File name</ion-label>
+      <ion-input [(ngModel)]="pdfFileName"></ion-input>
+      <button ion-button large="true" (click)="savePDF(reports)">Save PDF</button>
+    </ion-card>
+  </div>
 
 </ion-content>

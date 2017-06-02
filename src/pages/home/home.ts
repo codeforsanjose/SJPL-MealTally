@@ -1,29 +1,23 @@
+import { IonicPage } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
 import { LibraryService } from '../../providers/library-service';
-import { Library } from '../../schema/library';
 import { MealService } from '../../providers/meal-service';
 import { Meal } from '../../schema/meal';
 
-import { ObjectID } from 'bson';
+import * as moment from 'moment';
 
-
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
 
-  // TODO Make mealTypes accessible to other components (similar to loadLibraries() problem).
-  mealTypes = ['Breakfast', 'AM Snack', 'Lunch', 'PM Snack', 'Supper'];
-  selectedMealType = this.mealTypes[0];
-
-  libraries: Library[];
-
-  selectedLibrary: Library;
-  // TODO Update selectedDate to show local US/Pacific time.
-  selectedDate = new Date().toString();
+  selectedLibrary: string;
+  selectedMealType: string;
+  selectedDate = moment().format();
 
   //  TODO Organize mealInventory and tallies into more legible objects.
   mealInventories = [
@@ -46,20 +40,6 @@ export class HomePage {
               private mealService: MealService) {
   }
 
-  ionViewDidLoad() {
-    // TODO Replace these redundant loadLibraries() calls to the server.
-    this.libraryService.loadLibraries().subscribe(data => {
-      this.libraries = data;
-      this.selectedLibrary = this.libraries[0];
-    }, err => {
-      this.showPageErrorAlert();
-    });
-  }
-
-  setCount(mealItem) {
-    // TODO Open number input to set custom count; OR replace buttons with ion-input?
-  }
-
   increaseCount(mealItem) {
     mealItem.count++;
   }
@@ -77,7 +57,7 @@ export class HomePage {
   addMeal() {
     var meal = {
       date: this.selectedDate,
-      library_id: new ObjectID(this.selectedLibrary._id),
+      library: this.selectedLibrary,
       mealType: this.selectedMealType,
       numReceivedMeals: this.mealInventories.find(x => x.name === 'Received').count,
       numLeftoverMeals: this.mealInventories.find(x => x.name === 'Leftovers').count,

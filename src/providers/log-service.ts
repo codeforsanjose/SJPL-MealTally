@@ -9,6 +9,7 @@ import { Log } from '../schema/log';
 @Injectable()
 export class LogService {
   logsUrl = "/api/logs"
+  logTypes = ['Food', 'Refrigerator'];
 
   constructor(public http: Http) {
   }

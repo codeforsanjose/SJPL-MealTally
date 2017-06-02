@@ -15,14 +15,14 @@
       <ion-item>
         <ion-label>Library</ion-label>
         <ion-select multiple="false" [(ngModel)]="selectedLibrary">
-          <ion-option *ngFor="let library of libraries">{{library.name}}</ion-option>
+          <ion-option *ngFor="let library of libraryService.libraries">{{library.name}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- Meal type select -->
       <ion-item>
         <ion-label>Meal type</ion-label>
         <ion-select multiple="false" [(ngModel)]="selectedMealType">
-          <ion-option *ngFor="let mealType of mealTypes">{{mealType}}</ion-option>
+          <ion-option *ngFor="let mealType of mealService.mealTypes">{{mealType}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- Datetime -->
@@ -37,10 +37,10 @@
     <ion-card-header>Inventory</ion-card-header>
     <ion-list>
       <ion-item *ngFor="let mealInv of mealInventories">
-        <button ion-button item-left large="true" (click)="setCount(mealInv)">{{mealInv.count}}</button>
-        <h2>{{mealInv.name}}</h2>
-        <button ion-button item-right large="true" (click)="increaseCount(mealInv)">+</button>
-        <button ion-button item-right large="true" (click)="decreaseCount(mealInv)">-</button>
+        <ion-label col-5 fixed>{{mealInv.name}}</ion-label>
+        <ion-input col-3 type="tel" [(ngModel)]="mealInv.count"></ion-input>
+        <button ion-button col-2 item-right large="true" (click)="increaseCount(mealInv)">+</button>
+        <button ion-button col-2 item-right large="true" (click)="decreaseCount(mealInv)">-</button>
       </ion-item>
     </ion-list>
   </ion-card>
@@ -49,10 +49,10 @@
     <ion-card-header>Categories</ion-card-header>
     <ion-list>
       <ion-item *ngFor="let tally of tallies">
-        <button ion-button item-left large="true">{{tally.count}}</button>
-        <h2>{{tally.name}}</h2>
-        <button ion-button item-right large="true" (click)="increaseCount(tally)">+</button>
-        <button ion-button item-right large="true" (click)="decreaseCount(tally)">-</button>
+        <ion-label col-5 fixed>{{tally.name}}</ion-label>
+        <ion-input col-3 type="tel" [(ngModel)]="tally.count"></ion-input>
+        <button ion-button col-2 item-right large="true" (click)="increaseCount(tally)">+</button>
+        <button ion-button col-2 item-right large="true" (click)="decreaseCount(tally)">-</button>
       </ion-item>
     </ion-list>
   </ion-card>

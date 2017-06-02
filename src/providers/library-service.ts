@@ -9,6 +9,7 @@ import { Library } from '../schema/library';
 @Injectable()
 export class LibraryService {
   libsUrl = "/api/libraries"
+  libraries: Library[];
 
   constructor(public http: Http) {
   }
@@ -16,7 +17,7 @@ export class LibraryService {
   // Get all libraries from the database.
   loadLibraries(): Observable<Library[]> {
     return this.http.get(this.libsUrl)
-      .map(res => res.json())
+      .map(res => res.json().filter(x => x.isActive === true))
       .catch(this.handleError);
   }
 

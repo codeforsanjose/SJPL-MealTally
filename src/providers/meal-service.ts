@@ -10,6 +10,7 @@ import { Report } from '../schema/report';
 @Injectable()
 export class MealService {
   mealsUrl = "/api/meals"
+  mealTypes = ['Breakfast', 'AM Snack', 'Lunch', 'PM Snack', 'Supper'];
 
   constructor(public http: Http) {
   }
@@ -25,9 +26,9 @@ export class MealService {
   }
 
   // Get meals in start-end date range.
-  get(start: string, end: string): Observable<Report> {
+  get(start: string, end: string): Observable<Report[]> {
     return this.http.get(`${this.mealsUrl}/${start}/${end}`)
-      .map(r => r.json() as Report)
+      .map(r => r.json())
       .catch(this.handleError);
   }
 

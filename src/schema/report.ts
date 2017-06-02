@@ -1,4 +1,5 @@
 export class Report {
+  _id: any;
   totalReceived: number;
   totalLeftover: number;
   totalStaff: number;
