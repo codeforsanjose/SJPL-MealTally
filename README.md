@@ -12,7 +12,7 @@ Last October, some friends and I hacked together a software [solution](https://g
 
 ### Dashboard
 
-The dashboard allows the meal coordinator to keep an eye on meal trends at each library.
+The dashboard allows the meal coordinator to keep an eye on meal trends at each library. (NOTE: Not yet connected with the current database schema)
 ![dashboard screenshot](https://raw.githubusercontent.com/codeforsanjose/SJPL-MealTally/master/assets/dashboard.png)
 
 ### Mobile Web App
@@ -20,26 +20,46 @@ The dashboard allows the meal coordinator to keep an eye on meal trends at each 
 This is the current UI to add meals, record logs and generate pdf reports.
 ![](https://raw.githubusercontent.com/wiki/codeforsanjose/SJPL-MealTally/images/home-log-report.png)
 
-Before each meal, the volunteer selects the library and enters some information.
+There are three tabs along the bottom screen:
+1. Home
+2. Log
+3. Report
 
-During the meal, the volunteer adds each meal as it is served by tapping the relevant button.
+##### Home
+1. The volunteer selects the library name and the meal type (e.g. Lunch) on the `Meal Info` card. Date is also customizable; default value is current time in timezone -07:00.
+2. The total received meals is logged on the `Inventory` card.
+3. As program attendees enter the meal line, increments are made for each person on the `Categories` card.
+4. After the meal line stops in its entirety, the leftover meals are input on the `Inventory` card.
+5. A signature such as one's full name is input on the `User Info` card; the meal tallies can then be pushed to the database by clicking "ADD MEAL".
+6. Click the "RESET COUNTS" button to clear all categories tallies (NOTE: Careful not to accidentally press this instead of "ADD MEAL" #32)
+
+##### Log
+1. The volunteer selects the library name and the log type (e.g. Refrigerator) on the `Log Info` card. Date is also customizable; default value is current time in timezone -07:00.
+2. A description, a temperature (in Fahrenheit) and a comment can be input via laptop or mobile keyboard.
+3. A signature such as one's full name is input on the `User Info` card; the meal tallies can then be pushed to the database by clicking "ADD LOG".
+
+##### Report
+1. The start and date range can be selected (NOTE: End range is exclusive, so to get today increase the date end by one day #29).
+2. Click "GET MEAL REPORT" to preview a list of cards each with a unique:
+  - library name
+  - meal type
+  - category totals
+3. A new card appears at the bottom of the Report tab. Type an output PDF file name and click "SAVE PDF" to download the report.
 
 See [the live Heroku demo](https://sjpl-meal-tally.herokuapp.com); read [this wiki article](https://github.com/codeforsanjose/SJPL-MealTally/wiki/Proof-of-concept-for-modern-web-app) for development details.
 
 ## Running the web app locally
 
-**NOTE: These instructions still need an update as a result of pull request, [Update to modern web app.](https://github.com/codeforsanjose/SJPL-MealTally/pull/16)**
+1. Start the express server in one CLI tab (e.g. Terminal for macOS):
+```
+$ MONGODB_URI=∆ node server.js
+```
+where ∆ is the `mongodb://` Uniform Resource Identifier (NOTE: This can also be set as an environment variable in Node). The current MongoDB database is hosted on [mLab](https://mlab.com/). Feel free to create and connect your own MongoDB instance; it just needs a `meals` and a `logs` collection.
 
-1. Clone the project and cd into SJPL-MealTally/server.
-2. You will need to either:
-  * Add these variables with a MongoLabs URI and an email URI into a `server/config/index.json` file.
-    - **MLABURI** = `mongodb://\<dbUser\>:\<dbPassword\>@ds0\<port\>.mlab.com:\<port\>/mealtally`
-    - **MAILURI** = `smtps://\<emailAddress\>:\<password\>@smtp.gmail.com/?pool=true`
-      * If you're using Gmail, you will have to change some settings - you'll get an email about it the first time you try to run the app with your URI)
-  * OR add those same variables as environmental variables.
+2. Start the web app in another CLI tab:
+```
+$ ionic serve -b
+```
+The `-b` flag prevents the automatic opening of a new tab in the default browser.
 
-3. `DocumentRoot\SJPL-MealTally\server>npm install`
-
-4. `DocumentRoot\SJPL-MealTally\server>node app`
-
-The app should connect to the database and be running at http://localhost:3000.
+3. Open `localhost:8080` to enter from the web app's Home page.
