@@ -50,7 +50,11 @@ See [the live Heroku demo](https://sjpl-meal-tally.herokuapp.com); read [this wi
 
 ## Running the web app locally
 
-1. Start the express server in one CLI tab (e.g. Terminal for macOS):
+1. Clone this repo, then cd into SJPL-MealTally and `npm install`
+
+2. Install Cordova `sudo npm install -g cordova` and Ionic `sudo npm install -g ionic`
+
+3. Start the express server in one CLI tab (e.g. Terminal for macOS):
 ```
 $ MONGODB_URI=∆ node server.js
 ```
@@ -62,4 +66,4 @@ $ ionic serve -b
 ```
 The `-b` flag prevents the automatic opening of a new tab in the default browser.
 
-3. Open `localhost:8080` to enter from the web app's Home page.
+3. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
