@@ -60,10 +60,10 @@ $ MONGODB_URI=∆ node server.js
 ```
 where ∆ is the `mongodb://` Uniform Resource Identifier (NOTE: This can also be set as an environment variable in Node). The current MongoDB database is hosted on [mLab](https://mlab.com/). Feel free to create and connect your own MongoDB instance; it just needs a `meals` and a `logs` collection.
 
-2. Start the web app in another CLI tab:
+4. Start the web app in another CLI tab:
 ```
 $ ionic serve -b
 ```
 The `-b` flag prevents the automatic opening of a new tab in the default browser.
 
-3. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
+5. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
