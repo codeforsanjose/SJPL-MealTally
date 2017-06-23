@@ -50,17 +50,22 @@ See [the live Heroku demo](https://sjpl-meal-tally.herokuapp.com); read [this wi
 
 ## Running the web app locally
 
-1. Clone this repo, then cd into SJPL-MealTally and `npm install`
+1. In your terminal, cd into your project folder and clone this repo:
+```
+$ git clone https://github.com/codeforsanjose/SJPL-MealTally
+```
+
+2. Cd into SJPL-MealTally and run `npm install`
 
 2. Install Cordova `sudo npm install -g cordova` and Ionic `sudo npm install -g ionic`
 
-3. Start the express server in one CLI tab (e.g. Terminal for macOS):
+3. Open a new tab in your terminal and start the express server in it:
 ```
-$ MONGODB_URI=∆ node server.js
+$ MONGODB_URI=<get the uri from a project member> node server.js
 ```
-where ∆ is the `mongodb://` Uniform Resource Identifier (NOTE: This can also be set as an environment variable in Node). The current MongoDB database is hosted on [mLab](https://mlab.com/). Feel free to create and connect your own MongoDB instance; it just needs a `meals` and a `logs` collection.
+Replace <> with a mongolab URI -- you can create your own on [mLab](https://mlab.com/) or get one from a project member (NOTE: This can also be set as an environment variable in Node). It just needs a `meals` and a `logs` collection.
 
-4. Start the web app in another CLI tab:
+4. Start the web app in another tab:
 ```
 $ ionic serve -b
 ```
