@@ -10,6 +10,7 @@
 
   <ion-card>
     <ion-card-header>Meal Info</ion-card-header>
+    <button ion-button large="true" (click)="resetCounts()">Reset counts</button>
     <ion-list>
       <!-- Library select -->
       <ion-item>
@@ -61,7 +62,6 @@
     <ion-card-header>User Input</ion-card-header>
     <ion-label>Signature</ion-label>
     <ion-input placeholder="Type signature here" [(ngModel)]="signature"></ion-input>
-    <button ion-button large="true" (click)="resetCounts()">Reset counts</button>
     <button ion-button large="true" (click)="addMeal()">Add meal</button>
   </ion-card>
 
