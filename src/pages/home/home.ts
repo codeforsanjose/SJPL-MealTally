@@ -59,13 +59,13 @@ export class HomePage {
       date: this.selectedDate,
       library: this.selectedLibrary,
       mealType: this.selectedMealType,
-      numReceivedMeals: this.mealInventories.find(x => x.name === 'Received').count,
-      numLeftoverMeals: this.mealInventories.find(x => x.name === 'Leftovers').count,
-      numStaffMeals: this.tallies.find(x => x.name === 'Staff').count,
-      numChildrenMeals: this.tallies.find(x => x.name === 'Children').count,
-      numAdultMeals: this.tallies.find(x => x.name === 'Adult').count,
-      numVolunteerMeals: this.tallies.find(x => x.name === 'Volunteers').count,
-      numWastedMeals: this.tallies.find(x => x.name === 'Non-reimbursable').count,
+      numReceivedMeals: Number(this.mealInventories.find(x => x.name === 'Received').count),
+      numLeftoverMeals: Number(this.mealInventories.find(x => x.name === 'Leftovers').count),
+      numStaffMeals: Number(this.tallies.find(x => x.name === 'Staff').count),
+      numChildrenMeals: Number(this.tallies.find(x => x.name === 'Children').count),
+      numAdultMeals: Number(this.tallies.find(x => x.name === 'Adult').count),
+      numVolunteerMeals: Number(this.tallies.find(x => x.name === 'Volunteers').count),
+      numWastedMeals: Number(this.tallies.find(x => x.name === 'Non-reimbursable').count),
       signature: this.signature
     } as Meal;
 
