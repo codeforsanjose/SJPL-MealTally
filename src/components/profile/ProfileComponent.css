@@ -1,0 +1,14 @@
+
+.adminProfileNavigationContainer {
+
+}
+
+.navItem {
+    display: inline-block;
+    font-size: 18px;
+    margin: 10px;
+}
+
+.navItem:hover {
+    color: green
+}

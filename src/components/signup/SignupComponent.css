@@ -1,0 +1,30 @@
+
+.section {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    margin-top: 20px;
+}
+
+.skillsInputStyle {
+    width: 100%;
+}
+
+.volunteerDetailsContainer {
+    margin-top: 60px;
+    text-align: left;
+}
+
+.checkBoxStyle {
+    margin-top: 10px;
+}
+
+.interestsCheckboxContainer {
+    display: inline-block;
+    width: 360px;
+    text-align: left;
+}
+
+.countryRegionContainer {
+    margin: 10px;
+}
