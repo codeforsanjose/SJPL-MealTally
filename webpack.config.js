@@ -3,13 +3,6 @@ const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
-  devServer: {
-    historyApiFallback: true,
-    inline: true,
-    progress: true,
-    contentBase: './src',
-    port: 8080
-  },
   entry: [
     path.resolve(__dirname, 'src/main.jsx')
   ],

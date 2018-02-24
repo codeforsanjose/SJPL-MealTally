@@ -9,10 +9,12 @@ var mongoClient = mongodb.MongoClient;
 var ObjectID = mongodb.ObjectID;  // Used in API endpoints
 var db;
 
+const publicDir = __dirname + '/public'
+
 app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-app.use(express.static("www"));
+app.use(express.static("public"));
 
 var MONGODB_URI = process.env.MONGODB_URI;
 
@@ -28,6 +30,10 @@ mongoClient.connect(MONGODB_URI, function (err, database) {
     console.log("[*] mealtally running on port", app.get('port'));
   });
 });
+
+app.get(["/", "/login", "/signup", "/admin"], (reqest, response) => {
+    response.sendFile(path.join(publicDir, '/index.html'))
+})
 
 /*
 * Endpoint --> "/api/libraries"
