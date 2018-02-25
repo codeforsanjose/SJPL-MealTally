@@ -92,7 +92,7 @@ class LoginComponent extends React.Component {
         }
         return (
             <Paper zDepth={1} className="paperStyle">
-
+                <LogoComponent />
                 <form onSubmit={this.onSubmit} className="LoginForm">
                     <div><TextField type="text" name="email" value={this.state.email} floatingLabelText="Email" onChange={e => this.handleField(e, 'email')} /></div>
                     <div><TextField type="password" name="passphrase" value={this.state.passphrase} floatingLabelText="Passphrase" onChange={e => this.handleField(e, 'passphrase')} /></div>

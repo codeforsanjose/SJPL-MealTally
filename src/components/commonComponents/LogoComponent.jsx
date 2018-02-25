@@ -1,4 +1,5 @@
 import * as React from 'react'
+import appConfig from '../../AppContentConfig.json'
 
 require('./LogoComponent.css');
 
@@ -9,12 +10,16 @@ class LogoComponent extends React.Component {
         this.state = {
         }
     }    
-
+    backgroundImage() {
+        // TODO:  need to figure out way to do this
+        return {
+            backgroundImage: appConfig['app_logo_url']
+        }
+    }
     render() {
-        
         return (
             <div className="logoContainer">
-                <a href="http://www.givelight.org"><div className="logo"></div></a>
+                <a href={appConfig['app_org_url']}><div style={this.backgroundImage()} className="logo"></div></a>
             </div>
         )
     }
