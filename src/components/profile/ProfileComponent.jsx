@@ -24,16 +24,10 @@ class ProfileComponent extends React.Component {
         _id: '',
         name: '',
         email: '',
-        country: '',
-        region: '',
         phone: '',
-        interests: [],
-        skills: [],
-        skillsInput: '',
         oldPassphrase: '',
         newPassphrase: '',
         retypeNewPassphrase: '',
-        checkboxInterests: [],
         isAdmin: false,
         adminTabs: 0,
     }
@@ -49,17 +43,8 @@ class ProfileComponent extends React.Component {
                 window.location.href = '/login'
             }
             else {
-                if (this.state.checkboxInterests.length === 0) {
-                    checkboxInterests = interests.map(interest => ({ interest: interest, checked: false }))
-                }
-
-                checkboxInterests = checkboxInterests.map(interest => {
-                    if (response.user && response.user.interests && response.user.interests.includes(interest.interest)) {
-                        return { ...interest, checked: true };
-                    } 
-                    return { ...interest, checked: false };
-                });
-                this.setState({...response.user, checkboxInterests, skillsInput: response.user.skills && response.user.skills.join(',')});
+                
+                this.setState({...response.user});
             }
         }).catch( error => {
             window.alert('Invalid operation')
@@ -73,53 +58,7 @@ class ProfileComponent extends React.Component {
             [fieldName]: event.target.value
         })
     }
-    handleCountry = (event, index, value) => {
-        this.setState({
-            ...this.state,
-            country: value
-        })
-    }
-    handleRegion = (event, index, value) => {
-        this.setState({
-            ...this.state,
-            region: value
-        })
-    }
-    handleCheckbox = (event, index, interest) => {
-        var data = this.state.checkboxInterests
-        data[index] = { interest: data[index].interest, checked: !data[index].checked }
-        var volunteerInterests = []
-        data.map( interestCheckbox => {
-            if (interestCheckbox.checked) {
-                volunteerInterests.push(interestCheckbox.interest)
-            }
-        })
-        this.setState({
-            ...this.state,
-            checkboxInterests: data,
-            interests: volunteerInterests
-        })
-    }
-    handleSkillsInput = (event) => {
-        event.preventDefault()
-        if (event.target.value == "") {
-            this.setState({
-                ...this.state,
-                skillsInput: "",
-                skills: []
-            })
-        }
-        else {
-            this.setState({
-                ...this.state,
-                skillsInput: event.target.value,
-                skills: this.state.skillsInput.split(/[,]+/)
-            })
-        }
-    }
-    disableCheckboxes = () => {
-        return this.state.checkboxInterests.filter( (interest) => {return interest.checked}).length < 3
-    }
+    
     validateState = () => {
         let errorMessage = ''
         let emailPatternReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -129,23 +68,7 @@ class ProfileComponent extends React.Component {
         if (!emailPatternReg.test(this.state.email)) {
             errorMessage += 'Please enter a valid email\n'
         }
-        if (!this.state.country) {
-            errorMessage += 'Please select a country\n'
-        }
-        if (!this.state.region) {
-            errorMessage += 'Please select a region\n'
-        }
-            /*
-        if (!this.state.passphrase) {
-            errorMessage += 'Please enter a passphrase\n'
-        }
-        if (!this.state.retypePassphrase) {
-            errorMessage += 'Please retype the passphrase\n'
-        }
-        if (this.state.passphrase !== this.state.retypePassphrase) {
-            errorMessage += 'Passphrases do not match\n'
-        }
-             */
+        
         return errorMessage
     }
     
@@ -190,25 +113,9 @@ class ProfileComponent extends React.Component {
                     <div><TextField type="password" name="passphrase" value={this.state.oldPassphrase} floatingLabelText="Coming soon Old Passphrase" onChange={(e) => this.handleField('oldPassphrase', e)} /></div>
                     <div><TextField type="password" name="passphrase" value={this.state.newPassphrase} floatingLabelText="Coming soon New Passphrase" onChange={(e) => this.handleField('newPassphrase', e)} /></div>
                     <div><TextField type="password" name="retypePassphrase" value={this.state.retypePassphrase} floatingLabelText="Coming soon Retype Passphrase" onChange={(e) => this.handleField('retypePassphrase', e)} /></div>
-                    <div className="countryRegionContainer">
-                        <CountryDropdown
-                            value={this.state.country}
-                            onChange={this.handleCountry}
-                        />
-                    </div>
-                    <div>
-                        <RegionDropdown
-                            country={this.state.country}
-                            value={this.state.region}
-                            onChange={this.handleRegion}
-                        />
-                    </div>
+                    
                 </div>
-                <div className={`section volunteerDetailsContainer`}>
-                    <h3>Choose 3 Interests</h3>
-                    <VolunteerInterestsCheckboxesComponent handleCheckbox={this.handleCheckbox} checkboxInterests={this.state.checkboxInterests} />
-                    <VolunteerSkillsInputComponent handleSkillsInput={this.handleSkillsInput} skillsInput={this.state.skillsInput ? this.state.skillsInput : ''} />
-                </div>
+                
                 <div><RaisedButton className={`darkStyle saveButton`} type="submit" label="Update Profile" /></div>
             </form>
             </Paper>
@@ -220,7 +127,7 @@ class ProfileComponent extends React.Component {
             return (
                 <div>
                     <div className="adminProfileNavigationContainer">
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Search</a></div> |
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Dashboard</a></div> |
                         <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
                     </div>
                 </div>

@@ -43,33 +43,9 @@ class VolunteerDisplayComponent extends React.Component {
                                     {this.props.volunteerData.phone}
                                 </td>
                             </tr> 
-                            <tr>
-                                <td>
-                                    <MapIcon />
-                                </td>
-                                <td>
-                                    {this.props.volunteerData.country}<br />
-                                    {this.props.volunteerData.region}
-                                </td>
-                            </tr> 
+                            
                         </tbody>
                     </table>
-                </div> 
-                <div>
-                    <div>Interests: 
-                        <ul>
-                            {this.props.volunteerData.interests.map( (interest, index) => {
-                                return (<li key={index}>{interest}</li>)
-                            })}
-                        </ul>    
-                    </div>
-                    <div>Skills: 
-                        <ul>
-                            {this.props.volunteerData.skills.map( (skill, index) => {
-                                return (<li key={index}>{skill}</li>)
-                            })}
-                        </ul>    
-                    </div> 
                 </div> 
             </div>
         )
