@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import GiveLightLogoComponent from '../commonComponents/GiveLightLogoComponent'
+import LogoComponent from '../commonComponents/LogoComponent'
 import { loginUser } from '../../api/api'
 import {
     BrowserRouter as Router,
@@ -72,6 +72,7 @@ class LoginComponent extends React.Component {
     }
 
     goBacktoGiveLightMain = (event) => {
+        // TODO: place in config
         window.location = 'http://www.givelight.org'
     }
 
@@ -95,7 +96,7 @@ class LoginComponent extends React.Component {
                 <form onSubmit={this.onSubmit} className="LoginForm">
                     <div><TextField type="text" name="email" value={this.state.email} floatingLabelText="Email" onChange={e => this.handleField(e, 'email')} /></div>
                     <div><TextField type="password" name="passphrase" value={this.state.passphrase} floatingLabelText="Passphrase" onChange={e => this.handleField(e, 'passphrase')} /></div>
-                    <div><button className="giveLightButton" onClick={e => this.handleSubmit(e)} >login</button></div>
+                    <div><button className="appButton" onClick={e => this.handleSubmit(e)} >login</button></div>
                 </form>
             </Paper>
         )

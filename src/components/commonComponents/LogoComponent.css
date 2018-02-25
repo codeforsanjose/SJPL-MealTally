@@ -1,10 +1,10 @@
-.giveLightContainer {
+.logoContainer {
     text-align: center;
     background-color: red;
     width: 400px;
 }
 
-.giveLightLogo {
+.logo {
     
     background-image: url('http://www.givelight.org/images/branding/logo_lg.png');
     background-repeat: no-repeat;

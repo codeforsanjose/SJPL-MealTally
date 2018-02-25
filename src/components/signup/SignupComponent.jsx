@@ -6,14 +6,9 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import { validateEmail } from '../../../lib/validation.js'
 
-import GiveLightLogoComponent from '../commonComponents/GiveLightLogoComponent'
-import VolunteerInterestsCheckboxesComponent from '../commonComponents/VolunteerInterestsCheckboxesComponent'
-import VolunteerSkillsInputComponent from '../commonComponents/SkillsInputComponent'
-
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector-material-ui'
+import MealTallyLogoComponent from '../commonComponents/MealTallyLogoComponent'
 
 import { registerUser, signupFacebook } from '../../api/api'
-import { interests } from '../../models/interests'
 
 
 require('../sharedCss.css')
@@ -87,7 +82,7 @@ class SignupComponent extends React.Component {
     render () {
         return (
             <Paper>
-            <GiveLightLogoComponent />
+            <LogoComponent />
             <form onSubmit={e => this.onSubmit(e)} className="main">
                 <div className="section">
                     
@@ -99,7 +94,7 @@ class SignupComponent extends React.Component {
                     
                 </div>
                 
-                <div><button className="giveLightButton" onClick={e =>this.handleSubmit(e)} >sign up</button></div>
+                <div><button className="appButton" onClick={e =>this.handleSubmit(e)} >sign up</button></div>
             </form>
             </Paper>
         )

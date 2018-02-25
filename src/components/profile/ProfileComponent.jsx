@@ -6,9 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import AdminPanelComponent from '../admin/AdminPanelComponent'
-import GiveLightLogoComponent from '../commonComponents/GiveLightLogoComponent'
-import VolunteerInterestsCheckboxesComponent from '../commonComponents/VolunteerInterestsCheckboxesComponent'
-import VolunteerSkillsInputComponent from '../commonComponents/SkillsInputComponent'
+import LogoComponent from '../commonComponents/LogoComponent'
+
 
 import { Redirect } from 'react-router-dom'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector-material-ui'
@@ -151,7 +150,7 @@ class ProfileComponent extends React.Component {
     render () {
         return (
             <div>
-                <GiveLightLogoComponent />
+                <LogoComponent />
                 { this.displayAdminNavigation() }
                 { this.displayPanels() }
             

@@ -12,7 +12,7 @@
     background-color: #252525;
 }
 
-.giveLightButton {
+.appButton {
     font-size: .8em;
     padding: 10px 23px 10px 23px;
     color: white;
@@ -22,6 +22,6 @@
     transition: background-color 0.5s ease;
 }
 
-.giveLightButton:hover {
+.appButton:hover {
     background-color: black;
 }
