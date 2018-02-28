@@ -4,6 +4,9 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import LogoComponent from '../commonComponents/LogoComponent'
+
+import IncrementComponent from '../commonComponents/incrementComponent'
+
 import { loginUser } from '../../api/api'
 import {
     BrowserRouter as Router,
@@ -98,6 +101,7 @@ class LoginComponent extends React.Component {
                     <div><TextField type="password" name="passphrase" value={this.state.passphrase} floatingLabelText="Passphrase" onChange={e => this.handleField(e, 'passphrase')} /></div>
                     <div><button className="appButton" onClick={e => this.handleSubmit(e)} >login</button></div>
                 </form>
+                <IncrementComponent />
             </Paper>
         )
     }

@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import AdminPanelComponent from '../admin/AdminPanelComponent'
 import LogoComponent from '../commonComponents/LogoComponent'
-
+import IncrementComponent from '../commonComponents/incrementComponent'
 
 import { Redirect } from 'react-router-dom'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector-material-ui'
@@ -19,22 +19,34 @@ require('./ProfileComponent.css');
 require('../sharedCss.css');
 
 class ProfileComponent extends React.Component {
-    state = {
-        _id: '',
-        name: '',
-        email: '',
-        phone: '',
-        oldPassphrase: '',
-        newPassphrase: '',
-        retypeNewPassphrase: '',
-        isAdmin: false,
-        adminTabs: 0,
+    constructor(props) {
+        super(props)
+        this.props = props
+        var user = {
+            _id: '',
+            name: '',
+            email: '',
+            phone: '',
+            oldPassphrase: '',
+            newPassphrase: '',
+            retypeNewPassphrase: '',
+            isAdmin: false,
+            adminTabs: 0,
+        }
+        var mealTallyDetails = {
+            
+        }
+        this.state = {
+            user: user,
+            mealTallyDetails: mealTallyDetails
+        }
     }
 
     componentDidMount() {
-        const href = window.location.href;
-        const id = href.substr(href.lastIndexOf('/') + 1);
+        //const href = window.location.href;
+        //const id = href.substr(href.lastIndexOf('/') + 1);
         
+        /*
         getUser(id).then(response => {
             let checkboxInterests;
             
@@ -48,13 +60,27 @@ class ProfileComponent extends React.Component {
         }).catch( error => {
             window.alert('Invalid operation')
         });
+         */
     }
 
-    handleField = (fieldName, event) => {
+    handleMealTallyDetailsField = (fieldName, event) => {
         event.preventDefault()
+
         this.setState({
             ...this.state,
-            [fieldName]: event.target.value
+            mealTallyDetails: {
+                [fieldName]: event.target.value
+            }
+        })
+    }
+    handleUserDetailsField = (fieldName, event) => {
+        event.preventDefault()
+
+        this.setState({
+            ...this.state,
+            user: {
+                [fieldName]: event.target.value
+            }
         })
     }
     
