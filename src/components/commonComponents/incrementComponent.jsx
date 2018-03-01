@@ -12,11 +12,13 @@ class IncrementComponent extends React.Component {
         }
     }    
     render() {
+        const { incrementerName, itemCount } = this.props
+        const fieldName = incrementerName.toLowerCase()
         return (
             <div className="incrementContainer">
-
-                IncrementComponent
-
+                <span><span>{incrementerName}</span> <span>{itemCount}</span></span>
+                <button onClick={(e) => this.props.incrementerHandler(e, fieldName, -1)}>-</button>
+                <button onClick={(e) => this.props.incrementerHandler(e, fieldName, 1)}>+</button>
             </div>
         )
     }

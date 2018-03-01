@@ -34,6 +34,7 @@ class ProfileComponent extends React.Component {
             adminTabs: 0,
         }
         var mealTallyDetails = {
+            received: 0,
             
         }
         this.state = {
@@ -63,17 +64,17 @@ class ProfileComponent extends React.Component {
          */
     }
 
-    handleMealTallyDetailsField = (fieldName, event) => {
+    handleMealTallyDetailsField = (event, fieldName, value) => {
         event.preventDefault()
-
+        let incValue = this.state.mealTallyDetails[fieldName] + value
         this.setState({
             ...this.state,
             mealTallyDetails: {
-                [fieldName]: event.target.value
+                [fieldName]: incValue
             }
         })
     }
-    handleUserDetailsField = (fieldName, event) => {
+    handleUserDetailsField = (event, fieldName, value) => {
         event.preventDefault()
 
         this.setState({
@@ -180,7 +181,11 @@ class ProfileComponent extends React.Component {
                 { this.displayAdminNavigation() }
                 { this.displayPanels() }
 
-                <IncrementComponent />
+                <IncrementComponent 
+                    incrementerName={"Received"} 
+                    itemCount={this.state.mealTallyDetails.received} 
+                    incrementerHandler={this.handleMealTallyDetailsField} 
+                />
             
             </div>
         )
