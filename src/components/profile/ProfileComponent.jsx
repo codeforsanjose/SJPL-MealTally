@@ -179,6 +179,8 @@ class ProfileComponent extends React.Component {
                 <LogoComponent />
                 { this.displayAdminNavigation() }
                 { this.displayPanels() }
+
+                <IncrementComponent />
             
             </div>
         )

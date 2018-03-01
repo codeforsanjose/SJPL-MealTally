@@ -15,6 +15,8 @@ class IncrementComponent extends React.Component {
         return (
             <div className="incrementContainer">
 
+                IncrementComponent
+
             </div>
         )
     }
