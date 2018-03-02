@@ -7,8 +7,7 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import AdminPanelComponent from '../admin/AdminPanelComponent'
 import LogoComponent from '../commonComponents/LogoComponent'
-import IncrementComponent from '../commonComponents/incrementComponent'
-import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
+import MealTallyComponent from '../MealTallyComponent/MealTallyComponent'
 
 import { Redirect } from 'react-router-dom'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector-material-ui'
@@ -32,7 +31,6 @@ class ProfileComponent extends React.Component {
             newPassphrase: '',
             retypeNewPassphrase: '',
             isAdmin: false,
-            adminTabs: 0,
         }
         var mealTallyDetails = {
             received: 0,
@@ -41,7 +39,8 @@ class ProfileComponent extends React.Component {
         }
         this.state = {
             user: user,
-            mealTallyDetails: mealTallyDetails
+            mealTallyDetails: mealTallyDetails,
+            tabs: 1,
         }
     }
 
@@ -66,27 +65,6 @@ class ProfileComponent extends React.Component {
          */
     }
 
-    handleMealTallyDetailsIncrementField = (event, fieldName, value) => {
-        event.preventDefault()
-        let incValue = this.state.mealTallyDetails[fieldName] + value
-        this.setState({
-            ...this.state,
-            mealTallyDetails: {
-                [fieldName]: incValue
-            }
-        })
-    }
-    handleMealTallyDetailsOptionsField = (event, fieldName) => {
-        event.preventDefault()
-        console.log(event.target.value)
-        
-        this.setState({
-            ...this.state,
-            mealTallyDetails: {
-                [fieldName]: event.target.value
-            }
-        })
-    }
     handleUserDetailsField = (event, fieldName, value) => {
         event.preventDefault()
 
@@ -134,12 +112,101 @@ class ProfileComponent extends React.Component {
 
 
     handleTabs = (event, tab) => {
+        console.log(tab)
         this.setState({
             ...this.state,
-            adminTabs: tab,
+            tabs: tab,
         })
     }
 
+
+    displayNavigation = () => {
+        if (this.state.isAdmin) {
+            return (
+                <div>
+                    <div className="adminProfileNavigationContainer">
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Dashboard</a></div> |
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally</a></div>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div>
+                    <div className="profileNavigationContainer">
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally</a></div>
+                    </div>
+                </div>
+            )
+
+        }
+    }
+
+    displayPanels = () => {
+        if (this.state.isAdmin) {
+            switch (this.state.tabs) {
+                case (0): {
+                    console.log('admin tabs  is 0')
+                    return (
+                        <AdminPanelComponent />
+                    )
+                }
+                case (1): {
+                    console.log('admin tabs  is 1')
+
+                    return (
+                        this.profileDisplayDetails()
+                    )
+                }
+                case (2): {
+                    console.log('admin tabs  is 2')
+                    return (
+                        <MealTallyComponent />
+                    )
+                }
+
+                default: {
+
+                    console.log('admin default')
+                }
+            }
+
+        }
+        else {
+            switch (this.state.tabs) {
+                case (1): {
+                    console.log('tabs  is 1')
+                    return (
+                        this.profileDisplayDetails()
+                    )
+                }
+                case (2): {
+                    console.log('tabs  is 2')
+                    return (
+                        <MealTallyComponent />
+                    )
+                }
+                default: {
+                    console.log('just default')
+                }
+            }
+
+        }
+    }
+
+    render () {
+        return (
+            <div>
+                <LogoComponent />
+                { this.displayNavigation() }
+                { this.displayPanels() }
+
+            </div>
+        )
+    }
     profileDisplayDetails = () => {
         return (
             <Paper>
@@ -158,55 +225,6 @@ class ProfileComponent extends React.Component {
                 <div><RaisedButton className={`darkStyle saveButton`} type="submit" label="Update Profile" /></div>
             </form>
             </Paper>
-        )
-    }
-
-    displayAdminNavigation = () => {
-        if (this.state.isAdmin) {
-            return (
-                <div>
-                    <div className="adminProfileNavigationContainer">
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Dashboard</a></div> |
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
-                    </div>
-                </div>
-            )
-        }
-    }
-
-    displayPanels = () => {
-        if (this.state.isAdmin && this.state.adminTabs == 0) {
-            return (
-                <AdminPanelComponent />
-            )
-        }
-        else {
-            return (
-                this.profileDisplayDetails()
-            )
-        }
-    }
-
-    render () {
-        return (
-            <div>
-                <LogoComponent />
-                { this.displayAdminNavigation() }
-                { this.displayPanels() }
-
-                <IncrementComponent 
-                    incrementerName={"Received"} 
-                    itemCount={this.state.mealTallyDetails.received} 
-                    incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                />
-                <OptionsSelectorComponent
-                    optionsName={'library'}
-                    options={['lib 1', 'lib2', 'lib 3']}
-                    itemSelected={this.state.mealTallyDetails.library}
-                    optionsHandler={this.handleMealTallyDetailsOptionsField}
-                />
-            
-            </div>
         )
     }
 }
