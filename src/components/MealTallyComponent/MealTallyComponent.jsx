@@ -1,7 +1,10 @@
 
 import * as React from 'react'
+import moment from 'moment'
+
 import IncrementComponent from '../commonComponents/incrementComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
+import DatePickerComponent from '../commonComponents/DatePickerComponent'
 
 //require('./incrementComponent.css');
 
@@ -11,8 +14,8 @@ class MealTallyComponent extends React.Component {
         super(props)
         var mealTallyDetails = {
             received: 0,
-            library: ''
-            
+            library: '',
+            date: moment()
         }
         this.state = {
             mealTallyDetails: mealTallyDetails
@@ -39,6 +42,16 @@ class MealTallyComponent extends React.Component {
             }
         })
     }
+    handleDateField = (date) => {
+        console.log(date)
+        
+        this.setState({
+            ...this.state,
+            mealTallyDetails: {
+                date: date
+            }
+        })
+    }
     render() {
         return (
             <div className="MealTallyContainer">
@@ -52,6 +65,11 @@ class MealTallyComponent extends React.Component {
                     options={['lib 1', 'lib2', 'lib 3']}
                     itemSelected={this.state.mealTallyDetails.library}
                     optionsHandler={this.handleMealTallyDetailsOptionsField}
+                />
+                <DatePickerComponent
+                    name={'Date'}
+                    dateSelected={this.state.mealTallyDetails.date}
+                    handleDateSelected={this.handleDateField}
                 />
             </div>
         )

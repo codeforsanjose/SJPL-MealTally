@@ -14,12 +14,12 @@ module.exports = {
   module: {
     rules: [
       { test: /\.css$/, include: path.resolve(__dirname, 'src'), use: ['style-loader', 'css-loader'] },
-      { test: /\.js[x]?$/, include: path.resolve(__dirname, 'src'), exclude: /node_modules/, use: 'babel-loader' },
+      { test: /\.js[x]?$/, include: path.resolve(__dirname, 'src'), exclude: [/node_modules/], use: 'babel-loader' },
       { test: /\.json?$/, include: path.resolve(__dirname, 'config'), use: 'json-loader' },
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', 'json']
+    extensions: ['.js', '.jsx', 'json', '.css']
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
