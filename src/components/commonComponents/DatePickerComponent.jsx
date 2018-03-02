@@ -2,17 +2,22 @@
 import * as React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-//require('./incrementComponent.css');
-import 'react-datepicker/dist/react-datepicker'
+//import 'react-datepicker/dist/react-datepicker'
 
 import InfiniteCalendar from 'react-infinite-calendar'
-//import 'react-infinite-calendar/styles.css'
-//require('react-infinite-calendar/styles')
+//import styles from 'react-infinite-calendar/styles.css'
+const css = require('style-loader!css-loader!react-infinite-calendar/styles.css')
             
 class DatePickerComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+        }
+    }
+    calendarStyle() {
+        return {
+            textAlign: 'center',
+            display: 'inline-block'
         }
     }
     render() {
@@ -21,14 +26,15 @@ class DatePickerComponent extends React.Component {
         let today = new Date()
         var minDate = new Date(today.getFullYear() - 4, today.getMonth(), today.getDate() - 7)
         return (
-            <InfiniteCalendar
-                width={400}
-                height={600}
-                selected={this.props.dateSelected}
-                disabledDays={[0,6]}
-                onSelect={this.props.handleDateSelected}
-                minDate={minDate}
-            />
+            <div style={this.calendarStyle()}>
+                <InfiniteCalendar
+                    width={400}
+                    height={400}
+                    selected={this.props.dateSelected}
+                    onSelect={this.props.handleDateSelected}
+                    minDate={minDate}
+                />
+            </div>
         )
     }
 }

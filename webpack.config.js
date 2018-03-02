@@ -13,7 +13,7 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.css$/, include: path.resolve(__dirname, 'src'), use: ['style-loader', 'css-loader'] },
+      { test: /\.css$/, include: [path.resolve(__dirname, 'src') ], use: ['style-loader', 'css-loader'] },
       { test: /\.js[x]?$/, include: path.resolve(__dirname, 'src'), exclude: [/node_modules/], use: 'babel-loader' },
       { test: /\.json?$/, include: path.resolve(__dirname, 'config'), use: 'json-loader' },
     ]
