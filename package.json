@@ -66,6 +66,7 @@
     "passport-local": "^1.0.0",
     "react": "15.x",
     "react-country-region-selector-material-ui": "1.0.0",
+    "react-datepicker": "^1.2.1",
     "react-dom": "15.x",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
