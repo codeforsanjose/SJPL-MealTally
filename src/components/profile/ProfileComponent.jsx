@@ -1,7 +1,6 @@
 import * as React from 'react'
 import  Checkbox from 'material-ui/Checkbox'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'

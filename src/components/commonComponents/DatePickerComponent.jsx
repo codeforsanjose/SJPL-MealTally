@@ -29,7 +29,7 @@ class DatePickerComponent extends React.Component {
             <div style={this.calendarStyle()}>
                 <InfiniteCalendar
                     width={400}
-                    height={400}
+                    height={300}
                     selected={this.props.dateSelected}
                     onSelect={this.props.handleDateSelected}
                     minDate={minDate}

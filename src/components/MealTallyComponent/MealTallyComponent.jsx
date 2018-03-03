@@ -1,21 +1,32 @@
 
 import * as React from 'react'
 import moment from 'moment'
+import Paper from 'material-ui/Paper'
 
 import IncrementComponent from '../commonComponents/incrementComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
 
-//require('./incrementComponent.css');
+require('./MealTallyComponent.scss');
 
+const mealTypes = ['Breakfast', 'AM Snack', 'Lunch', 'PM Snack', 'Dinner']
+const libraries = ['lib1', 'lib 2', 'lib 3']
 
 class MealTallyComponent extends React.Component {
     constructor(props) {
         super(props)
         var mealTallyDetails = {
-            received: 0,
             library: '',
-            date: moment()
+            date: moment(),
+            type: '',
+            received: 0,
+            leftovers: 0,
+            children: 0,
+            volunteer: 0,
+            adult: 0,
+            nonreimbursment: 0,
+            user: {}
+            
         }
         this.state = {
             mealTallyDetails: mealTallyDetails
@@ -54,23 +65,75 @@ class MealTallyComponent extends React.Component {
     }
     render() {
         return (
-            <div className="MealTallyContainer">
-                <IncrementComponent 
-                    incrementerName={"Received"} 
-                    itemCount={this.state.mealTallyDetails.received} 
-                    incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                />
-                <OptionsSelectorComponent
-                    optionsName={'library'}
-                    options={['lib 1', 'lib2', 'lib 3']}
-                    itemSelected={this.state.mealTallyDetails.library}
-                    optionsHandler={this.handleMealTallyDetailsOptionsField}
-                />
-                <DatePickerComponent
-                    name={'Date'}
-                    dateSelected={this.state.mealTallyDetails.date}
-                    handleDateSelected={this.handleDateField}
-                />
+            <div className="mealTallyContainer">
+                <Paper>
+                    <div className="infoContainer">
+                        <h3 className="infoContainerTitle">Meal Info</h3>
+                        <OptionsSelectorComponent
+                            optionsName={'library'}
+                            options={libraries}
+                            itemSelected={this.state.mealTallyDetails.library}
+                            optionsHandler={this.handleMealTallyDetailsOptionsField}
+                        />
+                        <OptionsSelectorComponent
+                            optionsName={'Type'}
+                            options={mealTypes}
+                            itemSelected={this.state.mealTallyDetails.library}
+                            optionsHandler={this.handleMealTallyDetailsOptionsField}
+                        />
+                        <div>
+                            <span>Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
+                            <DatePickerComponent
+                                name={'Date'}
+                                dateSelected={this.state.mealTallyDetails.date}
+                                handleDateSelected={this.handleDateField}
+                            />
+                        </div>
+                    </div>
+                    <div className="infoContainer">
+                        <h3 className="infoContainerTitle">Inventory</h3>
+                        <IncrementComponent 
+                            incrementerName={"Received"} 
+                            itemCount={this.state.mealTallyDetails.received} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={"Leftovers"} 
+                            itemCount={this.state.mealTallyDetails.received} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+
+                    </div>
+                    <div className="infoContainer">
+                        <h3 className="infoContainerTitle">Categories</h3>
+                        <IncrementComponent 
+                            incrementerName={"Staff"} 
+                            itemCount={this.state.mealTallyDetails.received} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={"Children"} 
+                            itemCount={this.state.mealTallyDetails.received} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={"Adult"} 
+                            itemCount={this.state.mealTallyDetails.received} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={"Volunteer"} 
+                            itemCount={this.state.mealTallyDetails.received} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={"Nonreimbursment"} 
+                            itemCount={this.state.mealTallyDetails.received} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+
+                    </div>
+                </Paper>
             </div>
         )
     }
