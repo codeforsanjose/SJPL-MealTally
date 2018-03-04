@@ -44,10 +44,10 @@ class ProfileComponent extends React.Component {
     }
 
     componentDidMount() {
-        //const href = window.location.href;
-        //const id = href.substr(href.lastIndexOf('/') + 1);
+        const href = window.location.href;
+        const id = href.substr(href.lastIndexOf('/') + 1);
         
-        /*
+        
         getUser(id).then(response => {
             let checkboxInterests;
             
@@ -61,7 +61,6 @@ class ProfileComponent extends React.Component {
         }).catch( error => {
             window.alert('Invalid operation')
         });
-         */
     }
 
     handleUserDetailsField = (event, fieldName, value) => {

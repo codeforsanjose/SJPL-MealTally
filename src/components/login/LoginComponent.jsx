@@ -101,7 +101,6 @@ class LoginComponent extends React.Component {
                     <div><TextField type="password" name="passphrase" value={this.state.passphrase} floatingLabelText="Passphrase" onChange={e => this.handleField(e, 'passphrase')} /></div>
                     <div><button className="appButton" onClick={e => this.handleSubmit(e)} >login</button></div>
                 </form>
-                <IncrementComponent />
             </Paper>
         )
     }
