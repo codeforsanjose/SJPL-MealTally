@@ -24,6 +24,7 @@ class MealTallyComponent extends React.Component {
             children: 0,
             volunteer: 0,
             adult: 0,
+            staff: 0,
             nonreimbursment: 0,
             user: {}
             
@@ -38,17 +39,18 @@ class MealTallyComponent extends React.Component {
         this.setState({
             ...this.state,
             mealTallyDetails: {
+                ...this.state.mealTallyDetails,
                 [fieldName]: incValue
             }
         })
     }
     handleMealTallyDetailsOptionsField = (event, fieldName) => {
         event.preventDefault()
-        console.log(event.target.value)
         
         this.setState({
             ...this.state,
             mealTallyDetails: {
+                ...this.state.mealTallyDetails,
                 [fieldName]: event.target.value
             }
         })
@@ -59,6 +61,7 @@ class MealTallyComponent extends React.Component {
         this.setState({
             ...this.state,
             mealTallyDetails: {
+                ...this.state.mealTallyDetails,
                 date: date
             }
         })
@@ -78,7 +81,7 @@ class MealTallyComponent extends React.Component {
                         <OptionsSelectorComponent
                             optionsName={'Type'}
                             options={mealTypes}
-                            itemSelected={this.state.mealTallyDetails.library}
+                            itemSelected={this.state.mealTallyDetails.type}
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />
                         <div>
@@ -99,7 +102,7 @@ class MealTallyComponent extends React.Component {
                         />
                         <IncrementComponent 
                             incrementerName={"Leftovers"} 
-                            itemCount={this.state.mealTallyDetails.received} 
+                            itemCount={this.state.mealTallyDetails.leftovers} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
 
@@ -108,27 +111,27 @@ class MealTallyComponent extends React.Component {
                         <h3 className="infoContainerTitle">Categories</h3>
                         <IncrementComponent 
                             incrementerName={"Staff"} 
-                            itemCount={this.state.mealTallyDetails.received} 
+                            itemCount={this.state.mealTallyDetails.staff} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
                             incrementerName={"Children"} 
-                            itemCount={this.state.mealTallyDetails.received} 
+                            itemCount={this.state.mealTallyDetails.children} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
                             incrementerName={"Adult"} 
-                            itemCount={this.state.mealTallyDetails.received} 
+                            itemCount={this.state.mealTallyDetails.adult} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
                             incrementerName={"Volunteer"} 
-                            itemCount={this.state.mealTallyDetails.received} 
+                            itemCount={this.state.mealTallyDetails.volunteer} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
                             incrementerName={"Nonreimbursment"} 
-                            itemCount={this.state.mealTallyDetails.received} 
+                            itemCount={this.state.mealTallyDetails.nonreimbursment} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
 
