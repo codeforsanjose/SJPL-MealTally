@@ -15,10 +15,6 @@ app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.use(express.static("public"));
-
-var MONGODB_URI = process.env.MONGODB_URI;
-
-console.log("MONGODB_URI", MONGODB_URI)
 ///////////////////////
 ///////////////////////
 ///////////////////////
@@ -48,7 +44,7 @@ app.post('/api/login', (req, res, next) => {
         }
         req.login(user, () => {
             return res.json(user)
-        })    
+        })
     })(req, res, next)
 
 })
@@ -63,7 +59,7 @@ const prepareSearchQuery = (searchQuery) => {
     if (searchQuery.interests) {
         searchQuery.interests = {
             $in: searchQuery.interests
-        } 
+        }
     }
     else if (searchQuery.skills) {
         const regexSkills = searchQuery.skills.map( (skill) => {
@@ -71,13 +67,13 @@ const prepareSearchQuery = (searchQuery) => {
         })
         searchQuery.skills = {
             $in: regexSkills
-        } 
+        }
     }
     var query = { $or: []}
     Object.keys(searchQuery).map( key => {
         var keyObj = {}
         keyObj[key] = searchQuery[key]
-        query['$or'].push(keyObj)    
+        query['$or'].push(keyObj)
     })
     return query
 }
@@ -139,7 +135,7 @@ app.get('/api/admin/user/exportData', (req, res) => {
         conf.stylesXmlFile = "./lib/styles.xml"
         conf.name = "UserData"
         conf.cols = headers
-        
+
         var values = results.map( result => {
             delete result['passphrase']
             return Object.values(result)
@@ -253,13 +249,13 @@ app.get(["/", "/login", "/signup", "/admin"], (reqest, response) => {
 
 // GET: retrieve all libraries
 app.get("/api/libraries", function(req, res) {
-  db.collection("libraries").find({}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get libraries");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
+
+    db.getAll('libraries').then(result => {
+        return res.json(result)
+    }).catch(error => {
+        console.log('error getting all libraries', error)
+        return res.json(error)
+    })
 });
 
 /*
@@ -268,7 +264,7 @@ app.get("/api/libraries", function(req, res) {
 
 // GET: retrieve meals in date range of one week
 app.get("/api/meals/:start/:end", function(req, res) {
-  var cursor = db.collection("meals").aggregate([
+  var cursor = db.getAll('meals').aggregate([
     { $match: { date: {$gte: req.params.start, $lte: req.params.end}}},
     { $group: { _id: { library: "$library", mealType: "$mealType" },
                 totalReceived: { $sum: "$numReceivedMeals"},
@@ -292,14 +288,23 @@ app.get("/api/meals/:start/:end", function(req, res) {
 
 // POST: create a new todo
 app.post("/api/meals", function(req, res) {
-  db.collection("meals").insertOne(req.body, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to post meal");
-    } else {
-      res.status(201).json(doc.ops[0]);
+    console.log(req.body)
+    db.insertOne('meals', req.body).then(result => {
+        return res.json(result)
+    }).catch(error => {
+        console.log('error creating more meals', error)
+        return res.json(error)
+    })
+
+    // db.collection("meals").insertOne(req.body, function(err, doc) {
+    //   if (err) {
+    //     handleError(res, err.message, "Failed to post meal");
+    //   } else {
+    //     res.status(201).json(doc.ops[0]);
+    //   }
+    // });
     }
-  });
-});
+)
 
 /*
 * Endpoint --> "/api/logs"
@@ -307,14 +312,24 @@ app.post("/api/meals", function(req, res) {
 
 // POST: create a new log
 app.post("/api/logs", function(req, res) {
-  db.collection("logs").insertOne(req.body, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to post log");
-    } else {
-      res.status(201).json(doc.ops[0]);
+    // db.insertOne('meals', req.body)
+
+    db.insertOne('logs', req.body).then(result => {
+        return res.json(result)
+    }).catch(error => {
+        console.log('error creating log', error)
+        return res.json(error)
+    })
+
+  // db.collection("logs").insertOne(req.body, function(err, doc) {
+  //   if (err) {
+  //     handleError(res, err.message, "Failed to post log");
+  //   } else {
+  //     res.status(201).json(doc.ops[0]);
+  //   }
+  // });
     }
-  });
-});
+)
 
 // Error handler for the api
 function handleError(res, reason, message, code) {

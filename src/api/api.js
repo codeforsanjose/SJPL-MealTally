@@ -61,7 +61,7 @@ const getUser = (id) => {
             console.log(error)
             return reject(error)
         })
-    }) 
+    })
 }
 const getAllUsers = (id) => {
     return new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ const getAllUsers = (id) => {
             console.log(error)
             return reject(error)
         })
-    }) 
+    })
 }
 
 const makeAdmin = (volunteerEmail) => {
@@ -84,8 +84,8 @@ const makeAdmin = (volunteerEmail) => {
             console.log(error)
             return reject(error)
         })
-    }) 
-    
+    })
+
 }
 
 const searchVolunteers = (searchQuery) => {
@@ -97,7 +97,7 @@ const searchVolunteers = (searchQuery) => {
             console.log(error)
             return reject(error)
         })
-    }) 
+    })
 
 }
 
@@ -107,7 +107,7 @@ const exportUserData  = () => {
         'Content-Disposition': 'attachment; filename=UserData.xlsx'
     }
     return makeRequest({}, 'GET', '/api/admin/user/exportData', headers)
-} 
+}
 
 const cleanupData = (uploadData) => {
     delete uploadData.checkboxInterests
@@ -128,6 +128,38 @@ const updateUser = (newUser) => {
         return console.log(error)
     })
 }
+
+const getAllLibs = () => {
+    return new Promise((resolve, reject) => {
+        return makeRequest(undefined, 'GET', '/api/libraries').then(response => {
+            return resolve(response.json())
+        }).catch(error => {
+            window.alert('Error retrieving user')
+            console.log(error)
+            return reject(error)
+        })
+    })
+}
+
+
+const createMeal = () => {
+    return new Promise((resolve, reject) => {
+        return makeRequest({'received':5, }, 'POST', '/api/meals').then(response => {
+            return resolve(response.json())
+        }).catch(error => {
+            window.alert('Error retrieving user')
+            console.log(error)
+            return reject(error)
+        })
+    })
+}
+
+createMeal().then( result => {
+    console.log(result)
+}).catch(error => {
+    console.log(error)
+})
+
 
 export {
     loginUser,
