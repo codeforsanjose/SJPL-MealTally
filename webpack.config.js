@@ -1,15 +1,16 @@
 const webpack = require('webpack');
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
     path.resolve(__dirname, 'src/main.jsx')
   ],
   output: {
-    path: path.resolve(__dirname, 'public/bundle'),
-    publicPath: '/',
-    filename: './bundle.js'
+    path: path.resolve(__dirname, 'public'),
+    publicPath: '/bundle',
+    filename: './bundle/bundle.js'
   },
   module: {
     rules: [
@@ -24,6 +25,10 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:3000' })
+    new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
+    new HtmlWebPackPlugin({
+      template: './index.html',
+      filename: 'index.html'
+    })
   ]
 };
