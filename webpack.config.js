@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, 'public'),
-    publicPath: '/bundle',
+    publicPath: '',
     filename: './bundle/bundle.js'
   },
   module: {
@@ -23,12 +24,20 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', 'json', '.scss']
   },
+  devtool: 'source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
     new HtmlWebPackPlugin({
       template: './index.html',
       filename: 'index.html'
-    })
+    }),
+    new UglifyJsPlugin({
+    sourceMap: true,
+    uglifyOptions: {
+      ie8: false,
+      ecma: 8
+    }
+  })
   ]
 };
