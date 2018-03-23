@@ -61,14 +61,13 @@ $ git clone https://github.com/codeforsanjose/SJPL-MealTally
 
 4. Open a new tab in your terminal and start the express server in it:
 ```
-$ MONGODB_URI=<get the uri from a project member> node server.js
+$ export MONGODB_URI=<get the uri from a project member>
 ```
 Replace <> with a mongolab URI -- you can create your own on [mLab](https://mlab.com/) or get one from a project member (NOTE: This can also be set as an environment variable in Node). It just needs a `meals` and a `logs` collection.
 
 5. Start the web app in another tab:
 ```
-$ ionic serve -b
+$ npm start
 ```
-The `-b` flag prevents the automatic opening of a new tab in the default browser.
 
 6. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
