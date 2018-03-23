@@ -34,7 +34,7 @@ class ProfileComponent extends React.Component {
         var mealTallyDetails = {
             received: 0,
             library: ''
-            
+
         }
         this.state = {
             user: user,
@@ -46,21 +46,27 @@ class ProfileComponent extends React.Component {
     componentDidMount() {
         const href = window.location.href;
         const id = href.substr(href.lastIndexOf('/') + 1);
-        
-        
-        getUser(id).then(response => {
-            let checkboxInterests;
-            
-            if (response['error']) {
-                window.location.href = '/login'
-            }
-            else {
-                
-                this.setState({...response.user});
-            }
-        }).catch( error => {
-            window.alert('Invalid operation')
-        });
+
+        if (id) {
+          getUser(id).then(response => {
+              let checkboxInterests;
+
+              if (response['error']) {
+                  window.location.href = '/login'
+              }
+              else {
+
+                  this.setState({...response.user});
+              }
+          }).catch( error => {
+              window.alert('Invalid operation');
+              console.error('Invalid operation ' + error);
+          });
+        } else {
+          // ?? What do I do?
+          console.warn("No user id is present or not logged in.");
+        }
+
     }
 
     handleUserDetailsField = (event, fieldName, value) => {
@@ -73,7 +79,7 @@ class ProfileComponent extends React.Component {
             }
         })
     }
-    
+
     validateState = () => {
         let errorMessage = ''
         let emailPatternReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -83,10 +89,10 @@ class ProfileComponent extends React.Component {
         if (!emailPatternReg.test(this.state.email)) {
             errorMessage += 'Please enter a valid email\n'
         }
-        
+
         return errorMessage
     }
-    
+
     onSubmit(e) {
         e.preventDefault();
         let error = this.validateState()
@@ -101,7 +107,7 @@ class ProfileComponent extends React.Component {
     handleUpdateProfile = () => {
         updateUser(this.state).then( (response) => {
             console.log(response)
-            window.alert('Thank you for editing your account information')    
+            window.alert('Thank you for editing your account information')
         }).catch( (error) => {
             console.log(error)
             window.alert('failed update')
@@ -117,6 +123,9 @@ class ProfileComponent extends React.Component {
         })
     }
 
+    handleField = (event, tab) => {
+      console.log(`handleField ${JSON.stringify(tab)}`);
+    }
 
     displayNavigation = () => {
         if (this.state.isAdmin) {
@@ -217,9 +226,9 @@ class ProfileComponent extends React.Component {
                     <div><TextField type="password" name="passphrase" value={this.state.oldPassphrase} floatingLabelText="Coming soon Old Passphrase" onChange={(e) => this.handleField('oldPassphrase', e)} /></div>
                     <div><TextField type="password" name="passphrase" value={this.state.newPassphrase} floatingLabelText="Coming soon New Passphrase" onChange={(e) => this.handleField('newPassphrase', e)} /></div>
                     <div><TextField type="password" name="retypePassphrase" value={this.state.retypePassphrase} floatingLabelText="Coming soon Retype Passphrase" onChange={(e) => this.handleField('retypePassphrase', e)} /></div>
-                    
+
                 </div>
-                
+
                 <div><RaisedButton className={`darkStyle saveButton`} type="submit" label="Update Profile" /></div>
             </form>
             </Paper>
