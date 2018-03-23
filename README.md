@@ -57,17 +57,15 @@ $ git clone https://github.com/codeforsanjose/SJPL-MealTally
 
 2. Cd into SJPL-MealTally and run `npm install`
 
-3. Install Cordova `sudo npm install -g cordova` and Ionic `sudo npm install -g ionic`
-
-4. Open a new tab in your terminal and start the express server in it:
+3. Open a new tab in your terminal and start the express server in it:
 ```
 $ export MONGODB_URI=<get the uri from a project member>
 ```
 Replace <> with a mongolab URI -- you can create your own on [mLab](https://mlab.com/) or get one from a project member (NOTE: This can also be set as an environment variable in Node). It just needs a `meals` and a `logs` collection.
 
-5. Start the web app in another tab:
+4. Start the web app in another tab:
 ```
 $ npm start
 ```
 
-6. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
+5. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
