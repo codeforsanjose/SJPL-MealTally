@@ -47,7 +47,6 @@ class ProfileComponent extends React.Component {
         const href = window.location.href;
         const id = href.substr(href.lastIndexOf('/') + 1);
         
-        
         getUser(id).then(response => {
             let checkboxInterests;
             
@@ -65,7 +64,6 @@ class ProfileComponent extends React.Component {
 
     handleUserDetailsField = (event, fieldName, value) => {
         event.preventDefault()
-
         this.setState({
             ...this.state,
             user: {
@@ -83,7 +81,6 @@ class ProfileComponent extends React.Component {
         if (!emailPatternReg.test(this.state.email)) {
             errorMessage += 'Please enter a valid email\n'
         }
-        
         return errorMessage
     }
     
@@ -108,7 +105,6 @@ class ProfileComponent extends React.Component {
         })
     }
 
-
     handleTabs = (event, tab) => {
         console.log(tab)
         this.setState({
@@ -116,7 +112,6 @@ class ProfileComponent extends React.Component {
             tabs: tab,
         })
     }
-
 
     displayNavigation = () => {
         if (this.state.isAdmin) {
@@ -139,7 +134,6 @@ class ProfileComponent extends React.Component {
                     </div>
                 </div>
             )
-
         }
     }
 
@@ -147,42 +141,33 @@ class ProfileComponent extends React.Component {
         if (this.state.isAdmin) {
             switch (this.state.tabs) {
                 case (0): {
-                    console.log('admin tabs  is 0')
                     return (
                         <AdminPanelComponent />
                     )
                 }
                 case (1): {
-                    console.log('admin tabs  is 1')
-
                     return (
                         this.profileDisplayDetails()
                     )
                 }
                 case (2): {
-                    console.log('admin tabs  is 2')
                     return (
                         <MealTallyComponent />
                     )
                 }
-
                 default: {
-
                     console.log('admin default')
                 }
             }
-
         }
         else {
             switch (this.state.tabs) {
                 case (1): {
-                    console.log('tabs  is 1')
                     return (
                         this.profileDisplayDetails()
                     )
                 }
                 case (2): {
-                    console.log('tabs  is 2')
                     return (
                         <MealTallyComponent />
                     )
@@ -191,7 +176,6 @@ class ProfileComponent extends React.Component {
                     console.log('just default')
                 }
             }
-
         }
     }
 
@@ -201,7 +185,6 @@ class ProfileComponent extends React.Component {
                 <LogoComponent />
                 { this.displayNavigation() }
                 { this.displayPanels() }
-
             </div>
         )
     }
@@ -217,9 +200,7 @@ class ProfileComponent extends React.Component {
                     <div><TextField type="password" name="passphrase" value={this.state.oldPassphrase} floatingLabelText="Coming soon Old Passphrase" onChange={(e) => this.handleField('oldPassphrase', e)} /></div>
                     <div><TextField type="password" name="passphrase" value={this.state.newPassphrase} floatingLabelText="Coming soon New Passphrase" onChange={(e) => this.handleField('newPassphrase', e)} /></div>
                     <div><TextField type="password" name="retypePassphrase" value={this.state.retypePassphrase} floatingLabelText="Coming soon Retype Passphrase" onChange={(e) => this.handleField('retypePassphrase', e)} /></div>
-                    
                 </div>
-                
                 <div><RaisedButton className={`darkStyle saveButton`} type="submit" label="Update Profile" /></div>
             </form>
             </Paper>
