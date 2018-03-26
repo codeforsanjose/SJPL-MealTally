@@ -64,7 +64,7 @@ class LoginComponent extends React.Component {
             else {
                 window.alert('Error logging in please try again')
                 this.setState({
-                    email: '',
+                    email: this.state.email,
                     passphrase: ''
                 })
             }

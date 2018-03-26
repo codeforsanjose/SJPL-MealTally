@@ -4,12 +4,7 @@ import  Checkbox from 'material-ui/Checkbox'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
-import AdminPanelComponent from '../admin/AdminPanelComponent'
-import LogoComponent from '../commonComponents/LogoComponent'
-import MealTallyComponent from '../MealTallyComponent/MealTallyComponent'
 
-import { Redirect } from 'react-router-dom'
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector-material-ui'
 import { getUser, updateUser } from '../../api/api'
 import { interests } from '../../models/interests'
 
@@ -21,25 +16,10 @@ class ProfileComponent extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
-        var user = {
-            _id: '',
-            name: '',
-            email: '',
-            phone: '',
-            oldPassphrase: '',
-            newPassphrase: '',
-            retypeNewPassphrase: '',
-            isAdmin: false,
-        }
-        var mealTallyDetails = {
-            received: 0,
-            library: ''
-
-        }
+        console.log('profile component props user: ', this.props.user)
+        
         this.state = {
-            user: user,
-            mealTallyDetails: mealTallyDetails,
-            tabs: 1,
+            ...this.props.user
         }
     }
 
@@ -54,22 +34,34 @@ class ProfileComponent extends React.Component {
                 window.location.href = '/login'
             }
             else {
-                
-                this.setState({...response.user});
+                this.setState({
+                    ...response.user
+                })
+                // if (response.user._id !== this.state._id) {
+                //     console.log('response.user._id !== this.state._id uh oh')
+                //     window.alert('Invalid operation')
+                //     window.location.href = '/login'
+                // }
+                // else {
+                //     console.log('dont need to set state siince user already passed?')
+                //     // this.setState({
+                //     //     ...response.user
+                //     // })
+                //}
             }
         }).catch( error => {
             window.alert('Invalid operation')
+            window.location.href = '/login'
         });
 
     }
 
-    handleUserDetailsField = (event, fieldName, value) => {
+    handleField = (event, fieldName) => {
         event.preventDefault()
         this.setState({
             ...this.state,
-            user: {
-                [fieldName]: event.target.value
-            }
+            [fieldName]: event.target.value
+            
         })
     }
 
@@ -96,6 +88,7 @@ class ProfileComponent extends React.Component {
         }
 
     }
+
     handleUpdateProfile = () => {
         updateUser(this.state).then( (response) => {
             console.log(response)
@@ -106,105 +99,27 @@ class ProfileComponent extends React.Component {
         })
     }
 
-    handleTabs = (event, tab) => {
-        console.log(tab)
-        this.setState({
-            ...this.state,
-            tabs: tab,
-        })
-    }
-
-    handleField = (event, tab) => {
-      console.log(`handleField ${JSON.stringify(tab)}`);
-    }
-
-    displayNavigation = () => {
-        if (this.state.isAdmin) {
-            return (
-                <div>
-                    <div className="adminProfileNavigationContainer">
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Dashboard</a></div> |
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally</a></div>
-                    </div>
-                </div>
-            )
-        }
-        else {
-            return (
-                <div>
-                    <div className="profileNavigationContainer">
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally</a></div>
-                    </div>
-                </div>
-            )
-        }
-    }
-
-    displayPanels = () => {
-        if (this.state.isAdmin) {
-            switch (this.state.tabs) {
-                case (0): {
-                    return (
-                        <AdminPanelComponent />
-                    )
-                }
-                case (1): {
-                    return (
-                        this.profileDisplayDetails()
-                    )
-                }
-                case (2): {
-                    return (
-                        <MealTallyComponent />
-                    )
-                }
-                default: {
-                    console.log('admin default')
-                }
-            }
-        }
-        else {
-            switch (this.state.tabs) {
-                case (1): {
-                    return (
-                        this.profileDisplayDetails()
-                    )
-                }
-                case (2): {
-                    return (
-                        <MealTallyComponent />
-                    )
-                }
-                default: {
-                    console.log('just default')
-                }
-            }
-        }
-    }
-
     render () {
         return (
             <div>
-                <LogoComponent />
-                { this.displayNavigation() }
-                { this.displayPanels() }
+                { this.profileDisplayDetails() }
             </div>
         )
+        
     }
+
     profileDisplayDetails = () => {
         return (
             <Paper>
             <form onSubmit={e => this.onSubmit(e)} className="main">
                 <h2>Volunteer Profile</h2>
                 <div className="section">
-                    <div className="checkBoxStyle"><TextField type="text" name="name" value={this.state.name} floatingLabelText="Name" onChange={(e) => this.handleField('name', e)} /></div>
-                    <div><TextField type="text" name="email" value={this.state.email} floatingLabelText="Email" onChange={(e) => this.handleField('email', e)} /></div>
-                    <div><TextField type="number" floatingLabelText="Phone" name="phone" value={this.state.phone} onChange={(e) => this.handleField('phone', e)} /></div>
-                    <div><TextField type="password" name="passphrase" value={this.state.oldPassphrase} floatingLabelText="Coming soon Old Passphrase" onChange={(e) => this.handleField('oldPassphrase', e)} /></div>
-                    <div><TextField type="password" name="passphrase" value={this.state.newPassphrase} floatingLabelText="Coming soon New Passphrase" onChange={(e) => this.handleField('newPassphrase', e)} /></div>
-                    <div><TextField type="password" name="retypePassphrase" value={this.state.retypePassphrase} floatingLabelText="Coming soon Retype Passphrase" onChange={(e) => this.handleField('retypePassphrase', e)} /></div>
+                    <div className="checkBoxStyle"><TextField type="text" name="name" value={this.state.name} floatingLabelText="Name" onChange={(e) => this.handleField(e, 'name')} /></div>
+                    <div><TextField type="text" name="email" value={this.state.email} floatingLabelText="Email" onChange={(e) => this.handleField(e, 'email')} /></div>
+                    <div><TextField type="number" floatingLabelText="Phone" name="phone" value={this.state.phone} onChange={(e) => this.handleField(e, 'phone')} /></div>
+                    <div><TextField type="password" name="passphrase" value={this.state.oldPassphrase} floatingLabelText="Coming soon Old Passphrase" onChange={(e) => this.handleField(e, 'oldPassphrase')} /></div>
+                    <div><TextField type="password" name="passphrase" value={this.state.newPassphrase} floatingLabelText="Coming soon New Passphrase" onChange={(e) => this.handleField(e, 'newPassphrase')} /></div>
+                    <div><TextField type="password" name="retypePassphrase" value={this.state.retypePassphrase} floatingLabelText="Coming soon Retype Passphrase" onChange={(e) => this.handleField(e, 'retypePassphrase')} /></div>
                 </div>
 
                 <div><RaisedButton className={`darkStyle saveButton`} type="submit" label="Update Profile" /></div>

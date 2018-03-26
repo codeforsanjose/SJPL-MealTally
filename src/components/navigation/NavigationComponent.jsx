@@ -8,6 +8,7 @@ import Header from '../header/Header';
 import SignupComponent from '../signup/SignupComponent';
 import LoginComponent from '../login/LoginComponent';
 import ProfileComponent from '../profile/ProfileComponent';
+import InAppNavigationComponent from '../navigation/InAppNavigationComponent';
 
 require('./NavigationComponent.css');
 
@@ -26,7 +27,7 @@ class NavigationComponent extends React.Component {
                 <Route exact path='/' component={LoginComponent}/>
                 <Route path='/signup' component={SignupComponent}/>
                 <Route path='/login' component={LoginComponent}/>
-                <Route path='/profile' component={ProfileComponent}/>
+                <Route path='/profile' component={InAppNavigationComponent}/>
               </Switch>
             
             </div>
