@@ -23,13 +23,6 @@ Replace <> with a mongolab URI -- you can create your own on [mLab](https://mlab
 7. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
 
 
-
-
-
-
-
-
-
 [![Stories in Ready](https://badge.waffle.io/codeforsanjose/SJPL-MealTally.png?label=ready&title=Ready)](https://waffle.io/codeforsanjose/SJPL-MealTally)
 ## Background
 

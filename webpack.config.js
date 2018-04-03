@@ -10,8 +10,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, 'public'),
-    publicPath: '',
-    filename: './bundle/bundle.js'
+    filename: './public/bundle/bundle.js'
   },
   module: {
     rules: [
@@ -26,18 +25,10 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
-    new HtmlWebPackPlugin({
-      template: './index.html',
-      filename: 'index.html'
-    }),
-    new UglifyJsPlugin({
-    sourceMap: true,
-    uglifyOptions: {
-      ie8: false,
-      ecma: 8
-    }
-  })
+    new webpack.HotModuleReplacementPlugin()
+    // new HtmlWebPackPlugin({     //when trying to refresh on profile page gives incorrect path and will crash need to look into how to use properly
+    //   template: './index.html',
+    //   filename: 'index.html'
+    // })
   ]
 };

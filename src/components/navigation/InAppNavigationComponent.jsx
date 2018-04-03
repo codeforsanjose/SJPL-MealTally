@@ -67,7 +67,7 @@ class InAppNavigationComponent extends React.Component {
                 <div>
                     <div className="adminProfileNavigationContainer">
                         <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Dashboard</a></div> |
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div> |
                         <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally</a></div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@ class InAppNavigationComponent extends React.Component {
             return (
                 <div>
                     <div className="profileNavigationContainer">
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div>
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div> | 
                         <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally</a></div>
                     </div>
                 </div>
