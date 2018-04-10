@@ -4,6 +4,7 @@ import ProfileComponent from '../profile/ProfileComponent'
 import AdminPanelComponent from '../admin/AdminPanelComponent'
 import LogoComponent from '../commonComponents/LogoComponent'
 import MealTallyComponent from '../MealTallyComponent/MealTallyComponent'
+import ReportsComponent from '../reports/ReportsComponent'
 
 import { getUser } from '../../api/api'
 
@@ -68,7 +69,8 @@ class InAppNavigationComponent extends React.Component {
                     <div className="adminProfileNavigationContainer">
                         <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Dashboard</a></div> |
                         <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 1)} >Profile</a></div> |
-                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally</a></div>
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally App</a></div> |
+                        <div className="navItem"><a className="navItem" onClick={(e) => this.handleTabs(e, 3)} >Reports</a></div> |
                     </div>
                 </div>
             )
@@ -86,6 +88,7 @@ class InAppNavigationComponent extends React.Component {
     }
 
     displayPanels = () => {
+        console.log("DISPLAYING PANELS")
         if (this.state.user.isAdmin) {
             switch (this.state.tabs) {
                 case (0): {
@@ -100,7 +103,12 @@ class InAppNavigationComponent extends React.Component {
                 }
                 case (2): {
                     return (
-                        <MealTallyComponent user={this.state.user} />
+                        <MealTallyComponent user={this.state.user} mealTallyDetails={this.state.mealTallyDetails} />
+                    )
+                }
+                case (3): {
+                    return (
+                        <ReportsComponent user={this.state.user} />
                     )
                 }
                 default: {
