@@ -2,6 +2,7 @@ import * as React from 'react'
 import moment from 'moment'
 
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
+import ReportsListComponent from '../admin/ReportsList/ReportsListComponent'
 import { getUser, getReportsInRange } from '../../api/api'
 require('./ReportsComponent.scss')
 
@@ -15,7 +16,8 @@ class ReportsComponent extends React.Component {
             startDate: new Date(),
             endDate: new Date(),
             showStartDate: false,
-            showEndDate: false
+            showEndDate: false,
+            reports: []
         }
     }
     componentDidMount() {
@@ -77,10 +79,18 @@ class ReportsComponent extends React.Component {
             startDate: this.state.startDate,
             endDate: this.state.endDate
         }
-        getReportsInRange(data).then(response => {
-            console.log("holy conoly response: ", response)
+        getReportsInRange(data).then(allReports => {
+            console.log("holy conoly response: ", allReports)
+            this.setState({
+                ...this.setState,
+                reports: allReports
+            })
         }).catch(error => {
             console.log("what luck an error: ", error)
+            this.setState({
+                ...this.setState,
+                reports: []
+            })
         })
     }
     getDatePicker = (type) => {
@@ -121,6 +131,7 @@ class ReportsComponent extends React.Component {
 
                     <hr />
                     <button onClick={this.handleGetReports}>Get Reports</button>
+                    <ReportsListComponent allReports={this.state.reports} />
                 </div>
             </div>
         )
