@@ -54,7 +54,7 @@ const registerUser = (newUser) => {
 
 const getUser = (id) => {
     return new Promise((resolve, reject) => {
-        return makeRequest(undefined, 'GET', `/api/user/${id}`).then(response => {
+        return makeRequest(undefined, 'GET', `/api/user/${id}`).then(response => {  
             return resolve(response.json())
         }).catch(error => {
             window.alert('Error retrieving user')
@@ -129,6 +129,16 @@ const updateUser = (newUser) => {
     })
 }
 
+const getReportsInRange = (range) => {
+    return makeRequest(range, 'post', '/api/reportsRange').then(response => {
+        console.log("response in api js: ", response)
+        return response.json()
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
 export {
     loginUser,
     registerUser,
@@ -138,4 +148,5 @@ export {
     makeAdmin,
     getAllUsers,
     searchVolunteers,
+    getReportsInRange,
 }

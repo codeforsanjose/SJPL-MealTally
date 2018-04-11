@@ -1,7 +1,8 @@
 import * as React from 'react'
-import DatePickerComponent from '../commonComponents/DatePickerComponent'
+import moment from 'moment'
 
-import { getUser } from '../../api/api'
+import DatePickerComponent from '../commonComponents/DatePickerComponent'
+import { getUser, getReportsInRange } from '../../api/api'
 require('./ReportsComponent.scss')
 
 
@@ -11,8 +12,10 @@ class ReportsComponent extends React.Component {
         this.props = props
         
         this.state = {
-            startDate: '',
-            endDate: ''
+            startDate: new Date(),
+            endDate: new Date(),
+            showStartDate: false,
+            showEndDate: false
         }
     }
     componentDidMount() {
@@ -34,13 +37,91 @@ class ReportsComponent extends React.Component {
             window.alert('Invalid operation')
             window.location.href = '/login'
         });
+    }
 
+    handleDate = (date, type) => {
+        if (type === "startDate") {
+            this.setState({
+                ...this.state,
+                startDate: date,
+                showStartDate: !this.state.showStartDate
+            })
+        }
+        else {
+            this.setState({
+                ...this.state,
+                endDate: date,
+                showEndDate: !this.state.showEndDate
+            })
+        }
+        
+    }
+
+    toggleShowDate = (event, type) => {
+        if (type === "startDate") {
+            this.setState({
+                ...this.state,
+                showStartDate: !this.state.showStartDate
+            })
+        }
+        else {
+            this.setState({
+                ...this.state,
+                showEndDate: !this.state.showEndDate
+            })
+        }
+    }
+
+    handleGetReports = (event) => {
+        const data = {
+            startDate: this.state.startDate,
+            endDate: this.state.endDate
+        }
+        getReportsInRange(data).then(response => {
+            console.log("holy conoly response: ", response)
+        }).catch(error => {
+            console.log("what luck an error: ", error)
+        })
+    }
+    getDatePicker = (type) => {
+        if (type === 'startDate') {
+            return (
+                <DatePickerComponent
+                    name={type}
+                    dateSelected={this.state.startDate}
+                    handleDateSelected={this.handleDate}
+                />
+            )
+        }
+        else {
+            return (
+                <DatePickerComponent
+                    name={type}
+                    dateSelected={this.state.endDate}
+                    handleDateSelected={this.handleDate}
+                />
+            )
+        }
     }
     
     render() {
         return (
-            <div>
-                start date end date
+            <div className="ReportContainer">
+                <div className="startDateContainer">
+                    <div onClick={(event) => this.toggleShowDate(event, 'startDate')}>
+                        <span>Start Date: {moment(this.state.startDate).format('MMM, DD YYYY')}</span>
+                    </div>
+                    {this.state.showStartDate ? this.getDatePicker('startDate') : ''}
+                </div>
+                <div className="endDateContainer">
+                    <div onClick={(event) => this.toggleShowDate(event, 'endDate')}>
+                        <span>End Date: {moment(this.state.endDate).format('MMM, DD YYYY')}</span>
+                    </div>
+                    {this.state.showEndDate ? this.getDatePicker('endDate') : ''}
+
+                    <hr />
+                    <button onClick={this.handleGetReports}>Get Reports</button>
+                </div>
             </div>
         )
         

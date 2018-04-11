@@ -24,15 +24,16 @@ class DatePickerComponent extends React.Component {
         const { name, dateSelected } = this.props
         const fieldName = name.toLowerCase()
         let today = new Date()
-        var minDate = new Date(today.getFullYear() - 4, today.getMonth(), today.getDate() - 7)
+        var minDate = new Date(today.getFullYear() - 2, today.getMonth(), today.getDate() - 7)
         return (
             <div style={this.calendarStyle()}>
                 <InfiniteCalendar
                     width={400}
                     height={300}
                     selected={this.props.dateSelected}
-                    onSelect={this.props.handleDateSelected}
+                    onSelect={(event) => this.props.handleDateSelected(event, name)}
                     minDate={minDate}
+                    maxDate={today}
                 />
             </div>
         )

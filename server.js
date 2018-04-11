@@ -53,6 +53,25 @@ app.post('/api/login', (req, res, next) => {
 
 })
 
+app.post('/api/reportsRange', (req, res) => {
+    if (req.user.isAdmin) {
+        //var cursor =db.collection('meal').find({"date": { $gte : req.query.DATEFROM }});
+        //var cursor = db.collection("meals").aggregate([
+        //{ $match: { date: {$gte: req.params.start, $lte: req.params.end}}},
+        const query = { date: {$gte: req.body.startDate, $lte: req.body.endDate}}
+        db.findAll('meals', query).then(meals => {
+            return res.json(meals)
+        }).catch(error => {
+            console.log("error in server js: ", error)
+            return res.status(422).json({"errormsg": error})
+        })
+        
+    }
+    else {
+        return res.status(422).json({"errormsg": "no access"})
+    } 
+})
+
 app.get('/api/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/api/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
