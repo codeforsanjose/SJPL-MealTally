@@ -56,7 +56,7 @@ app.post('/api/login', (req, res, next) => {
 app.post('/api/reportsRange', (req, res) => {
     if (req.user.isAdmin) {
         const query = { date: {$gte: req.body.startDate, $lte: req.body.endDate}}
-        db.findAll('meals', query).then(meals => {
+        db.findAll('test_meals', query).then(meals => {
             return res.json(meals)
         }).catch(error => {
             console.log("error in server js: ", error)
@@ -116,32 +116,6 @@ app.get('/api/admin/users', (req, res) => {
     }
 })
 
-app.get('/api/admin/user/exportData', (req, res) => {
-    db.getAll('user').then((results) => {
-        var headers = Object.keys(results[0])
-        var conf ={}
-        conf.stylesXmlFile = "./lib/styles.xml"
-        conf.name = "UserData"
-        conf.cols = headers
-        
-        var values = results.map( result => {
-            delete result['passphrase']
-            return Object.values(result)
-        })
-        console.log(values)
-        var sheet = nodeExcel.execute(conf)
-        fs.writeFileSync('./lib/volunteers.xlsx', sheet, 'binary')
-
-        //res.setHeader('Content-Type', 'application/vnd.openxmlformats')
-        //res.setHeader("Content-Disposition", "attachment; filename=" + "UserData.xlsx")
-        const file = './lib/volunteers.xlsx'
-        const filename = 'volunteers.xlsx'
-        return res.download(file, filename)
-    }).catch((error) => {
-        console.log(error)
-        return reject(error)
-    })
-});
 app.post('/api/user', (req, res) => {
     // It is good practice to specifically pick the fields we want to insert here *in the backend*,
     // even if we have already done so on the front end. This is to prevent malicious users
@@ -198,12 +172,10 @@ app.put('/api/user', (req, res) => {
 })
 
 app.get("/api/libraries", function(req, res) {
-    db.collection("libraries").find({}).toArray(function(err, libraries) {
-        if (err) {
-            handleError(res, err.message, "Failed to get libraries")
-        } else {
-            res.status(200).json(libraries)
-        }
+    db.getAll('libraries').then(libraries => {
+        res.status(200).json(libraries)
+    }).catch(error => {
+        handleError(res, error, "Failed to get libraries")
     })
 })
 
@@ -211,14 +183,12 @@ app.get("/api/libraries", function(req, res) {
 
 // POST: create a new meal
 app.post("/api/meals", function(req, res) {
-  db.collection("meals").insertOne(req.body, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to post meal");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
+    db.insertOne('test_meals', req.body).then(response => {
+        res.status(201).json(response);  
+    }).catch(error => {
+        handleError(res, error)  
+    })
+})
 
 /*
 * Endpoint --> "/api/logs"
@@ -236,9 +206,9 @@ app.post("/api/meals", function(req, res) {
 // });
 
 // Error handler for the api
-function handleError(res, reason, message, code) {
-  console.log("API Error: " + reason);
-  res.status(code || 500).json({"Error": message});
+function handleError(res, error, code) {
+  console.log("API Error: " + error);
+  res.status(code || 500).json({"error": error});
 }
 app.listen(app.get('port'), function () {
     console.log("[*] mealtally running on port", app.get('port'));

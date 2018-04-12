@@ -6,7 +6,7 @@ import LogoComponent from '../commonComponents/LogoComponent'
 import MealTallyComponent from '../MealTallyComponent/MealTallyComponent'
 import ReportsComponent from '../reports/ReportsComponent'
 
-import { getUser } from '../../api/api'
+import { getUser, getLibraries } from '../../api/api'
 
 
 class InAppNavigationComponent extends React.Component {
@@ -32,8 +32,25 @@ class InAppNavigationComponent extends React.Component {
             user: user,
             mealTallyDetails: mealTallyDetails,
             tabs: 1,
+            libraries: [],
+            mealTypes: ['', 'Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             isAdmin: this.props.isAdmin
         }
+    }
+    componentWillMount(props) {
+        getLibraries().then(libraries => {
+            console.log('libraries', libraries)
+            this.setState({
+                ...this.state,
+                libraries: libraries
+            })
+        }).catch(error => {
+            console.log('error getting libraries: ', error)
+            this.setState({
+                ...this.state,
+                libraries: []
+            })
+        })
     }
     componentDidMount() {
         const href = window.location.href;
@@ -88,7 +105,6 @@ class InAppNavigationComponent extends React.Component {
     }
 
     displayPanels = () => {
-        console.log("DISPLAYING PANELS")
         if (this.state.user.isAdmin) {
             switch (this.state.tabs) {
                 case (0): {
@@ -103,12 +119,12 @@ class InAppNavigationComponent extends React.Component {
                 }
                 case (2): {
                     return (
-                        <MealTallyComponent user={this.state.user} mealTallyDetails={this.state.mealTallyDetails} />
+                        <MealTallyComponent user={this.state.user} libraries={this.state.libraries} mealTypes={this.state.mealTypes} mealTallyDetails={this.state.mealTallyDetails} />
                     )
                 }
                 case (3): {
                     return (
-                        <ReportsComponent user={this.state.user} />
+                        <ReportsComponent user={this.state.user} libraries={this.state.libraries} mealTypes={this.state.mealTypes} />
                     )
                 }
                 default: {

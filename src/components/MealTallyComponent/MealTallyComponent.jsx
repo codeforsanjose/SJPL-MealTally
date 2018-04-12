@@ -9,8 +9,8 @@ import DatePickerComponent from '../commonComponents/DatePickerComponent'
 
 require('./MealTallyComponent.scss');
 
-const mealTypes = ['Breakfast', 'AM Snack', 'Lunch', 'PM Snack', 'Dinner']
-const libraries = ['lib1', 'lib 2', 'lib 3']
+//const mealTypes = ['Breakfast', 'AM Snack', 'Lunch', 'PM Snack', 'Dinner']
+//const libraries = ['lib1', 'lib 2', 'lib 3']
 
 class MealTallyComponent extends React.Component {
     constructor(props) {
@@ -26,7 +26,8 @@ class MealTallyComponent extends React.Component {
             adult: 0,
             staff: 0,
             nonreimbursment: 0,
-            user: {}
+            createdBy: {},
+            signature:''
             
         }
         this.state = {
@@ -56,8 +57,6 @@ class MealTallyComponent extends React.Component {
         })
     }
     handleDateField = (date) => {
-        console.log(date)
-        
         this.setState({
             ...this.state,
             mealTallyDetails: {
@@ -67,6 +66,9 @@ class MealTallyComponent extends React.Component {
         })
     }
     render() {
+        const libraryOptions = this.props.libraries.map(library => {
+            return library.name
+        })
         return (
             <div className="mealTallyContainer">
                 <Paper>
@@ -74,13 +76,13 @@ class MealTallyComponent extends React.Component {
                         <h3 className="infoContainerTitle">Meal Info</h3>
                         <OptionsSelectorComponent
                             optionsName={'library'}
-                            options={libraries}
+                            options={libraryOptions}
                             itemSelected={this.state.mealTallyDetails.library}
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />
                         <OptionsSelectorComponent
                             optionsName={'Type'}
-                            options={mealTypes}
+                            options={this.props.mealTypes}
                             itemSelected={this.state.mealTallyDetails.type}
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />

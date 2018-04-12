@@ -3,6 +3,7 @@ import moment from 'moment'
 
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
 import ReportsListComponent from '../admin/ReportsList/ReportsListComponent'
+import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
 import { getUser, getReportsInRange } from '../../api/api'
 require('./ReportsComponent.scss')
 
@@ -17,6 +18,8 @@ class ReportsComponent extends React.Component {
             endDate: new Date(),
             showStartDate: false,
             showEndDate: false,
+            library: '',
+            type: '',
             reports: []
         }
     }
@@ -77,20 +80,29 @@ class ReportsComponent extends React.Component {
     handleGetReports = (event) => {
         const data = {
             startDate: this.state.startDate,
-            endDate: this.state.endDate
+            endDate: this.state.endDate,
+            library: this.state.library,
+            type: this.state.type
         }
         getReportsInRange(data).then(allReports => {
-            console.log("holy conoly response: ", allReports)
             this.setState({
                 ...this.setState,
                 reports: allReports
             })
         }).catch(error => {
-            console.log("what luck an error: ", error)
+            console.log("error: ", error)
             this.setState({
                 ...this.setState,
                 reports: []
             })
+        })
+    }
+    handleMealTallyDetailsOptionsField = (event, fieldName) => {
+        event.preventDefault()
+        
+        this.setState({
+            ...this.state,
+            [fieldName]: event.target.value
         })
     }
     getDatePicker = (type) => {
@@ -115,6 +127,10 @@ class ReportsComponent extends React.Component {
     }
     
     render() {
+        console.log('reports component libraries passed: ', this.props)
+        const libraryOptions = this.props.libraries.map(library => {
+            return library.name
+        })
         return (
             <div className="ReportContainer">
                 <div className="startDateContainer">
@@ -130,6 +146,19 @@ class ReportsComponent extends React.Component {
                     {this.state.showEndDate ? this.getDatePicker('endDate') : ''}
 
                     <hr />
+                    <OptionsSelectorComponent
+                        optionsName={'library'}
+                        options={libraryOptions}
+                        itemSelected={this.state.library}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+                    <OptionsSelectorComponent
+                        optionsName={'Type'}
+                        options={this.props.mealTypes}
+                        itemSelected={this.state.type}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+
                     <button onClick={this.handleGetReports}>Get Reports</button>
                     <ReportsListComponent allReports={this.state.reports} />
                 </div>

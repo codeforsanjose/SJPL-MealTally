@@ -1,4 +1,5 @@
 import * as React from 'react'
+import moment from 'moment'
 
 require('./ReportDisplayComponent.scss');
 
@@ -17,10 +18,16 @@ class ReportDisplayComponent extends React.Component {
                         <tbody>
                             <tr>
                                 <td>
-                                    
+                                    {moment(this.props.reportData.date).format('MMM, DD YYYY')}
                                 </td>
                                 <td>
-                                    {this.props.reportData.date}
+                                    {this.props.reportData.library}
+                                </td>
+                                <td>
+                                    {this.props.reportData.type}
+                                </td>
+                                <td>
+                                    {this.props.reportData.signature}
                                 </td>
                             </tr> 
                             
