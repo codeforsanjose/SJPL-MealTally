@@ -75,39 +75,7 @@ app.get('/api/auth/facebook/callback', passport.authenticate('facebook', { failu
     res.redirect(`/profile/${req.user._id}`)
 });
 
-const prepareSearchQuery = (searchQuery) => {
-    if (searchQuery.interests) {
-        searchQuery.interests = {
-            $in: searchQuery.interests
-        } 
-    }
-    else if (searchQuery.skills) {
-        const regexSkills = searchQuery.skills.map( (skill) => {
-            return new RegExp(skill, "gi")
-        })
-        searchQuery.skills = {
-            $in: regexSkills
-        } 
-    }
-    var query = { $or: []}
-    Object.keys(searchQuery).map( key => {
-        var keyObj = {}
-        keyObj[key] = searchQuery[key]
-        query['$or'].push(keyObj)    
-    })
-    return query
-}
 
-app.post('/api/admin/search/users', (req, res) => {
-    if (auth.isAdmin(req)) {
-        searchQuery = prepareSearchQuery(req.body)
-        db.findAll('user', searchQuery).then(users => {
-            return res.json(users);
-        });
-    } else {
-        return res.json({ error: 'You do not have permission to access this resource...' });
-    }
-});
 
 app.get('/api/users', (req, res) => {
     if (auth.isAdmin(req)) {
@@ -229,84 +197,19 @@ app.put('/api/user', (req, res) => {
     }
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////
-///////////////////////
-///////////////////////
-
-// Initialize database connection and then start the server.
-/*
-mongoClient.connect(MONGODB_URI, function (err, database) {
-  if (err) {
-    process.exit(1);
-  }
-  db = database;  // Our database object from mLab
-  console.log("Database connection ready");
-  // Initialize the app.
-  app.listen(app.get('port'), function () {
-    console.log("[*] mealtally running on port", app.get('port'));
-  });
-});
-*/
-app.get(["/", "/login", "/signup", "/admin"], (reqest, response) => {
-    response.sendFile(path.join(publicDir, '/index.html'))
+app.get("/api/libraries", function(req, res) {
+    db.collection("libraries").find({}).toArray(function(err, libraries) {
+        if (err) {
+            handleError(res, err.message, "Failed to get libraries")
+        } else {
+            res.status(200).json(libraries)
+        }
+    })
 })
 
-/*
-* Endpoint --> "/api/libraries"
-*/
-
-// GET: retrieve all libraries
-app.get("/api/libraries", function(req, res) {
-  db.collection("libraries").find({}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get libraries");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
-
-/*
-* Endpoint --> "/api/meals"
-*/
-
-// GET: retrieve meals in date range of one week
-app.get("/api/meals/:start/:end", function(req, res) {
-  var cursor = db.collection("meals").aggregate([
-    { $match: { date: {$gte: req.params.start, $lte: req.params.end}}},
-    { $group: { _id: { library: "$library", mealType: "$mealType" },
-                totalReceived: { $sum: "$numReceivedMeals"},
-                totalLeftover: { $sum: "$numLeftoverMeals"},
-                totalStaff: { $sum: "$numStaffMeals"},
-                totalChildren: { $sum: "$numChildrenMeals"},
-                totalAdult: { $sum: "$numAdultMeals"},
-                totalVolunteer: { $sum: "$numVolunteerMeals"},
-                totalWasted: { $sum: "$numWastedMeals"}
-              }
-    }
-  ]).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get meals in date range");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
 
 
-// POST: create a new todo
+// POST: create a new meal
 app.post("/api/meals", function(req, res) {
   db.collection("meals").insertOne(req.body, function(err, doc) {
     if (err) {
@@ -320,17 +223,17 @@ app.post("/api/meals", function(req, res) {
 /*
 * Endpoint --> "/api/logs"
 */
-
+// --------------------------------> Logs no longer needed
 // POST: create a new log
-app.post("/api/logs", function(req, res) {
-  db.collection("logs").insertOne(req.body, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to post log");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
+// app.post("/api/logs", function(req, res) {
+//   db.collection("logs").insertOne(req.body, function(err, doc) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to post log");
+//     } else {
+//       res.status(201).json(doc.ops[0]);
+//     }
+//   });
+// });
 
 // Error handler for the api
 function handleError(res, reason, message, code) {
@@ -340,3 +243,37 @@ function handleError(res, reason, message, code) {
 app.listen(app.get('port'), function () {
     console.log("[*] mealtally running on port", app.get('port'));
 })
+
+const prepareSearchQuery = (searchQuery) => {
+    if (searchQuery.interests) {
+        searchQuery.interests = {
+            $in: searchQuery.interests
+        } 
+    }
+    else if (searchQuery.skills) {
+        const regexSkills = searchQuery.skills.map( (skill) => {
+            return new RegExp(skill, "gi")
+        })
+        searchQuery.skills = {
+            $in: regexSkills
+        } 
+    }
+    var query = { $or: []}
+    Object.keys(searchQuery).map( key => {
+        var keyObj = {}
+        keyObj[key] = searchQuery[key]
+        query['$or'].push(keyObj)    
+    })
+    return query
+}
+
+app.post('/api/admin/search/users', (req, res) => {
+    if (auth.isAdmin(req)) {
+        searchQuery = prepareSearchQuery(req.body)
+        db.findAll('user', searchQuery).then(users => {
+            return res.json(users);
+        });
+    } else {
+        return res.json({ error: 'You do not have permission to access this resource...' });
+    }
+});
