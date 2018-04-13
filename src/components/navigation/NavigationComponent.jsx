@@ -29,10 +29,10 @@ class NavigationComponent extends React.Component {
                 <Route path='/login' component={LoginComponent}/>
                 <Route path='/profile' component={InAppNavigationComponent}/>
               </Switch>
-            
+
             </div>
         </BrowserRouter>
-        
+
       </div>
     );
   }

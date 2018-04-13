@@ -45,7 +45,7 @@ app.post('/api/login', (req, res, next) => {
         }
         req.login(user, () => {
             return res.json(user)
-        })    
+        })
     })(req, res, next)
 
 })
@@ -103,13 +103,11 @@ app.post('/api/reportsRange', (req, res) => {
     } 
 })
 
-app.get('/api/auth/facebook', passport.authenticate('facebook'));
+app.get('/api/auth/facebook', passport.authenticate('facebook'))
 
 app.get('/api/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
     res.redirect(`/profile/${req.user._id}`)
-});
-
-
+})
 
 app.get('/api/users', (req, res) => {
     if (auth.isAdmin(req)) {
@@ -206,14 +204,13 @@ app.put('/api/user', (req, res) => {
 })
 
 app.get("/api/libraries", function(req, res) {
-    db.getAll('libraries').then(libraries => {
-        res.status(200).json(libraries)
+    db.getAll('libraries').then(result => {
+        return res.json(result)
     }).catch(error => {
-        handleError(res, error, "Failed to get libraries")
+        console.log('error getting all libraries', error)
+        return res.json(error)
     })
-})
-
-
+});
 
 // POST: create a new meal
 app.post("/api/meals", function(req, res) {
@@ -223,22 +220,6 @@ app.post("/api/meals", function(req, res) {
         handleError(res, error)  
     })
 })
-
-/*
-* Endpoint --> "/api/logs"
-*/
-// --------------------------------> Logs no longer needed
-// POST: create a new log
-// app.post("/api/logs", function(req, res) {
-//   db.collection("logs").insertOne(req.body, function(err, doc) {
-//     if (err) {
-//       handleError(res, err.message, "Failed to post log");
-//     } else {
-//       res.status(201).json(doc.ops[0]);
-//     }
-//   });
-// });
-
 // Error handler for the api
 function handleError(res, error, code) {
   console.log("API Error: " + error);
