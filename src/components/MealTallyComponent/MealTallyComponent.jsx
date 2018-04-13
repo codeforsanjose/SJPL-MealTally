@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper'
 import IncrementComponent from '../commonComponents/incrementComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
+import { createMeal } from '../../api/api'
 
 require('./MealTallyComponent.scss');
 
@@ -31,9 +32,18 @@ class MealTallyComponent extends React.Component {
             
         }
         this.state = {
+            showDate: false,
             mealTallyDetails: mealTallyDetails
         }
     }
+
+    toggleShowDate = (event) => {
+        this.setState({
+            ...this.state,
+            showDate: !this.state.showDate
+        })
+    }
+
     handleMealTallyDetailsIncrementField = (event, fieldName, value) => {
         event.preventDefault()
         let incValue = this.state.mealTallyDetails[fieldName] + value
@@ -47,7 +57,6 @@ class MealTallyComponent extends React.Component {
     }
     handleMealTallyDetailsOptionsField = (event, fieldName) => {
         event.preventDefault()
-        
         this.setState({
             ...this.state,
             mealTallyDetails: {
@@ -59,12 +68,23 @@ class MealTallyComponent extends React.Component {
     handleDateField = (date) => {
         this.setState({
             ...this.state,
+            showDate: !this.state.showDate,
             mealTallyDetails: {
                 ...this.state.mealTallyDetails,
                 date: date
             }
         })
     }
+
+    handleSaveMealTally = (event) => {
+        event.preventDefault()
+        createMeal(this.state.mealTallyDetails).then(response => {
+            console.log('create meal resut', response)
+        }).catch(error => {
+            console.log('create meal error: ', error)
+        })
+    }
+
     render() {
         const libraryOptions = this.props.libraries.map(library => {
             return library.name
@@ -87,12 +107,13 @@ class MealTallyComponent extends React.Component {
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />
                         <div>
-                            <span>Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
-                            <DatePickerComponent
+                            <span onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
+                            {this.state.showDate ? <DatePickerComponent
                                 name={'Date'}
                                 dateSelected={this.state.mealTallyDetails.date}
                                 handleDateSelected={this.handleDateField}
                             />
+                            : ''}
                         </div>
                     </div>
                     <div className="infoContainer">
@@ -138,6 +159,8 @@ class MealTallyComponent extends React.Component {
                         />
 
                     </div>
+
+                    <button onClick={this.handleSaveMealTally}>Save</button>
                 </Paper>
             </div>
         )

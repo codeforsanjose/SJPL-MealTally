@@ -2,6 +2,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var bcrypt = require('bcrypt')
 var app = express();
 
 var mongodb = require('mongodb');
@@ -152,18 +153,22 @@ app.post('/api/user', (req, res) => {
     // It is good practice to specifically pick the fields we want to insert here *in the backend*,
     // even if we have already done so on the front end. This is to prevent malicious users
     // from adding unexpected fields by modifying the front end JS in the browser.
+    
     var newUser =  _.pick(req.body, [
         'name', 'email', 'phone', 'passphrase'])
     newUser.isAdmin = false
     newUser.approvedBy = ''
-    db.insertOne('user', newUser).then(result => {
-        var userRecord = req.body
-        userRecord.recordType = 'New User'
-        //mailer.notifyAdmin(userRecord)
-        return res.json(result)
-    }).catch(error => {
-        console.log(error)
-        return res.status(422).json(error)
+    bcrypt.hash(newUser.passphrase, 10, (err, hash) => {
+        // Store hash in database
+        newUser.passphrase = hash
+        db.insertOne('user', newUser).then(result => {
+            var userRecord = req.body
+            
+            return res.json(result)
+        }).catch(error => {
+            console.log(error)
+            return res.status(422).json(error)
+        })
     })
 })
 
@@ -192,7 +197,6 @@ app.put('/api/user', (req, res) => {
         db.updateOneById('user', req.body).then(result => {
             var userRecord = req.body;
             userRecord.recordType = 'User Profile Update'
-            //mailer.notifyAdmin(userRecord);
             return res.json(result);
         }).catch(error => {
             console.log(error)
@@ -204,7 +208,7 @@ app.put('/api/user', (req, res) => {
 })
 
 app.get("/api/libraries", function(req, res) {
-    db.getAll('libraries').then(result => {
+    db.getAll('libraries', {name: 1}).then(result => {
         return res.json(result)
     }).catch(error => {
         console.log('error getting all libraries', error)

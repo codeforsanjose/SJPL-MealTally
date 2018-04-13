@@ -12,7 +12,7 @@ $ git clone https://github.com/codeforsanjose/SJPL-MealTally
 
 4. Move the index.html into public/ `mv index.html public/index.html`
 
-5. Start the web app in another tab: `<get the uri from a project member in slack group> nodemon server.js`
+5. Start the web app in another tab: `node server.js`
 
 6. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
 

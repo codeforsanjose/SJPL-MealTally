@@ -147,9 +147,9 @@ const getLibraries = () => {
     })
 }
 
-const createMeal = () => {
+const createMeal = (newMeal) => {
     return new Promise((resolve, reject) => {
-        return makeRequest({'received':5, }, 'POST', '/api/meals').then(response => {
+        return makeRequest(newMeal, 'POST', '/api/meals').then(response => {
             return resolve(response.json())
         }).catch(error => {
             window.alert('Error retrieving user')
@@ -170,4 +170,5 @@ export {
     searchVolunteers,
     getReportsInRange,
     getLibraries,
+    createMeal,
 }
