@@ -12,7 +12,15 @@ class ReportsComponent extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
-        
+        var totals = {
+            received: 0,
+            leftovers: 0,
+            children: 0,
+            volunteer: 0,
+            adult: 0,
+            staff: 0,
+            nonreimbursment: 0
+        }
         this.state = {
             startDate: new Date(),
             endDate: new Date(),
@@ -20,6 +28,7 @@ class ReportsComponent extends React.Component {
             showEndDate: false,
             library: '',
             type: '',
+            totals: totals,
             reports: []
         }
     }
@@ -84,10 +93,14 @@ class ReportsComponent extends React.Component {
             library: this.state.library,
             type: this.state.type
         }
-        getReportsInRange(data).then(allReports => {
+        getReportsInRange(data).then(response => {
+            console.log('range response totals: ', response.totals)
             this.setState({
                 ...this.setState,
-                reports: allReports
+                reports: response['allMeals'],
+                totals: {
+                    ...response.totals
+                }
             })
         }).catch(error => {
             console.log("error: ", error)
@@ -126,8 +139,16 @@ class ReportsComponent extends React.Component {
         }
     }
     
+    displayTotals = () => {
+        var itemTotals = []
+        console.log('display totals : ', this.state.totals)
+        Object.keys(this.state.totals).map((key, index) => {
+            itemTotals.push(<span key={index} className="itemTotal">{key}: {this.state.totals[key]}</span>)
+        })
+        return itemTotals
+    }
+
     render() {
-        console.log('reports component libraries passed: ', this.props)
         const libraryOptions = this.props.libraries.map(library => {
             return library.name
         })
@@ -160,7 +181,11 @@ class ReportsComponent extends React.Component {
                     />
 
                     <button onClick={this.handleGetReports}>Get Reports</button>
+                    {this.state.reports.length > 0 ? this.displayTotals(): ''}
                     <ReportsListComponent allReports={this.state.reports} />
+                    <div className="totalsContainer">
+                        {this.displayTotals()}
+                    </div>
                 </div>
             </div>
         )

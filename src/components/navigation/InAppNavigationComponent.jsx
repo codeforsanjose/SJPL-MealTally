@@ -39,7 +39,6 @@ class InAppNavigationComponent extends React.Component {
     }
     componentWillMount(props) {
         getLibraries().then(libraries => {
-            console.log('libraries', libraries)
             this.setState({
                 ...this.state,
                 libraries: libraries

@@ -8,22 +8,42 @@ class ReportDisplayComponent extends React.Component {
     constructor (props) {
         super(props)
         this.props = props
+        this.state ={
+            showDetails: false
+        }
+    }
+
+    toggleDetails = (event) => {
+        this.setState({
+            ...this.state,
+            showDetails: !this.state.showDetails
+        })
+    }
+
+    showReportDetails = () => {
+        const children = this.props.reportData.children
+        const adults = this.props.reportData.adults
+        return (
+            <div>
+                <span>Children: {children}</span>
+            </div>
+        )
     }
 
     render () {
         return (
-            <div className="reportDisplayContainer">
-                <div className="reportContactInformation">
+            <div className="reportDisplayContainer" onClick={this.toggleDetails} >
+                <div className="reportSummaryInformation">
                     <table>
                         <tbody>
                             <tr>
-                                <td>
+                                <td className="date">
                                     {moment(this.props.reportData.date).format('MMM, DD YYYY')}
                                 </td>
-                                <td>
+                                <td className="libraryName">
                                     {this.props.reportData.library}
                                 </td>
-                                <td>
+                                <td className="type">
                                     {this.props.reportData.type}
                                 </td>
                                 <td>
@@ -33,7 +53,8 @@ class ReportDisplayComponent extends React.Component {
                             
                         </tbody>
                     </table>
-                </div> 
+                </div>
+                {this.state.showDetails ? this.showReportDetails(): ''}
             </div>
         )
     }

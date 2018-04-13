@@ -131,7 +131,6 @@ const updateUser = (newUser) => {
 
 const getReportsInRange = (range) => {
     return makeRequest(range, 'POST', '/api/reportsRange').then(response => {
-        console.log("response in api js: ", response)
         return response.json()
     }).catch(error => {
         console.log("error in api js", error)
@@ -141,7 +140,6 @@ const getReportsInRange = (range) => {
 
 const getLibraries = () => {
     return makeRequest({}, 'GET', '/api/libraries').then(response => {
-        console.log("response in api js: ", response)
         return response.json()
     }).catch(error => {
         console.log("error in api js", error)

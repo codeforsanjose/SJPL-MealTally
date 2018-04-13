@@ -16,9 +16,6 @@ app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.use(express.static("public"));
 
-var MONGODB_URI = process.env.MONGODB_URI;
-
-console.log("MONGODB_URI", MONGODB_URI)
 ///////////////////////
 ///////////////////////
 ///////////////////////
@@ -52,12 +49,49 @@ app.post('/api/login', (req, res, next) => {
     })(req, res, next)
 
 })
+const findReportsDetails = (meals) => {
+    var allDetailsResponse = {
+        totals: {
+            received: 0,
+            leftovers: 0,
+            children: 0,
+            volunteer: 0,
+            adult: 0,
+            staff: 0,
+            nonreimbursment: 0,
+            wasted: 0
+        }
+    }
+    meals.map(meal => {
+        var keys = Object.keys(meal)
+        keys.map(key => {
+            if (allDetailsResponse['totals'][key]) {
+                allDetailsResponse['totals'][key] += +meal[key]
+            }
+        })
+    })
+
+    return allDetailsResponse
+}
 
 app.post('/api/reportsRange', (req, res) => {
     if (req.user.isAdmin) {
-        const query = { date: {$gte: req.body.startDate, $lte: req.body.endDate}}
+        const query = {
+            date: {
+                $gte: req.body.startDate,
+                $lte: req.body.endDate
+            }
+        }
+        if (req.body.type !== '') {
+            query.type = req.body.type
+        }
+        if (req.body.library !== '') {
+            query.library = req.body.library
+        }
         db.findAll('test_meals', query).then(meals => {
-            return res.json(meals)
+            var response = findReportsDetails(meals)
+            response['allMeals'] = meals
+            return res.json(response)
         }).catch(error => {
             console.log("error in server js: ", error)
             return res.status(422).json({"errormsg": error})

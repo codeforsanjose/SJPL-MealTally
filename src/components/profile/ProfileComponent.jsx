@@ -16,7 +16,6 @@ class ProfileComponent extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
-        console.log('profile component props user: ', this.props.user)
         
         this.state = {
             ...this.props.user
