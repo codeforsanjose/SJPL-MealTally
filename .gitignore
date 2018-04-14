@@ -14,7 +14,7 @@ server/node_modules
 public
 
 # Config files
-config
+config/projectInfoData.json
 server/config/*.json
 server/config/index.json
 
