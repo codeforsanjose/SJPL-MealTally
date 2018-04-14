@@ -1,20 +1,23 @@
 
 ## Running the web app locally
 
-1. In your terminal, cd into your project folder and clone this repo:
+1. In your terminal, cd into your project folder and clone this repo and navigate to correct branch:
 ```
 $ git clone https://github.com/codeforsanjose/SJPL-MealTally
+$ git checkout react-meal-tally
 ```
 
 2. cd into SJPL-MealTally and run `npm install`
 
 3. Run the command `npm run build`
 
-4. Move the index.html into public/ `mv index.html public/index.html`
+4. Copy the index.html into public/ `cp index.html public/index.html`
 
-5. Start the web app in another tab: `node server.js`
+5. Setup MongoDB local db instance or talk to project team for instructions to get test data
 
-6. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
+6. Start the web app in another tab: `node server.js` or `MONGODB_URI=<get from slack group member> node server.js`
+
+7. Open `localhost:8080` to enter from the web app's Home page.
 
 
 [![Stories in Ready](https://badge.waffle.io/codeforsanjose/SJPL-MealTally.png?label=ready&title=Ready)](https://waffle.io/codeforsanjose/SJPL-MealTally)
@@ -29,7 +32,7 @@ Because of the above restriction, the library must keep diligent documentation o
 Last October, some friends and I hacked together a software [solution](https://github.com/robeau/SJPL-MealTally) during a 30-hour [hackathon](https://devpost.com/software/togetherly-mealtally). We have since delivered the mobile and web app to the library, but since this was a quick hack, there are still some tasks that need to be taken care of before the meal program starts back up in May. I am currently the only developer still working with them on the web portion of the project, and my time is limited, plus this seems like a great project for CfSJ to be involved in as it benefits our public libraries. See open issues for a list of current tasks.
 
 ### Dashboard
-
+1. Work in progress
 The dashboard allows the meal coordinator to keep an eye on meal trends at each library. (NOTE: Not yet connected with the current database schema)
 ![dashboard screenshot](https://raw.githubusercontent.com/codeforsanjose/SJPL-MealTally/master/assets/dashboard.png)
 
@@ -38,12 +41,7 @@ The dashboard allows the meal coordinator to keep an eye on meal trends at each 
 This is the current UI to add meals, record logs and generate pdf reports.
 ![](https://raw.githubusercontent.com/wiki/codeforsanjose/SJPL-MealTally/images/home-log-report.png)
 
-There are three tabs along the bottom screen:
-1. Home
-2. Log
-3. Report
-
-##### Home
+##### Meal Tally App
 1. The volunteer selects the library name and the meal type (e.g. Lunch) on the `Meal Info` card. Date is also customizable; default value is current time in timezone -07:00.
 2. The total received meals is logged on the `Inventory` card.
 3. As program attendees enter the meal line, increments are made for each person on the `Categories` card.
@@ -51,10 +49,8 @@ There are three tabs along the bottom screen:
 5. A signature such as one's full name is input on the `User Info` card; the meal tallies can then be pushed to the database by clicking "ADD MEAL".
 6. Click the "RESET COUNTS" button to clear all categories tallies (NOTE: Careful not to accidentally press this instead of "ADD MEAL" #32)
 
-##### Log
-1. The volunteer selects the library name and the log type (e.g. Refrigerator) on the `Log Info` card. Date is also customizable; default value is current time in timezone -07:00.
-2. A description, a temperature (in Fahrenheit) and a comment can be input via laptop or mobile keyboard.
-3. A signature such as one's full name is input on the `User Info` card; the meal tallies can then be pushed to the database by clicking "ADD LOG".
+##### Profile
+1. Editing the volunteer's profile
 
 ##### Report
 1. The start and date range can be selected (NOTE: End range is exclusive, so to get today increase the date end by one day #29).
