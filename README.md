@@ -1,4 +1,22 @@
 
+## Running the web app locally
+
+1. In your terminal, cd into your project folder and clone this repo:
+```
+$ git clone https://github.com/codeforsanjose/SJPL-MealTally
+```
+
+2. cd into SJPL-MealTally and run `npm install`
+
+3. Run the command `npm run build`
+
+4. Move the index.html into public/ `mv index.html public/index.html`
+
+5. Start the web app in another tab: `node server.js`
+
+6. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
+
+
 [![Stories in Ready](https://badge.waffle.io/codeforsanjose/SJPL-MealTally.png?label=ready&title=Ready)](https://waffle.io/codeforsanjose/SJPL-MealTally)
 ## Background
 
@@ -48,27 +66,3 @@ There are three tabs along the bottom screen:
 
 See [the live Heroku demo](https://sjpl-meal-tally.herokuapp.com); read [this wiki article](https://github.com/codeforsanjose/SJPL-MealTally/wiki/Proof-of-concept-for-modern-web-app) for development details.
 
-## Running the web app locally
-
-1. In your terminal, cd into your project folder and clone this repo:
-```
-$ git clone https://github.com/codeforsanjose/SJPL-MealTally
-```
-
-2. Cd into SJPL-MealTally and run `npm install`
-
-3. Install Cordova `sudo npm install -g cordova` and Ionic `sudo npm install -g ionic`
-
-4. Open a new tab in your terminal and start the express server in it:
-```
-$ MONGODB_URI=<get the uri from a project member> node server.js
-```
-Replace <> with a mongolab URI -- you can create your own on [mLab](https://mlab.com/) or get one from a project member (NOTE: This can also be set as an environment variable in Node). It just needs a `meals` and a `logs` collection.
-
-5. Start the web app in another tab:
-```
-$ ionic serve -b
-```
-The `-b` flag prevents the automatic opening of a new tab in the default browser.
-
-6. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.

@@ -1,3 +1,4 @@
+public
 web/build
 web/node_modules
 web/bower_components
@@ -10,6 +11,7 @@ server/node_modules
 /build
 /captures
 .externalNativeBuild
+public
 
 # Config files
 config

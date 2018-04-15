@@ -1,0 +1,27 @@
+.main {
+    display: inline-block;
+    font-family: 'Roboto';
+    margin: 10px;
+    width: 800px;
+    background-color: #F3F2F0;
+    text-align: center;
+}
+
+.darkStyle {
+    margin: 10px;
+    background-color: #252525;
+}
+
+.appButton {
+    font-size: .8em;
+    padding: 10px 23px 10px 23px;
+    color: white;
+    background-color: #e0b300;
+    margin: 10px;
+    text-transform: uppercase;
+    transition: background-color 0.5s ease;
+}
+
+.appButton:hover {
+    background-color: black;
+}
