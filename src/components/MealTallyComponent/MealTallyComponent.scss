@@ -1,0 +1,16 @@
+.mealTallyContainer {
+    display: inline-block;
+    text-align: center;
+    width: 90%;
+
+    .infoContainer {
+        margin: 10px;
+        border: solid 1px #ccc;
+
+        .infoContainerTitle {
+            text-align: center;
+            background-color: blue;
+            color: white;
+        }
+    }
+}

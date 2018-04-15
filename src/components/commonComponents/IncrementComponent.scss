@@ -1,0 +1,28 @@
+.incrementContainer {
+    background-color: blueviolet;
+    padding: 10px;
+    margin: 10px;
+    height: 20px;
+
+    .itemTitle {
+        float: left;
+        
+    }
+    .itemCount {
+        float: left;
+        padding-left: 20px;
+
+    }
+    .buttonContainer {
+        float: right;
+
+        .inc {
+            padding: 6px;
+        }
+
+        .dec {
+            padding: 6px;
+
+        }
+    }
+}
