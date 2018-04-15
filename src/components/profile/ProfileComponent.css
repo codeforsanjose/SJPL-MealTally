@@ -17,3 +17,7 @@
 .navItem:hover {
     border: 2px solid #ccc;
 }
+
+.navItem a:hover {
+    border: none;
+}
