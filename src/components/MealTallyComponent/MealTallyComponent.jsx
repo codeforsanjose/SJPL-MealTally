@@ -93,6 +93,15 @@ class MealTallyComponent extends React.Component {
             <div className="mealTallyContainer">
                 <Paper>
                     <div className="infoContainer">
+                        <div className="dateContainer">
+                            <span className="dateDisplay" onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
+                            {this.state.showDate ? <DatePickerComponent
+                                name={'Date'}
+                                dateSelected={this.state.mealTallyDetails.date}
+                                handleDateSelected={this.handleDateField}
+                            />
+                            : ''}
+                        </div>
                         <h3 className="infoContainerTitle">Meal Info</h3>
                         <OptionsSelectorComponent
                             optionsName={'library'}
@@ -106,15 +115,7 @@ class MealTallyComponent extends React.Component {
                             itemSelected={this.state.mealTallyDetails.type}
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />
-                        <div>
-                            <span onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
-                            {this.state.showDate ? <DatePickerComponent
-                                name={'Date'}
-                                dateSelected={this.state.mealTallyDetails.date}
-                                handleDateSelected={this.handleDateField}
-                            />
-                            : ''}
-                        </div>
+                        
                     </div>
                     <div className="infoContainer">
                         <h3 className="infoContainerTitle">Inventory</h3>

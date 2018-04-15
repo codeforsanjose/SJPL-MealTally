@@ -5,10 +5,15 @@
 
 .navItem {
     display: inline-block;
-    font-size: 18px;
+    font-size: 1em;
+    font-family: arial;
     margin: 10px;
+    cursor: pointer;
+    background-color: #eee;
+    border: 2px solid #eee;
+
 }
 
 .navItem:hover {
-    color: green
+    border: 2px solid #ccc;
 }

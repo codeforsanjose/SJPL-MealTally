@@ -18,9 +18,10 @@ class IncrementComponent extends React.Component {
         const fieldName = incrementerName.toLowerCase()
         return (
             <div className="incrementContainer">
-                <span className="itemTitle">{incrementerName}</span> <span className="itemCount">{itemCount}</span>
+                <span className="itemTitle">{incrementerName}</span> 
                 <div className="buttonContainer">
                     <button className="inc" onClick={(e) => this.props.incrementerHandler(e, fieldName, -1)}>-</button>
+                    <span className="itemCount">{itemCount}</span>
                     <button className="dec" onClick={(e) => this.props.incrementerHandler(e, fieldName, 1)}>+</button>
                 </div>
             </div>
