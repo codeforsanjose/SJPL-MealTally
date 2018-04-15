@@ -92,6 +92,7 @@ class MealTallyComponent extends React.Component {
         return (
             <div className="mealTallyContainer">
                 <Paper>
+                <div className="introContainer">
                     <div className="infoContainer">
                         <div className="dateContainer">
                             <span className="dateDisplay" onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
@@ -102,7 +103,8 @@ class MealTallyComponent extends React.Component {
                             />
                             : ''}
                         </div>
-                        <h3 className="infoContainerTitle">Meal Info</h3>
+                    </div>
+                    <div className="infoContainer">
                         <OptionsSelectorComponent
                             optionsName={'library'}
                             options={libraryOptions}
@@ -118,43 +120,45 @@ class MealTallyComponent extends React.Component {
                         
                     </div>
                     <div className="infoContainer">
-                        <h3 className="infoContainerTitle">Inventory</h3>
+                        <h3 className="infoContainerTitle">Available Meals</h3>
                         <IncrementComponent 
                             incrementerName={"Received"} 
                             itemCount={this.state.mealTallyDetails.received} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
-                            incrementerName={"Leftovers"} 
+                            incrementerName={"Leftover Meals"} 
                             itemCount={this.state.mealTallyDetails.leftovers} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
 
                     </div>
+                    </div>
                     <div className="infoContainer">
-                        <h3 className="infoContainerTitle">Categories</h3>
+                        <h3 className="infoContainerTitle">Served Meals</h3>
+                        
                         <IncrementComponent 
-                            incrementerName={"Staff"} 
+                            incrementerName={"Children & Teens"} 
+                            itemCount={this.state.mealTallyDetails.children} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                    </div>
+                    <div className="infoContainer">
+                        <IncrementComponent 
+                            incrementerName={"Teen Staff & Volunteers"} 
                             itemCount={this.state.mealTallyDetails.staff} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
-                            incrementerName={"Children"} 
-                            itemCount={this.state.mealTallyDetails.children} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={"Adult"} 
+                            incrementerName={"Adults"} 
                             itemCount={this.state.mealTallyDetails.adult} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
+                    </div>
+                    <div className="infoContainer">
+
                         <IncrementComponent 
-                            incrementerName={"Volunteer"} 
-                            itemCount={this.state.mealTallyDetails.volunteer} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={"Nonreimbursment"} 
+                            incrementerName={"Unusable Meals"} 
                             itemCount={this.state.mealTallyDetails.nonreimbursment} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
