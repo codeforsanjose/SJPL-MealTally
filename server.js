@@ -15,7 +15,7 @@ const publicDir = __dirname + '/public'
 app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-app.use(express.static("public"));
+app.use('/public', express.static("public"));
 
 ///////////////////////
 ///////////////////////
