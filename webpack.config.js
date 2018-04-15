@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
