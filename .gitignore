@@ -8,7 +8,7 @@ public
 package-lock.json
 
 # Config files
-config/projectInfoData.json
+
 
 # npm
 npm-debug.log
