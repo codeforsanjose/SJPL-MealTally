@@ -1,20 +1,22 @@
 .incrementContainer {
-    background-color: blueviolet;
-    padding: 10px;
-    margin: 10px;
-    height: 20px;
+    
+    padding: 2em;
+    margin: 3em;
+    display: inline-block;
+ 
 
     .itemTitle {
-        float: left;
-        
+        font-size: 1.4em;
+        line-height: 2;
     }
-    .itemCount {
-        float: left;
-        padding-left: 20px;
-
-    }
+    
     .buttonContainer {
-        float: right;
+        text-align: center;
+        font-size: 1.4em;
+
+        button {
+            font-size: 1.4em;
+        }
 
         .inc {
             padding: 6px;
@@ -22,6 +24,11 @@
 
         .dec {
             padding: 6px;
+
+        }
+        .itemCount {
+            
+            padding: 1em;
 
         }
     }
