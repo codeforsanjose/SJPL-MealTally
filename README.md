@@ -11,11 +11,9 @@ $ git checkout react-meal-tally
 
 3. Run the command `npm run build`
 
-4. Copy the index.html into public/ `cp index.html public/index.html`
+5. Setup MongoDB local db instance `node config/setup_local_db.js` or talk to project team for instructions to get test data
 
-5. Setup MongoDB local db instance or talk to project team for instructions to get test data
-
-6. Start the web app in another tab: `node server.js` or `MONGODB_URI=<get from slack group member> node server.js`
+6. Start the web app in another tab: `node server.js`
 
 7. Open `localhost:8080` to enter from the web app's Home page.
 
@@ -60,5 +58,5 @@ This is the current UI to add meals, record logs and generate pdf reports.
   - category totals
 3. A new card appears at the bottom of the Report tab. Type an output PDF file name and click "SAVE PDF" to download the report.
 
-See [the live Heroku demo](https://sjpl-meal-tally.herokuapp.com); read [this wiki article](https://github.com/codeforsanjose/SJPL-MealTally/wiki/Proof-of-concept-for-modern-web-app) for development details.
+See [the live Heroku demo](https://mealtally-server.herokuapp.com); read [this wiki article](https://github.com/codeforsanjose/SJPL-MealTally/wiki/Proof-of-concept-for-modern-web-app) for development details.
 

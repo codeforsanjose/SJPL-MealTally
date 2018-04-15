@@ -22,11 +22,10 @@ class MealTallyComponent extends React.Component {
             type: '',
             received: 0,
             leftovers: 0,
-            children: 0,
-            volunteer: 0,
+            childrenAndTenns: 0,
+            teenStaffAndVolunteer: 0,
             adult: 0,
-            staff: 0,
-            nonreimbursment: 0,
+            unusable: 0,
             createdBy: {},
             signature:''
             
@@ -47,6 +46,7 @@ class MealTallyComponent extends React.Component {
     handleMealTallyDetailsIncrementField = (event, fieldName, value) => {
         event.preventDefault()
         let incValue = this.state.mealTallyDetails[fieldName] + value
+        incValue = incValue > 0 ? incValue: 0
         this.setState({
             ...this.state,
             mealTallyDetails: {
@@ -78,10 +78,22 @@ class MealTallyComponent extends React.Component {
 
     handleSaveMealTally = (event) => {
         event.preventDefault()
+        const data = this.state.mealTallyDetails
+        data['createdBy'] = this.props.user._id || 'guest'
         createMeal(this.state.mealTallyDetails).then(response => {
             console.log('create meal resut', response)
         }).catch(error => {
             console.log('create meal error: ', error)
+        })
+    }
+    handleSignature = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            mealTallyDetails: {
+                ...this.state.mealTallyDetails,
+                signature: event.target.value
+            }
         })
     }
 
@@ -164,7 +176,7 @@ class MealTallyComponent extends React.Component {
                         />
 
                     </div>
-
+                    <label>Signature: </label><input type="text" onChange={this.handleSignature} />
                     <button onClick={this.handleSaveMealTally}>Save</button>
                 </Paper>
             </div>

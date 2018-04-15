@@ -6,6 +6,7 @@ public
 .DS_Store
 public
 package-lock.json
+node_modules
 
 # Config files
 config/projectInfoData.json
