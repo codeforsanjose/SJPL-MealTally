@@ -4,16 +4,11 @@
   "description": "Give Light hackathon",
   "main": "app/main.jsx",
   "scripts": {
-    "lint": "eslint --cache --ignore-path .gitignore --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
-    "test": "npm run lint",
     "mocha-test": "mocha --require ignore-styles --compilers js:babel-core/register tests/test.js",
     "build": "webpack",
     "watch-build": "webpack --watch",
     "watch": "webpack --watch",
-    "start": "node server.js",
-    "deploy": "NODE_ENV=production webpack --config webpack.production.config.js",
-    "deploy-windows": "SET NODE_ENV=production & webpack --config webpack.production.config.js",
-    "heroku-postbuild": "webpack --config ./webpack.production.config.js --progress"
+    "start": "webpack && node server.js"
   },
   "engines": {
     "node": "6"
