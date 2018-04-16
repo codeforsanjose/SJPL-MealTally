@@ -161,40 +161,42 @@ class MealTallyComponent extends React.Component {
                                 : ''}
                             </div>
                         </div>
-                        <div className="infoContainer">
-                            <OptionsSelectorComponent
-                                optionsName={'Library'}
-                                fieldName={'library'}
-                                options={libraryOptions}
-                                itemSelected={this.state.mealTallyDetails.library}
-                                optionsHandler={this.handleMealTallyDetailsOptionsField}
-                            />
-                            <OptionsSelectorComponent
-                                optionsName={'Type'}
-                                fieldName={'type'}
-                                options={this.state.mealTypes}
-                                itemSelected={this.state.mealTallyDetails.type}
-                                optionsHandler={this.handleMealTallyDetailsOptionsField}
-                            />
-                            
+                        <div className="libraryType">
+                            <div className="infoContainer">
+                                <OptionsSelectorComponent
+                                    optionsName={'Library'}
+                                    fieldName={'library'}
+                                    options={libraryOptions}
+                                    itemSelected={this.state.mealTallyDetails.library}
+                                    optionsHandler={this.handleMealTallyDetailsOptionsField}
+                                />
+                                <OptionsSelectorComponent
+                                    optionsName={'Type'}
+                                    fieldName={'type'}
+                                    options={this.state.mealTypes}
+                                    itemSelected={this.state.mealTallyDetails.type}
+                                    optionsHandler={this.handleMealTallyDetailsOptionsField}
+                                />
+                                
+                            </div>
                         </div>
                         <div className="infoContainer">
                             <h3 className="infoContainerTitle">Available Meals</h3>
                             <IncrementComponent 
-                                incrementerName={"Received"}
+                                incrementerName={"Meals from Vendor"}
                                 fieldName={'received'}
                                 itemCount={this.state.mealTallyDetails.received} 
                                 incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                             />
                             <IncrementComponent 
-                                incrementerName={"Leftover Meals"}
+                                incrementerName={"Leftover from Yesterday"}
                                 fieldName={'leftovers'}
                                 itemCount={this.state.mealTallyDetails.leftovers} 
                                 incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                             />
                             <div className="totalMeals">
-                                <span>Total Meals Available</span>
-                                <div>
+                                <span className="tallyTotal">Total Meals Available:</span>
+                                <div className="totalNumber">
                                     {totalMealAvailable}
                                 </div>
                             </div>
@@ -232,15 +234,15 @@ class MealTallyComponent extends React.Component {
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <div className="totalServed">
-                            <span>Total Meals Served</span>
-                            <div>
+                            <span className="tallyTotal">Total Meals Served:</span>
+                            <div className="totalNumber">
                                 {totalMealServed}
                             </div>
                         </div>
                     </div>
                     <div className="totalLeftover">
-                            <span>Total Leftovers</span>
-                            <div>
+                            <span className="tallyTotal">Leftover Meals:</span>
+                            <div className="totalNumber">
                                 {totalLeftover}
                             </div>
                         </div>
