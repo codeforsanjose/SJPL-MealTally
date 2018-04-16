@@ -1,0 +1,44 @@
+.mealTallyContainer {
+    display: inline-block;
+    text-align: center;
+    width: 90%;
+
+    .introContainer {
+        background-color: #F7F7F7;
+    }
+
+
+    .infoContainer {
+        margin: 1em 0;
+        padding: 1em 0;
+
+        .infoContainerTitle {
+            text-align: center;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .dateContainer {
+            cursor: pointer;
+            border-bottom: 2px dotted #ccc;
+            padding: .5em;
+            width: auto;
+            display: inline-block;
+            margin: 2em 0 0 0;
+            &:hover {
+                background-color: #eee;
+            }
+            .dateDisplay span {
+                font-size: 1.4em;
+                display: block;
+            }
+        }
+    }
+
+    .saveMealTally {
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,35 @@
+.incrementContainer {
+    
+    padding: 2em;
+    margin: 3em;
+    display: inline-block;
+ 
+
+    .itemTitle {
+        font-size: 1.4em;
+        line-height: 2;
+    }
+    
+    .buttonContainer {
+        text-align: center;
+        font-size: 1.4em;
+
+        button {
+            font-size: 1.4em;
+        }
+
+        .inc {
+            padding: 6px;
+        }
+
+        .dec {
+            padding: 6px;
+
+        }
+        .itemCount {
+            
+            padding: 1em;
+
+        }
+    }
+}
