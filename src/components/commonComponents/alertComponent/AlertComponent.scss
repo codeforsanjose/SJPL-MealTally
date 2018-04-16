@@ -1,11 +1,13 @@
 .alertContainer {
     display: block;
-    width: 80%;
-    height: 80%;
+    width: 400px;
+    height: 400px;
     position: fixed;
     top: 100px;
-    left: 300px;
+    left: 30%;
+    background-color: white;
     border: 1px solid #ccc;
+    font-size: 24px;
 
     .messageContainer {
 

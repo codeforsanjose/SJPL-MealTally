@@ -138,6 +138,9 @@ class MealTallyComponent extends React.Component {
     }
 
     render() {
+        const totalMealAvailable = this.state.mealTallyDetails.received + this.state.mealTallyDetails.leftovers
+        const totalMealServed = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers + this.state.mealTallyDetails.adult
+        const totalLeftover = totalMealAvailable - totalMealServed - this.state.mealTallyDetails.unusable
         const libraryOptions = this.state.libraries.map(library => {
             return library.name
         })
@@ -146,51 +149,56 @@ class MealTallyComponent extends React.Component {
                 {this.state.showLoading ? <AlertComponent isLoading={true} message={this.state.loadingMessage} />: ''}
                 {this.state.showAlert ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.alertMessage} />: ''}
                 <Paper>
-                <div className="introContainer">
-                    <div className="infoContainer">
-                        <div className="dateContainer">
-                            <span className="dateDisplay" onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
-                            {this.state.showDate ? <DatePickerComponent
-                                name={'Date'}
-                                dateSelected={this.state.mealTallyDetails.date}
-                                handleDateSelected={this.handleDateField}
-                            />
-                            : ''}
+                    <div className="introContainer">
+                        <div className="infoContainer">
+                            <div className="dateContainer">
+                                <span className="dateDisplay" onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
+                                {this.state.showDate ? <DatePickerComponent
+                                    name={'Date'}
+                                    dateSelected={this.state.mealTallyDetails.date}
+                                    handleDateSelected={this.handleDateField}
+                                />
+                                : ''}
+                            </div>
                         </div>
-                    </div>
-                    <div className="infoContainer">
-                        <OptionsSelectorComponent
-                            optionsName={'Library'}
-                            fieldName={'library'}
-                            options={libraryOptions}
-                            itemSelected={this.state.mealTallyDetails.library}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-                        <OptionsSelectorComponent
-                            optionsName={'Type'}
-                            fieldName={'type'}
-                            options={this.state.mealTypes}
-                            itemSelected={this.state.mealTallyDetails.type}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-                        
-                    </div>
-                    <div className="infoContainer">
-                        <h3 className="infoContainerTitle">Available Meals</h3>
-                        <IncrementComponent 
-                            incrementerName={"Received"}
-                            fieldName={'received'}
-                            itemCount={this.state.mealTallyDetails.received} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={"Leftover Meals"}
-                            fieldName={'leftovers'}
-                            itemCount={this.state.mealTallyDetails.leftovers} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-
-                    </div>
+                        <div className="infoContainer">
+                            <OptionsSelectorComponent
+                                optionsName={'Library'}
+                                fieldName={'library'}
+                                options={libraryOptions}
+                                itemSelected={this.state.mealTallyDetails.library}
+                                optionsHandler={this.handleMealTallyDetailsOptionsField}
+                            />
+                            <OptionsSelectorComponent
+                                optionsName={'Type'}
+                                fieldName={'type'}
+                                options={this.state.mealTypes}
+                                itemSelected={this.state.mealTallyDetails.type}
+                                optionsHandler={this.handleMealTallyDetailsOptionsField}
+                            />
+                            
+                        </div>
+                        <div className="infoContainer">
+                            <h3 className="infoContainerTitle">Available Meals</h3>
+                            <IncrementComponent 
+                                incrementerName={"Received"}
+                                fieldName={'received'}
+                                itemCount={this.state.mealTallyDetails.received} 
+                                incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                            />
+                            <IncrementComponent 
+                                incrementerName={"Leftover Meals"}
+                                fieldName={'leftovers'}
+                                itemCount={this.state.mealTallyDetails.leftovers} 
+                                incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                            />
+                            <div className="totalMeals">
+                                <span>Total Meals Available</span>
+                                <div>
+                                    {totalMealAvailable}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="infoContainer">
                         <h3 className="infoContainerTitle">Served Meals</h3>
@@ -223,8 +231,19 @@ class MealTallyComponent extends React.Component {
                             itemCount={this.state.mealTallyDetails.unusable} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
-
+                        <div className="totalServed">
+                            <span>Total Meals Served</span>
+                            <div>
+                                {totalMealServed}
+                            </div>
+                        </div>
                     </div>
+                    <div className="totalLeftover">
+                            <span>Total Leftovers</span>
+                            <div>
+                                {totalLeftover}
+                            </div>
+                        </div>
                     <div>
                         <label>Signature: </label><input type="text" onChange={this.handleSignature} />
                     </div>
