@@ -13,7 +13,7 @@ $ git checkout react-meal-tally
 
 5. Setup MongoDB local db instance `node config/setup_local_db.js` or talk to project team for instructions to get test data
 
-6. Copy example.projectInfoData.json to projectInfoData.json and edit it so that localURL points to your local MongoDB (usually 127.0.0.1:27017)
+6. Copy example.projectInfoData.json to projectInfoData.json and edit it so that localURL points to your local MongoDB (usually mongodb://127.0.0.1:27017)
 
 7. Start the web app in another tab: `node server.js`
 
