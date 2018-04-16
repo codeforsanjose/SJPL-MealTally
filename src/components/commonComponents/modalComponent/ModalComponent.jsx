@@ -9,15 +9,16 @@ class ModalComponent extends React.Component {
         super(props)
         this.props = props
         this.state = {
-            message: ''
         }
     }
 
-    showDetails = () => {
+    showMealDetails = () => {
         
         return (
             <div className="messageContainer">
-                this is a modal
+                <div>
+                    <span>Meals received from Vendor: {this.props.meal.received}</span>
+                </div>
             </div>
         )
         
@@ -26,7 +27,7 @@ class ModalComponent extends React.Component {
     render () {
         return (
             <div className="ModalContainer" >
-                {this.showDetails()}
+                {this.showMealDetails()}
             </div>
         )
     }

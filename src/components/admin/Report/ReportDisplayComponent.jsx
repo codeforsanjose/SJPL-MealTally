@@ -1,6 +1,8 @@
 import * as React from 'react'
+import $ from 'jquery'
 import moment from 'moment'
 
+import ModalComponent from '../../commonComponents/modalComponent/ModalComponent'
 require('./ReportDisplayComponent.scss');
 
 
@@ -25,7 +27,7 @@ class ReportDisplayComponent extends React.Component {
         const adults = this.props.reportData.adults
         return (
             <div>
-                <span>Children: {children}</span>
+                <ModalComponent meal={this.props.reportData} />
             </div>
         )
     }
@@ -57,6 +59,16 @@ class ReportDisplayComponent extends React.Component {
                 {this.state.showDetails ? this.showReportDetails(): ''}
             </div>
         )
+    }
+    componentDidMount() {
+        // i do not like and does not work correctly but only way i could think of a simple solution without using a framework
+        const self = this
+        $('body').click(function() {
+            self.setState({
+                ...self.state,
+                showDetails: false
+            })
+        })
     }
 }
 
