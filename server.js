@@ -89,7 +89,7 @@ app.post('/api/reportsRange', (req, res) => {
         if (req.body.library !== '') {
             query.library = req.body.library
         }
-        db.findAll('test_meals', query).then(meals => {
+        db.findAll('meals', query).then(meals => {
             var response = findReportsDetails(meals)
             response['allMeals'] = meals
             return res.json(response)
@@ -218,7 +218,7 @@ app.get("/api/libraries", function(req, res) {
 
 // POST: create a new meal
 app.post("/api/meals", function(req, res) {
-    db.insertOne('test_meals', req.body).then(response => {
+    db.insertOne('meals', req.body).then(response => {
         res.status(201).json(response);  
     }).catch(error => {
         handleError(res, error)  
