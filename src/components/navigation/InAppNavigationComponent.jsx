@@ -24,9 +24,7 @@ class InAppNavigationComponent extends React.Component {
             isAdmin: false,
         }
         var mealTallyDetails = {
-            received: 0,
-            library: ''
-
+      
         }
         this.state = {
             user: user,
@@ -118,7 +116,7 @@ class InAppNavigationComponent extends React.Component {
                 }
                 case (2): {
                     return (
-                        <MealTallyComponent user={this.state.user} libraries={this.state.libraries} mealTypes={this.state.mealTypes} mealTallyDetails={this.state.mealTallyDetails} />
+                        <MealTallyComponent user={this.state.user} mealTallyDetails={this.state.mealTallyDetails} />
                     )
                 }
                 case (3): {
@@ -141,7 +139,7 @@ class InAppNavigationComponent extends React.Component {
                 }
                 case (2): {
                     return (
-                        <MealTallyComponent user={this.state.user} libraries={this.state.libraries} mealTypes={this.state.mealTypes} />
+                        <MealTallyComponent user={this.state.user || {}} />
                     )
                 }
                 default: {

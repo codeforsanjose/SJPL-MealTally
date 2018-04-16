@@ -26,7 +26,7 @@ class OptionsSelectorComponent extends React.Component {
         const fieldName = optionsName.toLowerCase()
         return (
             <div className="incrementContainer">
-                <span><span>{optionsName}</span> <span>{itemSelected}</span></span>
+                <span>{optionsName}</span>
                 <select onChange={(e) => this.props.optionsHandler(e,fieldName)} >
                     {this.displayOptions()}
                 </select>

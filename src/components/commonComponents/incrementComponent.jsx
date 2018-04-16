@@ -14,8 +14,7 @@ class IncrementComponent extends React.Component {
     }    
     render() {
         const { incrementerName, itemCount } = this.props
-        console.log("what is props", this.props)
-        const fieldName = incrementerName.toLowerCase()
+        const fieldName = this.props.fieldName
         return (
             <div className="incrementContainer">
                 <span className="itemTitle">{incrementerName}</span> 
