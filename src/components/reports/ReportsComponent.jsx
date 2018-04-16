@@ -33,24 +33,14 @@ class ReportsComponent extends React.Component {
         }
     }
     componentDidMount() {
-        const href = window.location.href;
-        const id = href.substr(href.lastIndexOf('/') + 1);
-        getUser(id).then(response => {
-            if (response['error']) {
-                window.location.href = '/login'
-            }
-            else {
-                this.setState({
-                    ...this.state,
-                    user: {
-                        ...response.user
-                    }
-                })
-            }
-        }).catch( error => {
-            window.alert('Invalid operation')
-            window.location.href = '/login'
-        });
+        
+    }
+    componentWillMount(newProps) {
+        this.setState({
+            ...this.state,
+            startDate: moment(),
+            endDate: moment().subtract(7,'d')
+        })
     }
 
     handleDate = (date, type) => {
@@ -184,7 +174,7 @@ class ReportsComponent extends React.Component {
                     {this.state.reports.length > 0 ? this.displayTotals(): ''}
                     <ReportsListComponent allReports={this.state.reports} />
                     <div className="totalsContainer">
-                        {this.displayTotals()}
+                        
                     </div>
                 </div>
             </div>

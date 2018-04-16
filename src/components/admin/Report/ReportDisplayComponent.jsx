@@ -63,7 +63,7 @@ class ReportDisplayComponent extends React.Component {
     componentDidMount() {
         // i do not like and does not work correctly but only way i could think of a simple solution without using a framework
         const self = this
-        $('body').click(function() {
+        $('div').click(function() {
             self.setState({
                 ...self.state,
                 showDetails: false
