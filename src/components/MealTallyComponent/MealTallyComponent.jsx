@@ -179,7 +179,7 @@ class MealTallyComponent extends React.Component {
                                 />
                                 
                             </div>
-                        </div>
+                    </div>
                         <div className="infoContainer">
                             <h3 className="infoContainerTitle">Available Meals</h3>
                             <IncrementComponent 
@@ -246,7 +246,7 @@ class MealTallyComponent extends React.Component {
                                 {totalLeftover}
                             </div>
                         </div>
-                    <div>
+                    <div className="signatureBox">
                         <label>Signature: </label><input type="text" onChange={this.handleSignature} />
                     </div>
 
