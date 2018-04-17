@@ -13,7 +13,6 @@ class ModalComponent extends React.Component {
     }
 
     showMealDetails = () => {
-        console.log('report selected: ', this.props.meal)
         const totalMealsAvailable = this.props.meal.received + this.props.meal.leftovers
         const totalMealsServed = this.props.meal.childrenAndTeens + this.props.meal.teenStaffAndVolunteers + this.props.meal.adult
         const totalLeftover = totalMealsAvailable - totalMealsServed
