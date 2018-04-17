@@ -1,15 +1,47 @@
-.mealTallyContainer {
-    display: inline-block;
+body {
+    margin: 0;
+}
+    .mealTallyContainer {
     text-align: center;
-    width: 90%;
+
+    .dateDisplay {
+      display: block;
+      margin-bottom: .5em;
+      font-size: 2em;
+    }
 
     .introContainer {
         background-color: #F7F7F7;
     }
 
+    select {
+        font-size: 1.4em;
+        background-color: #fff;
+        border: 1px solid #000;
+    }
+
+    .tallyTotal {
+        font-size: 1.6em;
+        margin-bottom: 1em;
+
+    }
+
+    .totalNumber {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 2em;
+    }
+
+    .libraryType {
+        span {
+            display: block;
+            margin-bottom: .5em;
+        }
+    }
+
 
     .infoContainer {
-        margin: 1em 0;
+        margin: 0;
         padding: 1em 0;
 
         .infoContainerTitle {
@@ -35,10 +67,13 @@
         }
     }
 
+    .signatureBox {
+        margin: 2em;
+    }
     .saveMealTally {
         margin: 10px;
-        width: 100px;
+        width: 50%;
         height: 100px;
-        font-size: 24px;
+        font-size: 1.4em;
     }
 }
