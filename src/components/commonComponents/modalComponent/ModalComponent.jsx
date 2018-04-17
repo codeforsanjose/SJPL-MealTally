@@ -18,7 +18,7 @@ class ModalComponent extends React.Component {
         const totalMealsServed = this.props.meal.childrenAndTeens + this.props.meal.teenStaffAndVolunteers + this.props.meal.adult
         const totalLeftover = totalMealsAvailable - totalMealsServed
         return (
-            <div className="messageContainer">
+            <div >
                 <div>
                     <div>
                         Meal Inventory
@@ -56,6 +56,9 @@ class ModalComponent extends React.Component {
                     <div>
                         <span>Total meals served: {totalMealsServed}</span>
                     </div>
+                </div>
+                <div className="reportActions">
+
                 </div>
 
             </div>
