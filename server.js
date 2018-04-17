@@ -177,16 +177,6 @@ app.post('/api/user', (req, res) => {
 })
 
 app.post('/api/generateReport', (req, res) => {
-    /*
-    Tested with:
-
-    Issue is the it requires table to be preformated with the table tags
-
-    curl -H "Content-Type: application/json" -X POST -d '{"title":"Meals at <place>", "numPeople":5, "meals":[{"library" : "test", "date" : "2018-04-16T01:25:26.508Z", "type" : "AM Sanck", "received" : 3, "leftovers" : 3, "childrenAndTeens" : 3, "teenStaffAndVolunteers" : 1, "adult" : 1, "unusable" : 1, "createdBy" : "guest", "signature" : "test" },{"library" : "test2", "date" : "2018-04-16T01:30:19.776Z", "type" : "Lunch", "received" : 4, "leftovers" : 2, "childrenAndTeens" : 3, "teenStaffAndVolunteers" : 1, "adult" : 1, "unusable" : 1, "createdBy" : "5ad3fa31a50fa508c39514f7", "signature" : "test2" }]}' "http://localhost:8080/api/generateReport"
-
-
-    */
-
     pdfCreator.createPDFReport(req.body).then( (result) => {
         console.log(result)
         return res.status(200).json(result)
