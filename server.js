@@ -28,6 +28,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const db = require('./lib/db')
 const auth = require('./lib/auth')
+const pdfCreator = require('./lib/pdfCreator')
 
 app.use(cookieParser())
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
@@ -100,11 +101,11 @@ app.post('/api/reportsRange', (req, res) => {
             console.log("error in server js: ", error)
             return res.status(422).json({"errormsg": error})
         })
-        
+
     }
     else {
         return res.status(422).json({"errormsg": "no access"})
-    } 
+    }
 })
 
 app.get('/api/auth/facebook', passport.authenticate('facebook'))
@@ -156,7 +157,7 @@ app.post('/api/user', (req, res) => {
     // It is good practice to specifically pick the fields we want to insert here *in the backend*,
     // even if we have already done so on the front end. This is to prevent malicious users
     // from adding unexpected fields by modifying the front end JS in the browser.
-    
+
     var newUser =  _.pick(req.body, [
         'name', 'email', 'phone', 'passphrase'])
     newUser.isAdmin = false
@@ -166,12 +167,32 @@ app.post('/api/user', (req, res) => {
         newUser.passphrase = hash
         db.insertOne('user', newUser).then(result => {
             var userRecord = req.body
-            
+
             return res.json(result)
         }).catch(error => {
             console.log(error)
             return res.status(422).json(error)
         })
+    })
+})
+
+app.post('/api/generateReport', (req, res) => {
+    /*
+    Tested with:
+
+    Issue is the it requires table to be preformated with the table tags
+
+    curl -H "Content-Type: application/json" -X POST -d '{"title":"Meals at <place>", "numPeople":5, "meals":[{"library" : "test", "date" : "2018-04-16T01:25:26.508Z", "type" : "AM Sanck", "received" : 3, "leftovers" : 3, "childrenAndTeens" : 3, "teenStaffAndVolunteers" : 1, "adult" : 1, "unusable" : 1, "createdBy" : "guest", "signature" : "test" },{"library" : "test2", "date" : "2018-04-16T01:30:19.776Z", "type" : "Lunch", "received" : 4, "leftovers" : 2, "childrenAndTeens" : 3, "teenStaffAndVolunteers" : 1, "adult" : 1, "unusable" : 1, "createdBy" : "5ad3fa31a50fa508c39514f7", "signature" : "test2" }]}' "http://localhost:8080/api/generateReport"
+
+
+    */
+
+    pdfCreator.createPDFReport(req.body).then( (result) => {
+        console.log(result)
+        return res.status(200).json(result)
+    }).catch(error => {
+        console.log(error)
+        return res.status(503)
     })
 })
 
@@ -222,9 +243,9 @@ app.get("/api/libraries", function(req, res) {
 // POST: create a new meal
 app.post("/api/meals", function(req, res) {
     db.insertOne('test_meals', req.body).then(response => {
-        res.status(201).json(response);  
+        res.status(201).json(response);
     }).catch(error => {
-        handleError(res, error)  
+        handleError(res, error)
     })
 })
 // Error handler for the api
@@ -240,7 +261,7 @@ const prepareSearchQuery = (searchQuery) => {
     if (searchQuery.interests) {
         searchQuery.interests = {
             $in: searchQuery.interests
-        } 
+        }
     }
     else if (searchQuery.skills) {
         const regexSkills = searchQuery.skills.map( (skill) => {
@@ -248,13 +269,13 @@ const prepareSearchQuery = (searchQuery) => {
         })
         searchQuery.skills = {
             $in: regexSkills
-        } 
+        }
     }
     var query = { $or: []}
     Object.keys(searchQuery).map( key => {
         var keyObj = {}
         keyObj[key] = searchQuery[key]
-        query['$or'].push(keyObj)    
+        query['$or'].push(keyObj)
     })
     return query
 }
