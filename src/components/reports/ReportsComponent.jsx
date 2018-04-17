@@ -36,11 +36,31 @@ class ReportsComponent extends React.Component {
         
     }
     componentWillMount(newProps) {
-        this.setState({
-            ...this.state,
+        const data = {
             startDate: moment(),
-            endDate: moment().subtract(7,'d')
+            endDate: moment().subtract(7,'d'),
+            library: '',
+            type: ''
+        }
+        getReportsInRange(data).then(response => {
+            console.log('range response: ', response)
+            this.setState({
+                ...this.setState,
+                startDate: data.startDate,
+                endDate: data.endDate,
+                reports: response['allMeals'],
+                totals: {
+                    ...response.totals
+                }
+            })
+        }).catch(error => {
+            console.log("error: ", error)
+            this.setState({
+                ...this.setState,
+                reports: []
+            })
         })
+        
     }
 
     handleDate = (date, type) => {
@@ -171,10 +191,10 @@ class ReportsComponent extends React.Component {
                     />
 
                     <button onClick={this.handleGetReports}>Get Reports</button>
-                    {this.state.reports.length > 0 ? this.displayTotals(): ''}
+                    
                     <ReportsListComponent allReports={this.state.reports} />
                     <div className="totalsContainer">
-                        
+                        {this.state.reports.length > 0 ? this.displayTotals(): ''}
                     </div>
                 </div>
             </div>

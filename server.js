@@ -60,18 +60,20 @@ const findReportsDetails = (meals) => {
             adult: 0,
             staff: 0,
             nonreimbursment: 0,
-            wasted: 0
+            wasted: 0,
+            childrenAndTeens: 0,
+            teenStaffAndVolunteers: 0,
+            unusable: 0
         }
     }
     meals.map(meal => {
         var keys = Object.keys(meal)
         keys.map(key => {
-            if (allDetailsResponse['totals'][key]) {
+            if (allDetailsResponse['totals'][key] >= 0) {
                 allDetailsResponse['totals'][key] += +meal[key]
             }
         })
     })
-
     return allDetailsResponse
 }
 
@@ -79,8 +81,8 @@ app.post('/api/reportsRange', (req, res) => {
     if (req.user.isAdmin) {
         const query = {
             date: {
-                $gte: req.body.startDate,
-                $lte: req.body.endDate
+                $gte: req.body.endDate,
+                $lte: req.body.startDate
             }
         }
         if (req.body.type !== '') {
@@ -92,6 +94,7 @@ app.post('/api/reportsRange', (req, res) => {
         db.findAll('test_meals', query).then(meals => {
             var response = findReportsDetails(meals)
             response['allMeals'] = meals
+            console.log('meals: ', meals[0])
             return res.json(response)
         }).catch(error => {
             console.log("error in server js: ", error)

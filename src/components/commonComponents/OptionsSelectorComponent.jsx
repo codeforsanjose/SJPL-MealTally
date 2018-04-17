@@ -15,9 +15,16 @@ class OptionsSelectorComponent extends React.Component {
     displayOptions() {
         let fieldName = this.props.optionsName
         return this.props.options.map( (option, index) => {
-            return (
-                <option key={index} value={option} >{option}</option>
-            )
+            if (option.toLowerCase() === 'lunch') {
+                return (
+                    <option selected key={index} value={option} >{option}</option>
+                )
+            }
+            else {
+                return (
+                    <option key={index} value={option} >{option}</option>
+                )
+            }
         })
 
     }

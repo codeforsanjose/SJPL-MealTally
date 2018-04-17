@@ -31,7 +31,7 @@ class InAppNavigationComponent extends React.Component {
             mealTallyDetails: mealTallyDetails,
             tabs: 1,
             libraries: [],
-            mealTypes: ['', 'Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
+            mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             isAdmin: this.props.isAdmin
         }
     }
