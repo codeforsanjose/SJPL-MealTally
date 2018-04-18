@@ -1,4 +1,31 @@
 .reportListContainer {
     height: 400px;    
     overflow-y: scroll;
+    
+    table {
+        width: 100%;
+
+        thead {
+            tr {
+                th {
+                    text-align: left;
+                    color: blue;
+                    .date {
+                        width: 150px;
+                    }
+                    .libraryName {
+                        width: 220px;
+                        white-space:nowrap;
+                    }
+                    .type {
+                        width: 100px;
+                    }
+                    .signature {
+                        width: 150px;
+                    }
+                }
+            }
+            
+        }
+    }
 }

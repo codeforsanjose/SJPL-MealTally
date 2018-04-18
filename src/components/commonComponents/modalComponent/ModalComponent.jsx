@@ -9,7 +9,12 @@ class ModalComponent extends React.Component {
         super(props)
         this.props = props
         this.state = {
+            showEdit: false
         }
+    }
+
+    handleDisplayReport = (event) => {
+
     }
 
     showMealDetails = () => {

@@ -2,22 +2,19 @@
 
     .reportSummaryInformation {
 
-        table {
+        td {
+            padding-right: 10px;
 
-            td {
-                padding-right: 10px;
+            .date {
+                width: 150px;
+            }
+            .libraryName {
+                width: 220px;
+                white-space:nowrap;
+            }
 
-                .date {
-                    width: 150px;
-                }
-                .libraryName {
-                    width: 220px;
-                    white-space:nowrap;
-                }
-
-                .type {
-                    width: 100px;
-                }
+            .type {
+                width: 100px;
             }
         }
     }

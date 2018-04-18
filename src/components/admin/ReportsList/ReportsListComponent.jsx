@@ -13,11 +13,24 @@ class ReportListComponent extends React.Component {
         if (this.props.allReports) {
             return (
                 <div className="reportListContainer">
-                    {
-                        this.props.allReports.map( (report, index) => {
-                            return ( <ReportDisplayComponent key={index} reportData={report} />)
-                        })
-                    }
+                
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="date">Date</th>
+                                <th className="library">Library</th>
+                                <th className="type">Type</th>
+                                <th className="signature">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            this.props.allReports.map( (report, index) => {
+                                return ( <ReportDisplayComponent key={index} reportData={report} />)
+                            })
+                        }
+                        </tbody>
+                    </table>
                 </div>
             )
         }
