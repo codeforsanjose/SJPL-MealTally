@@ -1,0 +1,36 @@
+<html>
+  <div class="entry">
+    <h1>{{title}}</h1>
+    <div class="numberOfPeopleServed">
+        <h2>Number of people served: {{numPeople}}</h2>
+    </div>
+    <div class="table">
+        <table>
+            <tr>
+                <td>Library</td>
+                <td>Type</td>
+                <td>Received</td>
+                <td>Leftovers</td>
+                <td>Children and Teens</td>
+                <td>Teen Staff and Volunteers</td>
+                <td>Adults</td>
+                <td>Unusable</td>
+                <td>Signature</td>
+                <!-- add more cells here for the header of the table -->
+            </tr>
+            <tr>{{#table meals}}
+                <td>{{library}}</td>
+                <td>{{type}}</td>
+                <td>{{received}}</td>
+                <td>{{leftovers}}</td>
+                <td>{{childrenAndTeens}}</td>
+                <td>{{teenStaffAndVolunteers}}</td>
+                <td>{{adult}}</td>
+                <td>{{unusable}}</td>
+                <td>{{signature}}</td>
+            </tr>{{/table}}
+        </table>
+    </div>
+  </div>
+</script>
+</html>
