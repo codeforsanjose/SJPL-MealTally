@@ -151,7 +151,7 @@ class InAppNavigationComponent extends React.Component {
     render() {
         return (
             <div>
-                <LogoComponent />
+                
                 { this.displayNavigation() }
                 { this.displayPanels() }
             </div>
