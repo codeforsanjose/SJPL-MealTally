@@ -30,11 +30,10 @@ class OptionsSelectorComponent extends React.Component {
     }
     render() {
         const { optionsName, itemSelected } = this.props
-        const fieldName = optionsName.toLowerCase()
         return (
             <div className="incrementContainer">
                 <span>{optionsName}</span>
-                <select onChange={(e) => this.props.optionsHandler(e,fieldName)} >
+                <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} >
                     {this.displayOptions()}
                 </select>
             </div>

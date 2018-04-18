@@ -27,7 +27,7 @@ class ReportDisplayComponent extends React.Component {
         const adults = this.props.reportData.adults
         return (
             <div>
-                <ModalComponent meal={this.props.reportData} />
+                <ModalComponent report={this.props.reportData} />
             </div>
         )
     }

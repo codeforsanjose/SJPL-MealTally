@@ -7,6 +7,7 @@ import IncrementComponent from '../commonComponents/incrementComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
 import AlertComponent from '../commonComponents/alertComponent/AlertComponent'
+import ModalComponent from '../commonComponents/modalComponent/ModalComponent'
 import { createMeal, getLibraries } from '../../api/api'
 
 require('./MealTallyComponent.scss');
@@ -15,7 +16,7 @@ class MealTallyComponent extends React.Component {
     INITIAL_MEAL_TALLY_DETAILS = {
         library: '',
         date: moment(),
-        type: '',
+        type: 'Lunch',
         received: 0,
         leftovers: 0,
         childrenAndTeens: 0,
@@ -32,7 +33,7 @@ class MealTallyComponent extends React.Component {
         this.state = {
             showDate: false,
             libraries: [],
-            mealTypes: ['', 'Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
+            mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             mealTallyDetails: this.INITIAL_MEAL_TALLY_DETAILS
         }
     }
@@ -100,20 +101,50 @@ class MealTallyComponent extends React.Component {
     }
     handleSaveMealTally = (event) => {
         event.preventDefault()
-        const data = this.state.mealTallyDetails
-        data['createdBy'] = (this.props.user && this.props.user._id) || 'guest'
-
+        
         this.setState({
             ...this.state,
             showLoading: true,
-            loadingMessage: 'Saving please wait...'
+            loadingMessage: 'Saving please wait...',
+            showModal: true,
+            modalMessage: 'Please review report before saving.'
         })
-        createMeal(this.state.mealTallyDetails).then(response => {
+        //this.handleCreateMeal({})
+    }
+
+    handleSignature = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            mealTallyDetails: {
+                ...this.state.mealTallyDetails,
+                signature: event.target.value
+            }
+        })
+    }
+
+    handleModalEdit = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            showModal: false,
+            showLoading: false
+        })
+    }
+
+    handleCreateMeal = (event) => {
+        // if event is empty object then don't call preventDefault when needing to call programatically without event
+        Object.keys(event).length > 0 ? event.preventDefault(): ''
+
+        const data = this.state.mealTallyDetails
+        data['createdBy'] = (this.props.user && this.props.user._id) || 'guest'
+        createMeal(data).then(response => {
             this.setState({
                 ...this.state,
                 mealTallyDetails: this.INITIAL_MEAL_TALLY_DETAILS,
                 showLoading: false,
                 showAlert: true,
+                showModal: false,
                 alertMessage: 'Successfully saved!'
             })
         }).catch(error => {
@@ -126,16 +157,6 @@ class MealTallyComponent extends React.Component {
             })
         })
     }
-    handleSignature = (event) => {
-        event.preventDefault()
-        this.setState({
-            ...this.state,
-            mealTallyDetails: {
-                ...this.state.mealTallyDetails,
-                signature: event.target.value
-            }
-        })
-    }
 
     render() {
         const totalMealAvailable = this.state.mealTallyDetails.received + this.state.mealTallyDetails.leftovers
@@ -146,6 +167,7 @@ class MealTallyComponent extends React.Component {
         })
         return (
             <div className="mealTallyContainer">
+                {this.state.showModal ? <ModalComponent message={this.state.modalMessage} handleEdit={this.handleModalEdit} handleSave={this.handleCreateMeal} report={this.state.mealTallyDetails} />: ''}
                 {this.state.showLoading ? <AlertComponent isLoading={true} message={this.state.loadingMessage} />: ''}
                 {this.state.showAlert ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.alertMessage} />: ''}
                 <Paper>

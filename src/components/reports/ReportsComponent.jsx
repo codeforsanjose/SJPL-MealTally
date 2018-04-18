@@ -4,7 +4,7 @@ import moment from 'moment'
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
 import ReportsListComponent from '../admin/ReportsList/ReportsListComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
-import { getUser, getReportsInRange } from '../../api/api'
+import { getUser, getReportsInRange, generateReport } from '../../api/api'
 require('./ReportsComponent.scss')
 
 
@@ -96,6 +96,13 @@ class ReportsComponent extends React.Component {
         }
     }
 
+    handleGenerateReport = (event) => {
+        generateReport(this.state.reports).then(reseponse => {
+            console.log('should be pdf downloading: reseponse: ', reseponse)
+        }).catch(error => {
+            console.log('pdf donwload errir: ', error)
+        })
+    }
     handleGetReports = (event) => {
         const data = {
             startDate: this.state.startDate,
@@ -191,6 +198,7 @@ class ReportsComponent extends React.Component {
                     />
 
                     <button onClick={this.handleGetReports}>Get Reports</button>
+                    <button onClick={this.handleGenerateReport}>Generate Report</button>
                     
                     <ReportsListComponent allReports={this.state.reports} />
                     <div className="totalsContainer">

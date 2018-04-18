@@ -138,6 +138,15 @@ const getReportsInRange = (range) => {
     })
 }
 
+const generateReport = (reports) => {
+    return makeRequest(reports, 'POST', '/api/generateReport').then(response => {
+        return response.json()
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
 const getLibraries = () => {
     return makeRequest({}, 'GET', '/api/libraries').then(response => {
         return response.json()
@@ -169,6 +178,7 @@ export {
     getAllUsers,
     searchVolunteers,
     getReportsInRange,
+    generateReport,
     getLibraries,
     createMeal,
 }
