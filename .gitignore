@@ -14,3 +14,5 @@ config/projectInfoData.json
 # npm
 npm-debug.log
 
+#pdfs from the report feature
+report-*.pdf
