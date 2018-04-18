@@ -1,12 +1,12 @@
 .modalContainer {
     display: block;
-    width: 600px;
-    height: 600px;
+    height: 100%;
     position: fixed;
-    top: 100px;
-    left: 30%;
+    top: 0;
+    left: 0;
+    right: 0;
     background-color: white;
     border: 1px solid #ccc;
     font-size: 24px;
-
+    padding: 2em;
 }
