@@ -1,7 +1,7 @@
 {
-  "name": "give-light",
-  "version": "0.0.1",
-  "description": "Give Light hackathon",
+  "name": "Meal-tally",
+  "version": "0.1.1",
+  "description": "Tally meals through public library meal program",
   "main": "app/main.jsx",
   "scripts": {
     "mocha-test": "mocha --require ignore-styles --compilers js:babel-core/register tests/test.js",
@@ -94,5 +94,5 @@
     "web app",
     "boilerplate"
   ],
-  "author": "Give Light Hackathon Team"
+  "author": "Code For San Jose Meal Tally Team"
 }
