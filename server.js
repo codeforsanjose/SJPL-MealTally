@@ -37,9 +37,6 @@ app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: fals
 auth.init(app)
 
 app.get(['/', '/signup', '/login', '/profile/:id'], (req, res) => {
-    console.log("what __dirname: ", __dirname)
-    console.log("what full path: ", publicDir + '/index.html')
-    console.log("what pubicDir: ", publicDir)
     res.sendFile(path.join(publicDir, '/index.html'))
 })
 
