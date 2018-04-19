@@ -1,14 +1,9 @@
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+var express = require('express')
+var bodyParser = require('body-parser')
+var cors = require('cors')
 var bcrypt = require('bcrypt')
-var app = express();
-
-var mongodb = require('mongodb');
-var mongoClient = mongodb.MongoClient;
-var ObjectID = mongodb.ObjectID;  // Used in API endpoints
-//var db;
+var app = express()
 
 const publicDir = __dirname + '/public'
 
@@ -179,12 +174,14 @@ app.post('/api/user', (req, res) => {
 app.post('/api/generateReport', (req, res) => {
     var reports =  _.pick(req.body, ['reports'])
     pdfCreator.createPDFReport(reports).then( (result) => {
-        console.log("result pdf creator: ", result)
         const filePath = result.filename
+        const filePathSplit = result.filename.split('/')
+        const filename = filePathSplit[filePathSplit.length - 1]
         res.header("Access-Control-Allow-Origin", "*")
+        res.header('Content-disposition', 'inline; filename=' + filename);
         res.header("Access-Control-Allow-Headers", "X-Requested-With")
-        res.header('content-type', 'application/pdf')
-        return res.status(200).json(result)
+        res.header('Content-Type', 'application/pdf')
+        return res.sendFile(filePath)
     }).catch(error => {
         console.log(error)
         return res.status(503)
