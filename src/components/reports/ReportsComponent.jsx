@@ -158,6 +158,9 @@ class ReportsComponent extends React.Component {
             <div className="ReportContainer">
                 <div className="report-controls">
                     <div className="dateContainer">
+                    <div>
+                                <h3>Select date rannge:</h3>
+                            </div>
                         <div className="endDateContainer">
                             <div onClick={(event) => this.toggleShowDate(event, 'endDate')}>
                                 <span>From: {moment(this.state.endDate).format('MMM, DD YYYY')}</span>

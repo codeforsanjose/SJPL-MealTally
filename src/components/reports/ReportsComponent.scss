@@ -1,9 +1,9 @@
 .ReportContainer {
-	
+	font-family: Helvetica, sans-serif;
 	.report-controls {
 		background-color: #F7F7F7;
 		text-align: center;
-		padding: 2em;
+		padding: 1em;
 	}
 	select {
         font-size: 1.4em;
@@ -23,7 +23,7 @@
         padding: .5em;
         width: auto;
         display: inline-block;
-        
+        margin: 2em 0 0 0;
         &:hover {
             background-color: #eee;
         }
@@ -37,7 +37,7 @@
         padding: .5em;
         width: auto;
         display: inline-block;
-        
+        margin: 2em 0 0 0;
         &:hover {
             background-color: #eee;
         }
