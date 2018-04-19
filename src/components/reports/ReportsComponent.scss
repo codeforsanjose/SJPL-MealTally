@@ -5,6 +5,12 @@
 		text-align: center;
 		padding: 1em;
 	}
+	.title {
+		text-align: center;
+            color: #000;
+            font-weight: 100;
+            font-size: 2.5em;
+	}
 	select {
         font-size: 1.4em;
         background-color: #fff;
@@ -24,6 +30,7 @@
         width: auto;
         display: inline-block;
         margin: 2em 0 0 0;
+        margin-left: 1em;
         &:hover {
             background-color: #eee;
         }
@@ -38,6 +45,7 @@
         width: auto;
         display: inline-block;
         margin: 2em 0 0 0;
+        margin-right: 1em;
         &:hover {
             background-color: #eee;
         }
