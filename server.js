@@ -17,6 +17,13 @@ app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.use('/public', express.static("public"));
 
+let meals_db_name = ''
+
+if (process.env.NODE_ENV === 'production') {
+    meals_db_name = 'meals'
+} else {
+    meals_db_name = 'test_meals'
+}
 ///////////////////////
 ///////////////////////
 ///////////////////////
@@ -87,7 +94,7 @@ app.post('/api/reportsRange', (req, res) => {
         if (req.body.library !== '') {
             query.library = req.body.library
         }
-        db.findAll('test_meals', query).then(meals => {
+        db.findAll(meals_db_name, query).then(meals => {
             var response = findReportsDetails(meals)
             response['allMeals'] = meals
             return res.json(response)
@@ -170,9 +177,13 @@ app.post('/api/user', (req, res) => {
 })
 
 app.post('/api/generateReport', (req, res) => {
-    console.log('generate report called:', req.body.length)
-    pdfCreator.createPDFReport(req.body).then( (result) => {
-        console.log(result)
+    var reports =  _.pick(req.body, ['reports'])
+    pdfCreator.createPDFReport(reports).then( (result) => {
+        console.log("result pdf creator: ", result)
+        const filePath = result.filename
+        res.header("Access-Control-Allow-Origin", "*")
+        res.header("Access-Control-Allow-Headers", "X-Requested-With")
+        res.header('content-type', 'application/pdf')
         return res.status(200).json(result)
     }).catch(error => {
         console.log(error)
@@ -226,7 +237,7 @@ app.get("/api/libraries", function(req, res) {
 
 // POST: create a new meal
 app.post("/api/meals", function(req, res) {
-    db.insertOne('test_meals', req.body).then(response => {
+    db.insertOne(meals_db_name, req.body).then(response => {
         res.status(201).json(response);
     }).catch(error => {
         handleError(res, error)

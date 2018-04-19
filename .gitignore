@@ -15,5 +15,5 @@ config/projectInfoData.json
 npm-debug.log
 
 #pdfs from the report feature
-report-*.pdf
-lib/db.js
+reports/report-*.pdf
+
