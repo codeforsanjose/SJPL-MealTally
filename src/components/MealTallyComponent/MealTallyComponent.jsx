@@ -208,7 +208,7 @@ class MealTallyComponent extends React.Component {
                                 
                             </div>
                     </div>
-                        <div className="infoContainer">
+                        <div className="infoContainer availableContainer">
                             <h3 className="infoContainerTitle">Available Meals</h3>
                             <IncrementComponent 
                                 incrementerName={"Meals from Vendor"}
