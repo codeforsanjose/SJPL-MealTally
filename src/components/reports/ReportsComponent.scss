@@ -1,10 +1,71 @@
 .ReportContainer {
-
+	
+	.report-controls {
+		background-color: #F7F7F7;
+		text-align: center;
+		padding: 2em;
+	}
+	select {
+        font-size: 1.4em;
+        background-color: #fff;
+        border: 1px solid #000;
+    }
+	.dateConntainer {
+		display: block;
+		vertical-align: text-top;
+		text-align: center;
+	}
     .startDateContainer {
-        margin: 10px;
+       	font-size: 1.4em;
+        display: inline-block;
+        cursor: pointer;
+        border-bottom: 2px dotted #ccc;
+        padding: .5em;
+        width: auto;
+        display: inline-block;
+        
+        &:hover {
+            background-color: #eee;
+        }
     }
 
     .endDateContainer {
-        margin: 10px;
+        font-size: 1.4em;
+        display: inline-block;
+        cursor: pointer;
+        border-bottom: 2px dotted #ccc;
+        padding: .5em;
+        width: auto;
+        display: inline-block;
+        
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
+    .incrementContainer {
+    	span {
+    		display: block;
+    		margin-bottom: .5em;
+    	}
+    }
+
+    .generateReport {
+    	display: block;
+    	margin-left:auto;
+    	margin-right:auto;
+    	width: 200px;
+    	height: 2em;
+    	background-color: #fff;
+    	font-size: 1.4em;
+    }
+
+    .reportListContainer {
+    	padding: 2em;
+    }
+
+    .totalsContainer {
+    	color: #ccc;
+    	padding: 1em;
     }
 }

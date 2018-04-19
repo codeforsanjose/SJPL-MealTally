@@ -153,41 +153,44 @@ class ReportsComponent extends React.Component {
         })
         return (
             <div className="ReportContainer">
-                <div className="startDateContainer">
-                    <div onClick={(event) => this.toggleShowDate(event, 'startDate')}>
-                        <span>Start Date: {moment(this.state.startDate).format('MMM, DD YYYY')}</span>
-                    </div>
-                    {this.state.showStartDate ? this.getDatePicker('startDate') : ''}
-                </div>
-                <div className="endDateContainer">
-                    <div onClick={(event) => this.toggleShowDate(event, 'endDate')}>
-                        <span>End Date: {moment(this.state.endDate).format('MMM, DD YYYY')}</span>
-                    </div>
-                    {this.state.showEndDate ? this.getDatePicker('endDate') : ''}
+                <div className="report-controls">
+                    <div className="dateContainer">
+                        <div className="endDateContainer">
+                            <div onClick={(event) => this.toggleShowDate(event, 'endDate')}>
+                                <span>From: {moment(this.state.endDate).format('MMM, DD YYYY')}</span>
+                            </div>
+                            {this.state.showEndDate ? this.getDatePicker('endDate') : ''}
+                        </div>
+                        <div className="startDateContainer">
+                            <div onClick={(event) => this.toggleShowDate(event, 'startDate')}>
+                                <span>To: {moment(this.state.startDate).format('MMM, DD YYYY')}</span>
+                            </div>
+                            {this.state.showStartDate ? this.getDatePicker('startDate') : ''}
+                        </div>
+                        </div>
+                        <OptionsSelectorComponent
+                            optionsName={'library'}
+                            fieldName={'library'}
+                            options={libraryOptions}
+                            itemSelected={this.state.library}
+                            optionsHandler={this.handleMealTallyDetailsOptionsField}
+                        />
+                        <OptionsSelectorComponent
+                            optionsName={'Type'}
+                            fieldName={'type'}
+                            options={this.props.mealTypes}
+                            itemSelected={this.state.type}
+                            optionsHandler={this.handleMealTallyDetailsOptionsField}
+                        />
 
-                    <hr />
-                    <OptionsSelectorComponent
-                        optionsName={'library'}
-                        fieldName={'library'}
-                        options={libraryOptions}
-                        itemSelected={this.state.library}
-                        optionsHandler={this.handleMealTallyDetailsOptionsField}
-                    />
-                    <OptionsSelectorComponent
-                        optionsName={'Type'}
-                        fieldName={'type'}
-                        options={this.props.mealTypes}
-                        itemSelected={this.state.type}
-                        optionsHandler={this.handleMealTallyDetailsOptionsField}
-                    />
-
-                    <button onClick={this.handleGenerateReport}>Generate Report</button>
-                    <div className="totalsContainer">
-                        {this.state.reports.length > 0 ? this.displayTotals(): ''}
+                        <button className="generateReport" onClick={this.handleGenerateReport}>Generate Report</button>
+                        
                     </div>
+             
+
                     <ReportsListComponent allReports={this.state.reports} />
                     
-                </div>
+                
             </div>
         )
         
