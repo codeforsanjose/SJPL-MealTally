@@ -62,6 +62,30 @@
 
     .reportListContainer {
     	padding: 2em;
+    	table {
+    		border-collapse: collapse;
+    		td {
+    			padding: 1em;
+    			margin: 0;
+    			border: none;
+    		}
+    		tr {
+    			cursor: pointer;
+    			
+    			&:hover {
+    				background-color: #ccc;
+    			}
+    		}
+    		tr:nth-child(even) {
+    			background: #F7F7F7;
+    		}
+			tr:nth-child(odd) {
+				background: #FFF;
+			}
+			tr:hover td {
+				background-color: #eee;
+			}
+    	}
     }
 
     .totalsContainer {
