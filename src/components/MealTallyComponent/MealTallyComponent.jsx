@@ -177,7 +177,7 @@ class MealTallyComponent extends React.Component {
                     <div className="introContainer">
                         <div className="infoContainer">
                             <div>
-                                <h3>Select date:</h3>
+                                <h3 className="infoContainerTitle">Meal Plan</h3>
                             </div>
                             <div className="dateContainer">
                                 <span className="dateDisplay" onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>

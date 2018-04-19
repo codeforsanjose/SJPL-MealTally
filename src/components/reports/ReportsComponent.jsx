@@ -159,7 +159,7 @@ class ReportsComponent extends React.Component {
                 <div className="report-controls">
                     <div className="dateContainer">
                     <div>
-                                <h3>Select date rannge:</h3>
+                                <h3 className="title">Report Settings</h3>
                             </div>
                         <div className="endDateContainer">
                             <div onClick={(event) => this.toggleShowDate(event, 'endDate')}>
