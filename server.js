@@ -171,17 +171,24 @@ app.post('/api/user', (req, res) => {
     })
 })
 
+
+var mime = require('mime')
+var fs = require('fs')
 app.post('/api/generateReport', (req, res) => {
     var reports =  _.pick(req.body, ['reports'])
+    //https://stackoverflow.com/questions/7288814/download-a-file-from-nodejs-server-using-express
     pdfCreator.createPDFReport(reports).then( (result) => {
         const filePath = result.filename
         const filePathSplit = result.filename.split('/')
         const filename = filePathSplit[filePathSplit.length - 1]
+        var mimetype = mime.lookup(filePath);
         res.header("Access-Control-Allow-Origin", "*")
-        res.header('Content-disposition', 'inline; filename=' + filename);
+        res.header('Content-disposition', 'attachment; filename=' + filename);
         res.header("Access-Control-Allow-Headers", "X-Requested-With")
-        res.header('Content-Type', 'application/pdf')
-        return res.sendFile(filePath)
+        res.setHeader('Content-type', mimetype)
+        res.download(filePath, filename)
+        //var filestream = fs.createReadStream(filePath)
+        //filestream.pipe(res)
     }).catch(error => {
         console.log(error)
         return res.status(503)
