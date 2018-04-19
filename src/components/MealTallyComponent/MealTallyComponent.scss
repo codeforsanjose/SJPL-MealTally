@@ -70,11 +70,24 @@ body {
 
     .signatureBox {
         margin: 2em;
+        border-top: 1px dashed #ccc;
+        padding-top: 2em;
+        text-align: center;
+        label {
+            font-size: 1.4em;
+            display: block;
+        }
+        input {
+            font-size: 1.4em;
+            width: 40%;
+            margin: .5em;
+        }
     }
     .saveMealTally {
         margin: 10px;
         width: 50%;
         height: 100px;
         font-size: 1.4em;
+        margin-bottom: 2em;
     }
 }
