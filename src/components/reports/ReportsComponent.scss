@@ -58,12 +58,17 @@
     	height: 2em;
     	background-color: #fff;
     	font-size: 1.4em;
+    	margin-bottom: 1em;
     }
 
     .reportListContainer {
-    	padding: 2em;
+    	padding: 0;
     	table {
     		border-collapse: collapse;
+    		thead th{
+    			background-color: #eee;
+    			padding: .5em;
+    		}
     		td {
     			padding: 1em;
     			margin: 0;
@@ -73,7 +78,7 @@
     			cursor: pointer;
     			
     			&:hover {
-    				background-color: #ccc;
+    				background-color: #eee;
     			}
     		}
     		tr:nth-child(even) {
@@ -88,8 +93,5 @@
     	}
     }
 
-    .totalsContainer {
-    	color: #ccc;
-    	padding: 1em;
-    }
+
 }

@@ -189,7 +189,7 @@ class ReportsComponent extends React.Component {
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />
 
-                        <button className="generateReport" onClick={this.handleGenerateReport}>Generate Report</button>
+                        <button className="generateReport" onClick={this.handleGenerateReport}>Export Reports</button>
                         
                     </div>
              
