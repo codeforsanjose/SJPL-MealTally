@@ -140,7 +140,8 @@ const getReportsInRange = (range) => {
 
 const generateReport = (reports) => {
     return makeRequest(reports, 'POST', '/api/generateReport').then(response => {
-        return response.json()
+        console.log('generate report response: ', response)
+        return response
     }).catch(error => {
         console.log("error in api js", error)
         return console.log(error)
