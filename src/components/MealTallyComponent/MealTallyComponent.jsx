@@ -14,7 +14,8 @@ require('./MealTallyComponent.scss');
 
 class MealTallyComponent extends React.Component {
     INITIAL_MEAL_TALLY_DETAILS = {
-        library: '',
+        _id: '',
+        library: 'Almaden Branch Library',
         date: moment(),
         type: 'Lunch',
         received: 0,
@@ -29,7 +30,8 @@ class MealTallyComponent extends React.Component {
     
     constructor(props) {
         super(props)
-
+        this.props = props
+        console.log('oooo what passed?')
         this.state = {
             showDate: false,
             libraries: [],
@@ -74,6 +76,8 @@ class MealTallyComponent extends React.Component {
     }
     handleMealTallyDetailsOptionsField = (event, fieldName) => {
         event.preventDefault()
+        console.log('options fieldName: ', fieldName)
+        console.log('options value: ', event.target.value)
         this.setState({
             ...this.state,
             mealTallyDetails: {
@@ -104,7 +108,6 @@ class MealTallyComponent extends React.Component {
         
         this.setState({
             ...this.state,
-            showLoading: true,
             loadingMessage: 'Saving please wait...',
             showModal: true,
             modalMessage: 'Please review report before saving.'

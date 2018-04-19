@@ -16,6 +16,7 @@ class ReportDisplayComponent extends React.Component {
     }
 
     toggleDetails = (event) => {
+        event.preventDefault()
         this.setState({
             ...this.state,
             showDetails: !this.state.showDetails
@@ -34,25 +35,21 @@ class ReportDisplayComponent extends React.Component {
 
     render () {
         return (
-            <div className="reportDisplayContainer" >
-                <div className="reportSummaryInformation">
-                    <tr onClick={this.toggleDetails}>
-                        <td className="date">
-                            {moment(this.props.reportData.date).format('MMM, DD YYYY')}
-                        </td>
-                        <td className="libraryName">
-                            {this.props.reportData.library}
-                        </td>
-                        <td className="type">
-                            {this.props.reportData.type}
-                        </td>
-                        <td>
-                            {this.props.reportData.signature}
-                        </td>
-                        {this.state.showDetails ? this.showReportDetails(): ''}
-                    </tr>
-                </div>
-            </div>
+            <tr onClick={this.toggleDetails}>
+                <td className="date">
+                    {moment(this.props.reportData.date).format('MMM, DD YYYY')}
+                </td>
+                <td className="libraryName">
+                    {this.props.reportData.library}
+                </td>
+                <td className="type">
+                    {this.props.reportData.type}
+                </td>
+                <td>
+                    {this.props.reportData.signature}
+                </td>
+                {this.state.showDetails ? this.showReportDetails(): null}
+            </tr>
         )
     }
     componentDidMount() {

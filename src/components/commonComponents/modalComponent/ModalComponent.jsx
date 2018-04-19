@@ -14,7 +14,9 @@ class ModalComponent extends React.Component {
     }
 
     handleDisplayReport = (event) => {
-
+        return (
+            <MealTallyComponent mealTallyDetails={this.state.mealTallyDetails} />
+        )
     }
 
     showMealDetails = () => {
@@ -27,6 +29,11 @@ class ModalComponent extends React.Component {
                     <h3>{this.props.message}</h3>
                     <div>
                         Meal Inventory
+                        <div>
+                            <span>{this.props.report.library}</span>
+                            <br />
+                            <span>{this.props.report.type}</span>
+                        </div>
                     </div>
                     <span>Meals received from Vendor: {this.props.report.received}</span>
                     <br />

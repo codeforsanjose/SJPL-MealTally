@@ -13,7 +13,6 @@ class ReportListComponent extends React.Component {
         if (this.props.allReports) {
             return (
                 <div className="reportListContainer">
-                
                     <table>
                         <thead>
                             <tr>
@@ -23,7 +22,7 @@ class ReportListComponent extends React.Component {
                                 <th className="signature">Signature</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="reportList">
                         {
                             this.props.allReports.map( (report, index) => {
                                 return ( <ReportDisplayComponent key={index} reportData={report} />)

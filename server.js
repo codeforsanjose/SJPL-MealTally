@@ -56,12 +56,7 @@ const findReportsDetails = (meals) => {
         totals: {
             received: 0,
             leftovers: 0,
-            children: 0,
-            volunteer: 0,
             adult: 0,
-            staff: 0,
-            nonreimbursment: 0,
-            wasted: 0,
             childrenAndTeens: 0,
             teenStaffAndVolunteers: 0,
             unusable: 0
@@ -95,13 +90,11 @@ app.post('/api/reportsRange', (req, res) => {
         db.findAll('test_meals', query).then(meals => {
             var response = findReportsDetails(meals)
             response['allMeals'] = meals
-            console.log('meals: ', meals[0])
             return res.json(response)
         }).catch(error => {
             console.log("error in server js: ", error)
             return res.status(422).json({"errormsg": error})
         })
-
     }
     else {
         return res.status(422).json({"errormsg": "no access"})
@@ -177,6 +170,7 @@ app.post('/api/user', (req, res) => {
 })
 
 app.post('/api/generateReport', (req, res) => {
+    console.log('generate report called:', req.body.length)
     pdfCreator.createPDFReport(req.body).then( (result) => {
         console.log(result)
         return res.status(200).json(result)

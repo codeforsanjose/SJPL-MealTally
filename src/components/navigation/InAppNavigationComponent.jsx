@@ -116,7 +116,7 @@ class InAppNavigationComponent extends React.Component {
                 }
                 case (2): {
                     return (
-                        <MealTallyComponent user={this.state.user} mealTallyDetails={this.state.mealTallyDetails} />
+                        <MealTallyComponent user={this.state.user} />
                     )
                 }
                 case (3): {

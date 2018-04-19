@@ -1,7 +1,4 @@
 .reportListContainer {
-    height: 400px;    
-    overflow-y: scroll;
-    
     table {
         width: 100%;
 
@@ -9,7 +6,7 @@
             tr {
                 th {
                     text-align: left;
-                    color: blue;
+
                     .date {
                         width: 150px;
                     }
@@ -25,7 +22,13 @@
                     }
                 }
             }
-            
+        }
+        tbody {
+            .reportList {
+                height: 400px;    
+                overflow-y: scroll;
+    
+            }
         }
     }
 }

@@ -1,21 +1,15 @@
-.reportDisplayContainer {
+td {
+    padding-right: 10px;
 
-    .reportSummaryInformation {
+    .date {
+        width: 150px;
+    }
+    .libraryName {
+        width: 220px;
+        white-space:nowrap;
+    }
 
-        td {
-            padding-right: 10px;
-
-            .date {
-                width: 150px;
-            }
-            .libraryName {
-                width: 220px;
-                white-space:nowrap;
-            }
-
-            .type {
-                width: 100px;
-            }
-        }
+    .type {
+        width: 100px;
     }
 }

@@ -13,13 +13,7 @@ class ReportsComponent extends React.Component {
         super(props)
         this.props = props
         var totals = {
-            received: 0,
-            leftovers: 0,
-            children: 0,
-            volunteer: 0,
-            adult: 0,
-            staff: 0,
-            nonreimbursment: 0
+            
         }
         this.state = {
             startDate: new Date(),
@@ -42,44 +36,29 @@ class ReportsComponent extends React.Component {
             library: '',
             type: ''
         }
-        getReportsInRange(data).then(response => {
-            console.log('range response: ', response)
-            this.setState({
-                ...this.setState,
-                startDate: data.startDate,
-                endDate: data.endDate,
-                reports: response['allMeals'],
-                totals: {
-                    ...response.totals
-                }
-            })
-        }).catch(error => {
-            console.log("error: ", error)
-            this.setState({
-                ...this.setState,
-                reports: []
-            })
-        })
+        this.handleGetReportsInRange(data)
         
     }
 
     handleDate = (date, type) => {
+        let data = {}
         if (type === "startDate") {
-            this.setState({
+            data = {
                 ...this.state,
                 startDate: date,
                 showStartDate: !this.state.showStartDate
-            })
+            }
         }
         else {
-            this.setState({
+            data = {
                 ...this.state,
                 endDate: date,
                 showEndDate: !this.state.showEndDate
-            })
+            }
         }
-        
+        this.handleGetReportsInRange(data)
     }
+    
 
     toggleShowDate = (event, type) => {
         if (type === "startDate") {
@@ -103,18 +82,20 @@ class ReportsComponent extends React.Component {
             console.log('pdf donwload errir: ', error)
         })
     }
-    handleGetReports = (event) => {
-        const data = {
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            library: this.state.library,
-            type: this.state.type
+
+    handleGetReportsInRange = (data) => {
+        const postData = {
+            startDate: data.startDate,
+            endDate: data.endDate,
+            library: data.library,
+            type: data.type
         }
-        getReportsInRange(data).then(response => {
-            console.log('range response totals: ', response.totals)
+        getReportsInRange(postData).then(response => {
+            console.log('handle get reports in range response:', response)
             this.setState({
-                ...this.setState,
-                reports: response['allMeals'],
+                ...this.state,
+                ...data,
+                reports: response.allMeals,
                 totals: {
                     ...response.totals
                 }
@@ -127,14 +108,16 @@ class ReportsComponent extends React.Component {
             })
         })
     }
+
     handleMealTallyDetailsOptionsField = (event, fieldName) => {
         event.preventDefault()
-        
-        this.setState({
+        const data = {
             ...this.state,
             [fieldName]: event.target.value
-        })
+        }
+        this.handleGetReportsInRange(data)
     }
+
     getDatePicker = (type) => {
         if (type === 'startDate') {
             return (
@@ -158,7 +141,6 @@ class ReportsComponent extends React.Component {
     
     displayTotals = () => {
         var itemTotals = []
-        console.log('display totals : ', this.state.totals)
         Object.keys(this.state.totals).map((key, index) => {
             itemTotals.push(<span key={index} className="itemTotal">{key}: {this.state.totals[key]}</span>)
         })
@@ -186,24 +168,25 @@ class ReportsComponent extends React.Component {
                     <hr />
                     <OptionsSelectorComponent
                         optionsName={'library'}
+                        fieldName={'library'}
                         options={libraryOptions}
                         itemSelected={this.state.library}
                         optionsHandler={this.handleMealTallyDetailsOptionsField}
                     />
                     <OptionsSelectorComponent
                         optionsName={'Type'}
+                        fieldName={'type'}
                         options={this.props.mealTypes}
                         itemSelected={this.state.type}
                         optionsHandler={this.handleMealTallyDetailsOptionsField}
                     />
 
-                    <button onClick={this.handleGetReports}>Get Reports</button>
                     <button onClick={this.handleGenerateReport}>Generate Report</button>
-                    
-                    <ReportsListComponent allReports={this.state.reports} />
                     <div className="totalsContainer">
                         {this.state.reports.length > 0 ? this.displayTotals(): ''}
                     </div>
+                    <ReportsListComponent allReports={this.state.reports} />
+                    
                 </div>
             </div>
         )
