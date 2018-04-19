@@ -76,7 +76,10 @@ class ReportsComponent extends React.Component {
     }
 
     handleGenerateReport = (event) => {
-        generateReport(this.state.reports).then(reseponse => {
+        const data = {
+            reports: this.state.reports
+        }
+        generateReport(data).then(reseponse => {
             console.log('should be pdf downloading: reseponse: ', reseponse)
         }).catch(error => {
             console.log('pdf donwload errir: ', error)
