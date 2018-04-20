@@ -241,17 +241,14 @@ app.get("/api/libraries", function(req, res) {
 
 // POST: create a new meal
 app.post("/api/meals", function(req, res) {
+    delete req.body['_id']
     db.insertOne(meals_db_name, req.body).then(response => {
         res.status(201).json(response);
     }).catch(error => {
-        handleError(res, error)
+        res.status(406).json({"error": error})
     })
 })
-// Error handler for the api
-function handleError(res, error, code) {
-  console.log("API Error: " + error);
-  res.status(code || 500).json({"error": error});
-}
+
 app.listen(app.get('port'), function () {
     console.log("[*] mealtally running on port", app.get('port'));
 })

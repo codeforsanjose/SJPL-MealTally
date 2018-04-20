@@ -162,7 +162,7 @@ const createMeal = (newMeal) => {
         return makeRequest(newMeal, 'POST', '/api/meals').then(response => {
             return resolve(response.json())
         }).catch(error => {
-            window.alert('Error retrieving user')
+            window.alert('Error creating meal please try again later.')
             console.log(error)
             return reject(error)
         })

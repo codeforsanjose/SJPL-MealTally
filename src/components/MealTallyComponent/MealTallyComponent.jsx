@@ -76,8 +76,6 @@ class MealTallyComponent extends React.Component {
     }
     handleMealTallyDetailsOptionsField = (event, fieldName) => {
         event.preventDefault()
-        console.log('options fieldName: ', fieldName)
-        console.log('options value: ', event.target.value)
         this.setState({
             ...this.state,
             mealTallyDetails: {
