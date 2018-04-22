@@ -81,7 +81,6 @@ class ReportsComponent extends React.Component {
         }
         generateReport(data).then(reseponse => {
             console.log('should be pdf downloading: reseponse: ', reseponse)
-            console.log('should be pdf downloading: reseponse: ', reseponse.body())
         }).catch(error => {
             console.log('pdf donwload errir: ', error)
         })

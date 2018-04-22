@@ -183,7 +183,7 @@ app.post('/api/generateReport', (req, res) => {
         res.set({
             'Access-Control-Allow-Origin': '*',
             'Content-disposition': 'attachment; filename=' + filename,
-            'Access-Control-Allow-Headers': 'X-Requested-With'
+            'Access-Control-Allow-Headers': 'X-Requested-With',
             'Content-type': 'application/pdf'
         })
         res.download(filePath, filename)
