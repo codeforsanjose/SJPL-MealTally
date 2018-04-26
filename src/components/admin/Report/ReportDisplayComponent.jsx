@@ -17,7 +17,6 @@ class ReportDisplayComponent extends React.Component {
 
     toggleDetails = (event) => {
         event.preventDefault()
-        console.log("toggle details being called too?")
         this.setState({
             ...this.state,
             showDetails: !this.state.showDetails

@@ -35,8 +35,22 @@ class ModalComponent extends React.Component {
         })
     }
 
-    handleEditRedport = (event) => {
+    handleEditReport = (event, editedReport) => {
+        event.preventDefault()
 
+        editReport(editedReport).then( response => {
+            console.log("response in modal compt", response)
+            this.setState({
+                ...this.state,
+                showEdit: !this.state.showEdit
+            })
+        }).catch( error => {
+            console.log("error in modal compt", error)
+            this.setState({
+                ...this.state,
+                showEdit: !this.state.showEdit
+            })
+        })
     }
 
     showMealDetails = () => {
@@ -50,7 +64,7 @@ class ModalComponent extends React.Component {
                     {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
                 </div>
                 <div className="editReportContainer">
-                    {this.state.showEdit ? <MealTallyComponent report={this.props.report} /> : ''}
+                    {this.state.showEdit ? <MealTallyComponent report={this.props.report} editReport={this.handleEditReport} /> : ''}
                 </div>
             </div>
         )

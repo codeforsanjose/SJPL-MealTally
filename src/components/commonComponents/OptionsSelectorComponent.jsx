@@ -15,25 +15,24 @@ class OptionsSelectorComponent extends React.Component {
     displayOptions() {
         let fieldName = this.props.optionsName
         return this.props.options.map( (option, index) => {
-            if (option.toLowerCase() === 'lunch') {
-                return (
-                    <option selected key={index} value={option} >{option}</option>
-                )
-            }
-            else {
-                return (
-                    <option key={index} value={option} >{option}</option>
-                )
-            }
+            
+            return (
+                <option key={index} value={option} >{option}</option>
+            )
+            
         })
 
     }
     render() {
         const { optionsName, itemSelected } = this.props
+        let item = 'Lunch'
+        if (this.props.itemSelected !== '') {
+            item = this.props.itemSelected
+        }
         return (
             <div className="incrementContainer">
                 <span>{optionsName}</span>
-                <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} >
+                <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} value={item} >
                     {this.displayOptions()}
                 </select>
             </div>

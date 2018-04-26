@@ -40,6 +40,7 @@ class MealTallyComponent extends React.Component {
     }
 
     componentWillMount(props) {
+        this.props = props
         getLibraries().then(libraries => {
             this.setState({
                 ...this.state,
@@ -101,15 +102,19 @@ class MealTallyComponent extends React.Component {
     }
     handleSaveMealTally = (event) => {
         event.preventDefault()
-        if (this.state.user._id !== '') {
-
+        // if no _id then is a new meal if _id then editing one from report component
+        if (this.state.mealTallyDetails._id !== '') {
+            console.log("this.props", this.props)
+            this.props.editReport(event, this.state.mealTallyDetails)
         }
-        this.setState({
-            ...this.state,
-            loadingMessage: 'Saving please wait...',
-            showModal: true,
-            modalMessage: 'Please review report before saving.'
-        })
+        else {
+            this.setState({
+                ...this.state,
+                loadingMessage: 'Saving please wait...',
+                showModal: true,
+                modalMessage: 'Please review report before saving.'
+            })
+        }
         //this.handleCreateMeal({})
     }
 

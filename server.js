@@ -249,6 +249,17 @@ app.post("/api/meals", function(req, res) {
     })
 })
 
+// PUT: edit a new meal
+app.put("/api/meals", function(req, res) {
+    db.updateOneById(meals_db_name, req.body).then(response => {
+        console.log("success response")
+        res.status(201).json({msg: 'successfully edited user'});
+    }).catch(error => {
+        console.log("error is", error)
+        res.status(406).json({"error": error})
+    })
+})
+
 app.listen(app.get('port'), function () {
     console.log("[*] mealtally running on port", app.get('port'));
 })

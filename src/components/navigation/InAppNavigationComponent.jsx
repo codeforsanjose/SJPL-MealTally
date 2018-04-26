@@ -29,7 +29,7 @@ class InAppNavigationComponent extends React.Component {
         this.state = {
             user: user,
             mealTallyDetails: mealTallyDetails,
-            tabs: 1,
+            tabs: 2,
             libraries: [],
             mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             isAdmin: this.props.isAdmin
@@ -131,7 +131,6 @@ class InAppNavigationComponent extends React.Component {
             switch (this.state.tabs) {
                 case (1): {
                     return (
-                        //this.profileDisplayDetails()
                         <ProfileComponent user={this.state.user} />
                     )
                 }
@@ -149,7 +148,6 @@ class InAppNavigationComponent extends React.Component {
     render() {
         return (
             <div>
-                
                 { this.displayNavigation() }
                 { this.displayPanels() }
             </div>
