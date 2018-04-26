@@ -1,14 +1,23 @@
 .modalContainer {
     display: block;
-    height: 100%;
+    width: 95%;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     background-color: white;
+    box-shadow: 6px;
     border: 1px solid #ccc;
     font-size: 24px;
     padding: 2em;
+    overflow-y: scroll;
+
+    .closeButton {
+        border-radius: 25px;
+        background-color: #c4c4c4;
+        font-size: 16px;
+    }
+
     button {
     	width: 200px;
     	height: 2em;

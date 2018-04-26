@@ -169,6 +169,18 @@ const createMeal = (newMeal) => {
     })
 }
 
+const editReport = (newMeal) => {
+    return new Promise((resolve, reject) => {
+        return makeRequest(newMeal, 'PUT', '/api/meals').then(response => {
+            return resolve(response.json())
+        }).catch(error => {
+            window.alert('Error creating meal please try again later.')
+            console.log(error)
+            return reject(error)
+        })
+    })
+}
+
 export {
     loginUser,
     registerUser,
@@ -182,4 +194,5 @@ export {
     generateReport,
     getLibraries,
     createMeal,
+    editReport,
 }

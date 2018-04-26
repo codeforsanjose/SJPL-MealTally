@@ -31,12 +31,11 @@ class MealTallyComponent extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
-        console.log('oooo what passed?')
         this.state = {
             showDate: false,
             libraries: [],
             mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
-            mealTallyDetails: this.INITIAL_MEAL_TALLY_DETAILS
+            mealTallyDetails: this.props.report || this.INITIAL_MEAL_TALLY_DETAILS
         }
     }
 
@@ -47,7 +46,6 @@ class MealTallyComponent extends React.Component {
                 libraries: libraries
             })
         }).catch(error => {
-            console.log('error getting libraries: ', error)
             this.setState({
                 ...this.state,
                 libraries: []
@@ -103,7 +101,9 @@ class MealTallyComponent extends React.Component {
     }
     handleSaveMealTally = (event) => {
         event.preventDefault()
-        
+        if (this.state.user._id !== '') {
+
+        }
         this.setState({
             ...this.state,
             loadingMessage: 'Saving please wait...',

@@ -17,6 +17,7 @@ class ReportDisplayComponent extends React.Component {
 
     toggleDetails = (event) => {
         event.preventDefault()
+        console.log("toggle details being called too?")
         this.setState({
             ...this.state,
             showDetails: !this.state.showDetails
@@ -28,14 +29,14 @@ class ReportDisplayComponent extends React.Component {
         const adults = this.props.reportData.adults
         return (
             <div>
-                <ModalComponent report={this.props.reportData} />
+                <ModalComponent closeReport={this.toggleDetails} report={this.props.reportData} />
             </div>
         )
     }
 
     render () {
-        return (
-            <tr onClick={this.toggleDetails}>
+        return [
+            <tr key={this.props.reportData._id} onClick={this.toggleDetails}>
                 <td className="date">
                     {moment(this.props.reportData.date).format('MMM, DD YYYY')}
                 </td>
@@ -48,19 +49,15 @@ class ReportDisplayComponent extends React.Component {
                 <td>
                     {this.props.reportData.signature}
                 </td>
-                {this.state.showDetails ? this.showReportDetails(): null}
-            </tr>
-        )
+                
+            </tr>,
+            <div key={this.props.reportData._id + this.props.reportData.signature}>
+                {this.state.showDetails ? this.showReportDetails(): ''}
+            </div>
+        ]
     }
     componentDidMount() {
-        // i do not like and does not work correctly but only way i could think of a simple solution without using a framework
-        const self = this
-        $('div').click(function() {
-            self.setState({
-                ...self.state,
-                showDetails: false
-            })
-        })
+        
     }
 }
 
