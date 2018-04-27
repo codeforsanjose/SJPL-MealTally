@@ -138,10 +138,16 @@ const getReportsInRange = (range) => {
     })
 }
 
+const downloadPDF = (filename) => {
+    window.location.href = `/pdf/${filename}`
+}
+
 const generateReport = (reports) => {
     return makeRequest(reports, 'POST', '/api/generateReport').then(response => {
-        console.log('generate report response: ', response)
-        return response
+        response.json().then( result => {
+            downloadPDF(result.filename)
+        })
+        return {}
     }).catch(error => {
         console.log("error in api js", error)
         return console.log(error)

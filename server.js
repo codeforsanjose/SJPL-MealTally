@@ -175,24 +175,17 @@ app.post('/api/user', (req, res) => {
 var fs = require('fs')
 app.post('/api/generateReport', (req, res) => {
     var reports =  _.pick(req.body, ['reports'])
-    //https://stackoverflow.com/questions/7288814/download-a-file-from-nodejs-server-using-express
-    pdfCreator.createPDFReport(reports['reports']).then( (result) => {
-        const filePath = result.filename
-        const filePathSplit = result.filename.split('/')
-        const filename = filePathSplit[filePathSplit.length - 1]
-        res.set({
-            'Access-Control-Allow-Origin': '*',
-            'Content-disposition': 'attachment; filename=' + filename,
-            'Access-Control-Allow-Headers': 'X-Requested-With',
-            'Content-type': 'application/pdf'
-        })
-        res.download(filePath, filename)
-        //var filestream = fs.createReadStream(filePath)
-        //filestream.pipe(res)
+    pdfCreator.createPDFReport(reports['reports'], res).then( (result) => {
+        res.json({"filename": result})
     }).catch(error => {
         console.log(error)
         return res.status(503)
     })
+})
+
+app.get('/pdf/:filename', (req, res) => {
+    const filename = req.params.filename
+    res.download('./reports/' + filename)
 })
 
 app.post('/api/admin/user/makeAdmin', (req, res) => {

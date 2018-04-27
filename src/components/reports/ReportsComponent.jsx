@@ -79,11 +79,7 @@ class ReportsComponent extends React.Component {
         const data = {
             reports: this.state.reports
         }
-        generateReport(data).then(reseponse => {
-            console.log('should be pdf downloading: reseponse: ', reseponse)
-        }).catch(error => {
-            console.log('pdf donwload errir: ', error)
-        })
+        generateReport(data)
     }
 
     handleGetReportsInRange = (data) => {
@@ -94,7 +90,6 @@ class ReportsComponent extends React.Component {
             type: data.type
         }
         getReportsInRange(postData).then(response => {
-            console.log('handle get reports in range response:', response)
             this.setState({
                 ...this.state,
                 ...data,
