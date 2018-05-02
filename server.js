@@ -182,10 +182,18 @@ app.post('/api/generateReport', (req, res) => {
         return res.status(503)
     })
 })
-
+// this is needed for downloading the created pdf
+// need to delete once sent or get an s3 bucket since not good idea or best practice to keep on our server
 app.get('/pdf/:filename', (req, res) => {
     const filename = req.params.filename
     res.download('./reports/' + filename)
+})
+
+// delete the file after downloaded
+app.get('/pdf/delete/:filename', (req, res) => {
+    const filename = req.params.filename
+    // delete file
+    res.status(202).json({"msg": "deleted file"})
 })
 
 app.post('/api/admin/user/makeAdmin', (req, res) => {
