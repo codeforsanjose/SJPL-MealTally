@@ -138,8 +138,23 @@ const getReportsInRange = (range) => {
     })
 }
 
+const deletePDF = (filename) => {
+    return makeRequest(reports, 'GET', `/pdf/delete/${filename}`).then(response => {
+        response.json().then( result => {
+            //downloadPDF(result.filename)
+        })
+        return {}
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
 const downloadPDF = (filename) => {
     window.location.href = `/pdf/${filename}`
+    // easiest way I can think of to avoid a race condition while using window.location
+    setTimeout(function() {
+        deletePDF(filename)
+    }, 3000)
 }
 
 const generateReport = (reports) => {

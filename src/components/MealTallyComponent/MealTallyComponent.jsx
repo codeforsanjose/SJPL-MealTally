@@ -15,14 +15,18 @@ require('./MealTallyComponent.scss');
 class MealTallyComponent extends React.Component {
     INITIAL_MEAL_TALLY_DETAILS = {
         _id: '',
-        library: 'Almaden Branch Library',
+        library: '',
         date: moment(),
         type: 'Lunch',
         received: 0,
         leftovers: 0,
         childrenAndTeens: 0,
         teenStaffAndVolunteers: 0,
+        staff: 0,
+        volunteers: 0,
         adult: 0,
+        children: 0,
+        teenagers: 0,
         unusable: 0,
         createdBy: {},
         signature:''
@@ -63,7 +67,13 @@ class MealTallyComponent extends React.Component {
 
     handleMealTallyDetailsIncrementField = (event, fieldName, value) => {
         event.preventDefault()
-        let incValue = this.state.mealTallyDetails[fieldName] + value
+        let incValue = 0
+        if (value !== -1 && value !== 1) {
+            incValue = +value    
+        }
+        else {
+            incValue = this.state.mealTallyDetails[fieldName] + value
+        }
         incValue = incValue > 0 ? incValue: 0
         this.setState({
             ...this.state,
@@ -75,11 +85,15 @@ class MealTallyComponent extends React.Component {
     }
     handleMealTallyDetailsOptionsField = (event, fieldName) => {
         event.preventDefault()
+        let selection = event.target.value
+        if (selection === 'Choose one...') {
+            selection = ''
+        }
         this.setState({
             ...this.state,
             mealTallyDetails: {
                 ...this.state.mealTallyDetails,
-                [fieldName]: event.target.value
+                [fieldName]: selection
             }
         })
     }
@@ -164,18 +178,41 @@ class MealTallyComponent extends React.Component {
         })
     }
 
+    validateMeal = () => {
+        let message = ''
+
+        if (this.state.mealTallyDetails.library === '') {
+            message += 'Please select a library.'
+        }
+        if (message !== '') {
+            return false
+            this.setState({
+                ...this.state,
+                showError: true,
+                errorMessage: message
+            })
+        }
+        else {
+            return true
+        }
+    }
+
     render() {
         const totalMealAvailable = this.state.mealTallyDetails.received + this.state.mealTallyDetails.leftovers
         const totalMealServed = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers + this.state.mealTallyDetails.adult
         const totalLeftover = totalMealAvailable - totalMealServed - this.state.mealTallyDetails.unusable
-        const libraryOptions = this.state.libraries.map(library => {
+        let librariesList = []
+        let libraryOptions = this.state.libraries.map(library => {
             return library.name
         })
+        libraryOptions.splice(0, 0, 'Choose one...')
+
         return (
             <div className="mealTallyContainer">
                 {this.state.showModal ? <ModalComponent message={this.state.modalMessage} handleEdit={this.handleModalEdit} handleSave={this.handleCreateMeal} report={this.state.mealTallyDetails} />: ''}
                 {this.state.showLoading ? <AlertComponent isLoading={true} message={this.state.loadingMessage} />: ''}
                 {this.state.showAlert ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.alertMessage} />: ''}
+                {this.state.showError ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.errorMessage} />: ''}
                 <Paper>
                     <div className="introContainer">
                         <div className="infoContainer">
@@ -235,21 +272,33 @@ class MealTallyComponent extends React.Component {
                     </div>
                     <div className="infoContainer">
                         <h3 className="infoContainerTitle">Served Meals</h3>
-                        
                         <IncrementComponent 
-                            incrementerName={"Children & Teens"}
-                            fieldName={'childrenAndTeens'}
-                            itemCount={this.state.mealTallyDetails.childrenAndTeens} 
+                            incrementerName={'Children'}
+                            fieldName={'children'}
+                            itemCount={this.state.mealTallyDetails.children} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={'Teenagers'}
+                            fieldName={'teenagers'}
+                            itemCount={this.state.mealTallyDetails.teenagers} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={"Staff"} 
+                            fieldName={'staff'}
+                            itemCount={this.state.mealTallyDetails.staff} 
+                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                        />
+                        <IncrementComponent 
+                            incrementerName={'Volunteers'} 
+                            fieldName={'volunteers'}
+                            itemCount={this.state.mealTallyDetails.staff} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                     </div>
+                    <hr />
                     <div className="infoContainer">
-                        <IncrementComponent 
-                            incrementerName={"Teen Staff & Volunteers"} 
-                            fieldName={'teenStaffAndVolunteers'}
-                            itemCount={this.state.mealTallyDetails.teenStaffAndVolunteers} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
                         <IncrementComponent 
                             incrementerName={"Adults"} 
                             fieldName={'adult'}

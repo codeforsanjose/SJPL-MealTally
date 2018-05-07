@@ -12,24 +12,24 @@
     
     .buttonContainer {
         text-align: center;
-        font-size: 1.4em;
 
         button {
-            font-size: 1.4em;
+            font-size: 2em;
         }
 
         .inc {
-            padding: 6px;
+            margin: 6px;
         }
 
         .dec {
-            padding: 6px;
+            margin: 6px;
 
         }
         .itemCount {
-            
-            padding: 1em;
-
+            font-size: 24px;
+            text-align: center;
+            width: 100px;
+            padding: 0 10px;
         }
     }
 }

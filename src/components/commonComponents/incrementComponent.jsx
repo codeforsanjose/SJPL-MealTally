@@ -20,7 +20,7 @@ class IncrementComponent extends React.Component {
                 <span className="itemTitle">{incrementerName}</span> 
                 <div className="buttonContainer">
                     <button className="inc" onClick={(e) => this.props.incrementerHandler(e, fieldName, -1)}>-</button>
-                    <span className="itemCount">{itemCount}</span>
+                    <input className="itemCount" type="number" value={itemCount} onChange={(e) => this.props.incrementerHandler(e, fieldName, e.target.value)} />
                     <button className="dec" onClick={(e) => this.props.incrementerHandler(e, fieldName, 1)}>+</button>
                 </div>
             </div>
