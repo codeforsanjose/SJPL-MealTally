@@ -269,7 +269,7 @@ class MealTallyComponent extends React.Component {
                             
                         </div>
                     </div>
-                    <div className="servedTitle">
+                    <div className="infoContainer servedTitle">
                             <h3 className="infoContainerTitle">Served Meals</h3>
                         </div>
                     <div className="infoContainer servedContainer">
