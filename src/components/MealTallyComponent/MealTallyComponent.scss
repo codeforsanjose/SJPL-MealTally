@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    padding-bottom: 3em;
     font-family: Helvetica, sans-serif;
 }
     .mealTallyContainer {
@@ -14,6 +15,7 @@ body {
     .introContainer {
         background-color: #F7F7F7;
     }
+
 
     .availableContainer {
         border-top: 1px dashed #666;
@@ -49,7 +51,7 @@ body {
     .infoContainer {
         margin: 0;
         padding: 2em 0 1em;
-
+        
         .infoContainerTitle {
             text-align: center;
             color: #000;

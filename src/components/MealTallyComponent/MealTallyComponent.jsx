@@ -270,35 +270,24 @@ class MealTallyComponent extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="infoContainer">
+                    <div className="infoContainer-childrenAndTeens">
                         <h3 className="infoContainerTitle">Served Meals</h3>
                         <IncrementComponent 
-                            incrementerName={'Children'}
+                            incrementerName={'Children and Teens'}
                             fieldName={'children'}
                             itemCount={this.state.mealTallyDetails.children} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
-                            incrementerName={'Teenagers'}
+                            incrementerName={'Teen Staff & Volunteers'}
                             fieldName={'teenagers'}
                             itemCount={this.state.mealTallyDetails.teenagers} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
-                        <IncrementComponent 
-                            incrementerName={"Staff"} 
-                            fieldName={'staff'}
-                            itemCount={this.state.mealTallyDetails.staff} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={'Volunteers'} 
-                            fieldName={'volunteers'}
-                            itemCount={this.state.mealTallyDetails.staff} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
+                       
                     </div>
-                    <hr />
-                    <div className="infoContainer">
+                    
+                    <div className="infoContainer-adults">
                         <IncrementComponent 
                             incrementerName={"Adults"} 
                             fieldName={'adult'}
@@ -306,19 +295,20 @@ class MealTallyComponent extends React.Component {
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                     </div>
-                    <div className="infoContainer">
+                    <div className="totalServed">
+                            <span className="tallyTotal">Total Meals Served:</span>
+                            <div className="totalNumber">
+                                {totalMealServed}
+                            </div>
+                        </div>
+                    <div className="infoContainer-unusable">
                         <IncrementComponent 
                             incrementerName={"Unusable Meals"}
                             fieldName={'unusable'}
                             itemCount={this.state.mealTallyDetails.unusable} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
-                        <div className="totalServed">
-                            <span className="tallyTotal">Total Meals Served:</span>
-                            <div className="totalNumber">
-                                {totalMealServed}
-                            </div>
-                        </div>
+                        
                     </div>
                     <div className="totalLeftover">
                             <span className="tallyTotal">Leftover Meals:</span>
@@ -330,7 +320,7 @@ class MealTallyComponent extends React.Component {
                         <label>Signature: </label><input type="text" onChange={this.handleSignature} />
                     </div>
 
-                    <button className="saveMealTally" onClick={this.handleSaveMealTally}>Save</button>
+                    <button className="saveMealTally" onClick={this.handleSaveMealTally}>Done</button>
                 </Paper>
             </div>
         )
