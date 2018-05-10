@@ -214,8 +214,9 @@ class MealTallyComponent extends React.Component {
                 {this.state.showAlert ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.alertMessage} />: ''}
                 {this.state.showError ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.errorMessage} />: ''}
                 <Paper>
-                    <div className="introContainer">
+                    
                         <div className="infoContainer">
+                        <div className="introContainer">
                             <div>
                                 <h3 className="infoContainerTitle">Meal Plan</h3>
                             </div>
@@ -250,6 +251,9 @@ class MealTallyComponent extends React.Component {
                     </div>
                         <div className="infoContainer availableContainer">
                             <h3 className="infoContainerTitle">Available Meals</h3>
+                                <div className="totalNumber">
+                                    {totalMealAvailable}
+                                </div>
                             <IncrementComponent 
                                 incrementerName={"Meals from Vendor"}
                                 fieldName={'received'}
@@ -262,12 +266,7 @@ class MealTallyComponent extends React.Component {
                                 itemCount={this.state.mealTallyDetails.leftovers} 
                                 incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                             />
-                            <div className="totalMeals">
-                                <span className="tallyTotal">Total Meals Available:</span>
-                                <div className="totalNumber">
-                                    {totalMealAvailable}
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     <div className="infoContainer servedContainer">
