@@ -22,6 +22,18 @@ body {
         
     }
 
+    .servedContainer, .adultsContainer, .totalServed, .unusableMeals {
+        background-color: #F7F7F7;
+        width: 50%;
+        float:left;
+    }
+
+    .totalLeftover {
+        width: 40%;
+        float: right;
+        text-align: center;
+    }
+
     select {
         font-size: 2em;
         background-color: #fff;
@@ -51,7 +63,7 @@ body {
     .infoContainer {
         margin: 0;
         padding: 2em 0 1em;
-        
+
         .infoContainerTitle {
             text-align: center;
             color: #000;
