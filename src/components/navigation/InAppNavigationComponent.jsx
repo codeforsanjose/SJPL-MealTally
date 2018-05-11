@@ -81,8 +81,8 @@ class InAppNavigationComponent extends React.Component {
             return (
                 <div>
                     <div className="adminProfileNavigationContainer">
-                        <a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Dashboard</a>
-                        <a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Meal Tally App</a>
+                        <a className="navItem" onClick={(e) => this.handleTabs(e, 0)} >Accounts</a>
+                        <a className="navItem" onClick={(e) => this.handleTabs(e, 2)} >Tally</a>
                         <a className="navItem" onClick={(e) => this.handleTabs(e, 3)} >Reports</a>
                     </div>
                 </div>

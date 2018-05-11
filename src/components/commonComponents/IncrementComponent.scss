@@ -1,7 +1,9 @@
+
+
 .incrementContainer {
     
     padding: 1em 1em 0 1em;
-    margin: 1em 3em 3em 3em;
+    margin: 1em;
     display: inline-block;
     
     select {
@@ -10,24 +12,37 @@
     }
 
     .itemTitle {
-        font-size: 1.4em;
+        font-size: 1.6em;
         line-height: 2;
+        background-color: #1E6169;
+        color: #fff;
+        
+        display: block;
     }
     
     .buttonContainer {
         text-align: center;
-        background-color: #ddd;
-        padding: .5em;
+        border:1px dotted #1E6169;
+        padding: 2em;
         button {
             font-size: 3em;
             height: 2em;
             width: 2em;
-            background-color: #1e616a;
-            color: #fff;
+            border: 1px solid #ccc;
+            background-color: #eee;
+            color: #000;
             text-align: center;
-            border-radius: 1em;
+            border-radius: 0 .3em .3em 0;
         }
+        button.inc {
+            border-radius: .3em 0 0 .3em;
+            border: 1px 1px 1px 2px;
 
+        }
+        button.dec {
+            border-radius: 0 .3em .3em 0;
+            margin-left:0;
+        }
         .inc {
             margin: .2em 0;
         }
@@ -37,13 +52,23 @@
 
         }
         .itemCount {
-            font-size: 4em;
-            text-align: center;
-            width: 2em;
-            height: 1.5em;
+            font-size: 3em;
+            text-align: right;
+            width: 3em;
+            height: 2em;
             padding: 0 10px;
             margin: .2em 0;
             display: inline-block;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+    }
+}
+
+.infoContainer-error {
+    .buttonContainer {
+        button {
+            background-color: #FF8D00;
         }
     }
 }

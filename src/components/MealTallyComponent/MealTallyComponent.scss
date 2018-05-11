@@ -1,7 +1,17 @@
 body {
     margin: 0;
+    padding-bottom: 3em;
     font-family: Helvetica, sans-serif;
 }
+
+    button:focus {outline:0;}
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+
     .mealTallyContainer {
     text-align: center;
 
@@ -12,13 +22,23 @@ body {
     }
 
     .introContainer {
-        background-color: #F7F7F7;
+        background-color: #fff;
     }
 
+
     .availableContainer {
-        border-top: 1px dashed #666;
-        
+        border-top: 1px solid #ccc;
+        background-color: #F7F7F7;
+        padding-bottom: 3em !important;
     }
+
+    .servedContainer, .adultsContainer, .unusableMeals {
+        background-color: #F7F7F7;
+        width: 58%;
+        float:right;
+    }
+
+    
 
     select {
         font-size: 2em;
@@ -45,10 +65,21 @@ body {
         }
     }
 
+    .servedTitle {
+        background-color: #F7F7F7;
+        width: 100%;
+        margin: 0;
+        padding: 2em 0 1em 0;
+        border-top:1px solid #ccc;
+        h3 {
+            margin: 0;
+             padding: 2em 0 1em 0;
+        }
+    }
 
     .infoContainer {
         margin: 0;
-        padding: 2em 0 1em;
+        padding: 0;
 
         .infoContainerTitle {
             text-align: center;
@@ -96,5 +127,7 @@ body {
         height: 100px;
         font-size: 1.4em;
         margin-bottom: 2em;
+        background-color: #75d085;
+        border-radius: 10px;
     }
 }
