@@ -201,6 +201,7 @@ class MealTallyComponent extends React.Component {
         const totalMealAvailable = this.state.mealTallyDetails.received + this.state.mealTallyDetails.leftovers
         const totalMealServed = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers + this.state.mealTallyDetails.adult
         const totalLeftover = totalMealAvailable - totalMealServed - this.state.mealTallyDetails.unusable
+        const totalMinors = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers
         let librariesList = []
         let libraryOptions = this.state.libraries.map(library => {
             return library.name
@@ -302,19 +303,31 @@ class MealTallyComponent extends React.Component {
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                     </div>
-                    
-                    
-                    <div className="totalServed">
+                    <div class="totalsContainer">
+                        <div className="totalServed">
+                            <span className="tallyTotal">18 and under:</span>
+                            <div className="totalNumber">
+                                {totalMinors > 0 ? totalMinors: 0}
+                            </div>
+                        </div>
+                        <div className="totalServed">
+                            <span className="tallyTotal">Adult:</span>
+                            <div className="totalNumber">
+                                {this.state.mealTallyDetails.adult > 0 ? this.state.mealTallyDetails.adult: 0}
+                            </div>
+                        </div>
+                        <div className="totalServed">
                             <span className="tallyTotal">Total Meals Served:</span>
                             <div className="totalNumber">
                                 {totalMealServed > 0 ? totalMealServed: 0}
                             </div>
                         </div>
-                    
-                    <div className="totalLeftover">
-                        <span className="tallyTotal">Leftover Meals:</span>
-                        <div className="totalNumber">
-                            {totalLeftover > 0 ? totalLeftover: 0}
+                        
+                        <div className="totalLeftover">
+                            <span className="tallyTotal">Leftover Meals:</span>
+                            <div className="totalNumber">
+                                {totalLeftover > 0 ? totalLeftover: 0}
+                            </div>
                         </div>
                     </div>
                     <div className="signatureBox">

@@ -28,10 +28,7 @@ class IncrementComponent extends React.Component {
         )
     }
     componentDidMount = () => {
-        $('.no-zoom').bind('touchend', function(e) {
-            e.preventDefault()
-            $(this).click()
-        })
+        
     }
 }
 
