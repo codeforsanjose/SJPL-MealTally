@@ -3,6 +3,15 @@ body {
     padding-bottom: 3em;
     font-family: Helvetica, sans-serif;
 }
+
+    button:focus {outline:0;}
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+
     .mealTallyContainer {
     text-align: center;
 
