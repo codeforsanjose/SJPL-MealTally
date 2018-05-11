@@ -19,12 +19,18 @@ class IncrementComponent extends React.Component {
             <div className="incrementContainer">
                 <span className="itemTitle">{incrementerName}</span> 
                 <div className="buttonContainer">
-                    <button className="inc" onClick={(e) => this.props.incrementerHandler(e, fieldName, -1)}>-</button>
+                    <button className="inc no-zoom" onClick={(e) => this.props.incrementerHandler(e, fieldName, -1)}>-</button>
                     <input className="itemCount" type="number" value={itemCount} onChange={(e) => this.props.incrementerHandler(e, fieldName, e.target.value)} />
-                    <button className="dec" onClick={(e) => this.props.incrementerHandler(e, fieldName, 1)}>+</button>
+                    <button className="dec no-zoom" onClick={(e) => this.props.incrementerHandler(e, fieldName, 1)}>+</button>
                 </div>
             </div>
         )
+    }
+    componentDidMount = () => {
+        $('.no-zoom').bind('touchend', function(e) {
+            e.preventDefault()
+            $(this).click()
+        })
     }
 }
 

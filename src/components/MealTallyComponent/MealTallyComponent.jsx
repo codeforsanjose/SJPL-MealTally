@@ -16,7 +16,7 @@ class MealTallyComponent extends React.Component {
     INITIAL_MEAL_TALLY_DETAILS = {
         _id: '',
         library: '',
-        date: moment(),
+        date: moment().format("YYY-MM-DD"),
         type: 'Lunch',
         received: 0,
         leftovers: 0,
@@ -118,7 +118,7 @@ class MealTallyComponent extends React.Component {
         event.preventDefault()
         // if no _id then is a new meal if _id then editing one from report component
         if (this.state.mealTallyDetails._id !== '') {
-            console.log("this.props", this.props)
+
             this.props.editReport(event, this.state.mealTallyDetails)
         }
         else {
@@ -273,27 +273,15 @@ class MealTallyComponent extends React.Component {
                     <div className="infoContainer">
                         <h3 className="infoContainerTitle">Served Meals</h3>
                         <IncrementComponent 
-                            incrementerName={'Children'}
-                            fieldName={'children'}
-                            itemCount={this.state.mealTallyDetails.children} 
+                            incrementerName={'Children & Teens'}
+                            fieldName={'childrenAndTeens'}
+                            itemCount={this.state.mealTallyDetails.childrenAndTeens} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
-                            incrementerName={'Teenagers'}
-                            fieldName={'teenagers'}
-                            itemCount={this.state.mealTallyDetails.teenagers} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={"Staff"} 
-                            fieldName={'staff'}
-                            itemCount={this.state.mealTallyDetails.staff} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={'Volunteers'} 
-                            fieldName={'volunteers'}
-                            itemCount={this.state.mealTallyDetails.staff} 
+                            incrementerName={'Teen Staff & Volunteers'}
+                            fieldName={'teenStaffAndVolunteers'}
+                            itemCount={this.state.mealTallyDetails.teenStaffAndVolunteers} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                     </div>
@@ -316,16 +304,16 @@ class MealTallyComponent extends React.Component {
                         <div className="totalServed">
                             <span className="tallyTotal">Total Meals Served:</span>
                             <div className="totalNumber">
-                                {totalMealServed}
+                                {totalMealServed > 0 ? totalMealServed: 0}
                             </div>
                         </div>
                     </div>
                     <div className="totalLeftover">
-                            <span className="tallyTotal">Leftover Meals:</span>
-                            <div className="totalNumber">
-                                {totalLeftover}
-                            </div>
+                        <span className="tallyTotal">Leftover Meals:</span>
+                        <div className="totalNumber">
+                            {totalLeftover > 0 ? totalLeftover: 0}
                         </div>
+                    </div>
                     <div className="signatureBox">
                         <label>Signature: </label><input type="text" onChange={this.handleSignature} />
                     </div>
