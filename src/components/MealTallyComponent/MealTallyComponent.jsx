@@ -201,6 +201,7 @@ class MealTallyComponent extends React.Component {
         const totalMealAvailable = this.state.mealTallyDetails.received + this.state.mealTallyDetails.leftovers
         const totalMealServed = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers + this.state.mealTallyDetails.adult
         const totalLeftover = totalMealAvailable - totalMealServed - this.state.mealTallyDetails.unusable
+        const totalMinors = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers
         let librariesList = []
         let libraryOptions = this.state.libraries.map(library => {
             return library.name
@@ -248,12 +249,12 @@ class MealTallyComponent extends React.Component {
                                 />
                                 
                             </div>
-                    </div>
+                        </div>
                         <div className="infoContainer availableContainer">
                             <h3 className="infoContainerTitle">Available Meals</h3>
-                                <div className="totalNumber">
-                                    {totalMealAvailable}
-                                </div>
+                            <div className="totalNumber">
+                                {totalMealAvailable}
+                            </div>
                             <IncrementComponent 
                                 incrementerName={"Meals from Vendor"}
                                 fieldName={'received'}
@@ -276,16 +277,21 @@ class MealTallyComponent extends React.Component {
                         
                         <IncrementComponent 
                             incrementerName={'Children and Teens'}
-                            fieldName={'children'}
-                            itemCount={this.state.mealTallyDetails.children} 
+
+                            fieldName={'childrenAndTeens'}
+                            itemCount={this.state.mealTallyDetails.childrenAndTeens} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                         <IncrementComponent 
-                            incrementerName={'Teen Staff & Volunteers'}
-                            fieldName={'teenagers'}
-                            itemCount={this.state.mealTallyDetails.teenagers} 
+                            incrementerName={'Teen Staff and Volunteers'}
+                            fieldName={'teenStaffAndVolunteers'}
+                            itemCount={this.state.mealTallyDetails.teenStaffAndVolunteers} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
+                    </div>
+                    <hr />
+                    <div className="infoContainer">
+
                        <IncrementComponent 
                             incrementerName={"Adults"} 
                             fieldName={'adult'}
@@ -299,19 +305,32 @@ class MealTallyComponent extends React.Component {
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
                     </div>
-                    
-                    
-                    <div className="totalServed">
+                    <div class="totalsContainer">
+                        <div className="totalServed">
+                            <span className="tallyTotal">18 and under:</span>
+                            <div className="totalNumber">
+                                {totalMinors > 0 ? totalMinors: 0}
+                            </div>
+                        </div>
+                        <div className="totalServed">
+                            <span className="tallyTotal">Adult:</span>
+                            <div className="totalNumber">
+                                {this.state.mealTallyDetails.adult > 0 ? this.state.mealTallyDetails.adult: 0}
+                            </div>
+                        </div>
+                        <div className="totalServed">
                             <span className="tallyTotal">Total Meals Served:</span>
                             <div className="totalNumber">
                                 {totalMealServed}
                             </div>
                         </div>
-                    
-                    <div className="totalLeftover">
+
+                        
+                        <div className="totalLeftover">
                             <span className="tallyTotal">Leftover Meals:</span>
                             <div className="totalNumber">
-                                {totalLeftover}
+                                {totalLeftover > 0 ? totalLeftover: 0}
+
                             </div>
                         </div>
                     <div className="signatureBox">

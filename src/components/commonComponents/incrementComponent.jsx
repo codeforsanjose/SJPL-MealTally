@@ -1,6 +1,7 @@
 
 import * as React from 'react'
 import Paper from 'material-ui/Paper'
+import $ from 'jquery'
 import appConfig from '../../AppContentConfig.json'
 
 require('./IncrementComponent.scss');
@@ -25,6 +26,9 @@ class IncrementComponent extends React.Component {
                 </div>
             </div>
         )
+    }
+    componentDidMount = () => {
+        
     }
 }
 
