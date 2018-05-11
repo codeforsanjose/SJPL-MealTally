@@ -288,11 +288,7 @@ class MealTallyComponent extends React.Component {
                             itemCount={this.state.mealTallyDetails.teenStaffAndVolunteers} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
-                    </div>
-                    <hr />
-                    <div className="infoContainer">
-
-                       <IncrementComponent 
+                        <IncrementComponent 
                             incrementerName={"Adults"} 
                             fieldName={'adult'}
                             itemCount={this.state.mealTallyDetails.adult} 
@@ -304,6 +300,11 @@ class MealTallyComponent extends React.Component {
                             itemCount={this.state.mealTallyDetails.unusable} 
                             incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                         />
+                    </div>
+                    
+                    <div className="infoContainer">
+
+                       
                     </div>
                     <div class="totalsContainer">
                         <div className="totalServed">
@@ -333,6 +334,7 @@ class MealTallyComponent extends React.Component {
 
                             </div>
                         </div>
+                    </div>
                     <div className="signatureBox">
                         <label>Signature: </label><input type="text" onChange={this.handleSignature} />
                     </div>
