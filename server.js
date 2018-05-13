@@ -83,6 +83,7 @@ app.post('/api/reportsRange', (req, res) => {
                 $lte: req.body.startDate
             }
         }
+        console.log(query)
         if (req.body.type !== '') {
             query.type = req.body.type
         }

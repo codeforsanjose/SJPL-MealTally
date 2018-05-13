@@ -9,6 +9,7 @@ require('./ReportsComponent.scss')
 
 
 class ReportsComponent extends React.Component {
+    MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     constructor(props) {
         super(props)
         this.props = props
@@ -23,7 +24,9 @@ class ReportsComponent extends React.Component {
             library: '',
             type: '',
             totals: totals,
-            reports: []
+            reports: [],
+            months: this.MONTHS,
+            selectedMonth: this.MONTHS[0]
         }
     }
     componentDidMount() {
@@ -82,7 +85,38 @@ class ReportsComponent extends React.Component {
         generateReport(data)
     }
 
-    handleGetReportsInRange = (data) => {
+    getLastSevenDays = (event) => {
+        event.preventDefault()
+        let today = moment()
+        let lastSeven = moment().subtract(7,'d')
+        
+        const data = {
+            startDate: today,
+            endDate: lastSeven,
+            library: this.state.library,
+            type: this.state.type
+        }
+        this.handleGetReportsInRange(data)
+    }
+
+    getMonthStartEndDates = (event) => {
+        event.preventDefault()
+        
+        const year = +moment().format('YYYY')
+        let startDate = moment([year, event.target.selectedIndex])
+        let endDate = moment(startDate).endOf('month')
+
+        const data = {
+            startDate: endDate,
+            endDate: startDate,
+            library: this.state.library,
+            type: this.state.type
+        }
+
+        this.handleGetReportsInRange(data, event.target.value)
+    }
+
+    handleGetReportsInRange = (data, month = this.MONTHS[0]) => {
         const postData = {
             startDate: data.startDate,
             endDate: data.endDate,
@@ -93,6 +127,7 @@ class ReportsComponent extends React.Component {
             this.setState({
                 ...this.state,
                 ...data,
+                selectedMonth: month,
                 reports: response.allMeals,
                 totals: {
                     ...response.totals
@@ -153,9 +188,19 @@ class ReportsComponent extends React.Component {
             <div className="ReportContainer">
                 <div className="report-controls">
                     <div className="dateContainer">
-                    <div>
-                                <h3 className="title">Report Settings</h3>
-                            </div>
+                        <div>
+                            <h3 className="title">Report Settings</h3>
+                        </div>
+                        <div>
+                            <button onClick={this.getLastSevenDays}>Last 7 Days</button>
+                            <OptionsSelectorComponent
+                                optionsName={'Month'}
+                                fieldName={'selectedMonth'}
+                                options={this.state.months}
+                                itemSelected={this.state.selectedMonth}
+                                optionsHandler={this.getMonthStartEndDates}
+                            />
+                        </div>
                         <div className="endDateContainer">
                             <div onClick={(event) => this.toggleShowDate(event, 'endDate')}>
                                 <span> {moment(this.state.endDate).format('MMM, DD YYYY')}</span>

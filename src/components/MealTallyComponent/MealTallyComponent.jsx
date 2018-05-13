@@ -306,7 +306,7 @@ class MealTallyComponent extends React.Component {
 
                        
                     </div>
-                    <div class="totalsContainer">
+                    <div className="totalsContainer">
                         <div className="totalServed">
                             <span className="tallyTotal">18 and under:</span>
                             <div className="totalNumber">
