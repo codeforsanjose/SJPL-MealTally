@@ -150,7 +150,7 @@ const deletePDF = (filename) => {
     })
 }
 const downloadPDF = (filename) => {
-    window.location.href = `/pdf/${filename}`
+    window.location.href = `/report/${filename}`
     // easiest way I can think of to avoid a race condition while using window.location
     setTimeout(function() {
         deletePDF(filename)

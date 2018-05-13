@@ -17,8 +17,9 @@ class ReportsComponent extends React.Component {
             
         }
         this.state = {
-            startDate: new Date(),
-            endDate: new Date(),
+            startDate: moment(),
+            endDate: moment(),
+            selectedDate: moment(),
             showStartDate: false,
             showEndDate: false,
             library: '',
@@ -26,7 +27,8 @@ class ReportsComponent extends React.Component {
             totals: totals,
             reports: [],
             months: this.MONTHS,
-            selectedMonth: this.MONTHS[0]
+            selectedMonth: this.MONTHS[0],
+            
         }
     }
     componentDidMount() {
@@ -45,20 +47,21 @@ class ReportsComponent extends React.Component {
 
     handleDate = (date, type) => {
         let data = {}
-        if (type === "startDate") {
+        if (type === 'startDate') {
             data = {
                 ...this.state,
                 startDate: date,
                 showStartDate: !this.state.showStartDate
             }
         }
-        else {
+        else if (type === 'endDate') {
             data = {
                 ...this.state,
                 endDate: date,
                 showEndDate: !this.state.showEndDate
             }
         }
+        
         this.handleGetReportsInRange(data)
     }
     
@@ -70,10 +73,16 @@ class ReportsComponent extends React.Component {
                 showStartDate: !this.state.showStartDate
             })
         }
-        else {
+        else if (type === "endDate") {
             this.setState({
                 ...this.state,
                 showEndDate: !this.state.showEndDate
+            })
+        }
+        else if (type === "selectedDate") {
+            this.setState({
+                ...this.state,
+                showSelectedDate: !this.state.showSelectedDate
             })
         }
     }
@@ -83,6 +92,18 @@ class ReportsComponent extends React.Component {
             reports: this.state.reports
         }
         generateReport(data)
+    }
+
+    getSelectedDay = (date, type) => {
+        const startDate = moment(date).startOf("day")
+        const endDate = startDate.endOf("day")
+        const data = {
+            startDate: startDate,
+            endDate: endDate
+        }
+        console.log(data)
+        this.handleGetReportsInRange(data)
+        
     }
 
     getLastSevenDays = (event) => {
@@ -161,12 +182,21 @@ class ReportsComponent extends React.Component {
                 />
             )
         }
-        else {
+        else if (type === 'endDate') {
             return (
                 <DatePickerComponent
                     name={type}
                     dateSelected={this.state.endDate}
                     handleDateSelected={this.handleDate}
+                />
+            )
+        }
+        else {
+            return (
+                <DatePickerComponent
+                    name={type}
+                    dateSelected={this.state.selectedDate}
+                    handleDateSelected={this.getSelectedDay}
                 />
             )
         }
@@ -192,6 +222,12 @@ class ReportsComponent extends React.Component {
                             <h3 className="title">Report Settings</h3>
                         </div>
                         <div>
+                            <div className="singleDay">
+                                <div onClick={(event) => this.toggleShowDate(event, 'selectedDate')}>
+                                    <span> {moment(this.state.selectedDate).format('MMM, DD YYYY')}</span>
+                                </div>
+                                {this.state.showSelectedDate ? this.getDatePicker('selectedDate') : ''}
+                            </div>
                             <button onClick={this.getLastSevenDays}>Last 7 Days</button>
                             <OptionsSelectorComponent
                                 optionsName={'Month'}

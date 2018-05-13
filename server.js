@@ -4,24 +4,6 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 var bcrypt = require('bcrypt')
 var app = express()
-
-const publicDir = __dirname + '/public'
-
-app.use(bodyParser.json());
-app.set('port', process.env.PORT || 8080);
-app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-app.use('/public', express.static("public"));
-
-let meals_db_name = ''
-
-if (process.env.NODE_ENV === 'production') {
-    meals_db_name = 'meals'
-} else {
-    meals_db_name = 'test_meals'
-}
-///////////////////////
-///////////////////////
-///////////////////////
 const session = require('express-session')
 const _ = require('lodash')
 const errorHandler = require('errorhandler')
@@ -31,7 +13,22 @@ const cookieParser = require('cookie-parser')
 const db = require('./lib/db')
 const auth = require('./lib/auth')
 const pdfCreator = require('./lib/pdfCreator')
+const excelCreator = require('./lib/excelCreator')
+const publicDir = __dirname + '/public'
 
+
+let meals_db_name = ''
+
+if (process.env.NODE_ENV === 'production') {
+    meals_db_name = 'meals'
+} else {
+    meals_db_name = 'test_meals'
+}
+
+app.use(bodyParser.json());
+app.set('port', process.env.PORT || 8080);
+app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
+app.use('/public', express.static("public"));
 app.use(cookieParser())
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
 auth.init(app)
@@ -83,7 +80,6 @@ app.post('/api/reportsRange', (req, res) => {
                 $lte: req.body.startDate
             }
         }
-        console.log(query)
         if (req.body.type !== '') {
             query.type = req.body.type
         }
@@ -102,12 +98,6 @@ app.post('/api/reportsRange', (req, res) => {
     else {
         return res.status(422).json({"errormsg": "no access"})
     }
-})
-
-app.get('/api/auth/facebook', passport.authenticate('facebook'))
-
-app.get('/api/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-    res.redirect(`/profile/${req.user._id}`)
 })
 
 app.get('/api/users', (req, res) => {
@@ -172,26 +162,53 @@ app.post('/api/user', (req, res) => {
     })
 })
 
-
-var fs = require('fs')
 app.post('/api/generateReport', (req, res) => {
-    var reports =  _.pick(req.body, ['reports'])
-    pdfCreator.createPDFReport(reports['reports'], res).then( (result) => {
-        res.json({"filename": result})
+    const reports =  _.pick(req.body, ['reports'])
+    createReport(reports['reports']).then( (result) => {
+        res.json(result)
     }).catch(error => {
         console.log(error)
-        return res.status(503)
+        return res.status(503).json(error)
     })
 })
+
+const createReport = (reports, type = 'excel') => {
+    return new Promise((resolve, reject) => {
+        if (type === 'excel') {
+            excelCreator.createExcelReport(reports).then( (result) => {
+                return resolve({
+                    "filename": result,
+                    "allMeals": reports
+                })
+            }).catch(error => {
+                console.log(error)
+                return reject(error)  // res.status(503)
+            })
+        }
+        else {
+            pdfCreator.createPDFReport(reports).then( (result) => {
+                return resolve({
+                    "filename": result,
+                    "allMeals": reports
+                })
+            }).catch(error => {
+                console.log(error)
+                return reject(error)  // res.status(503)
+            })
+        }
+
+    })
+}
 // this is needed for downloading the created pdf
 // need to delete once sent or get an s3 bucket since not good idea or best practice to keep on our server
-app.get('/pdf/:filename', (req, res) => {
+app.get('/report/:filename', (req, res) => {
     const filename = req.params.filename
+    console.log('getting file: ', filename)
     res.download('./reports/' + filename)
 })
 
 // delete the file after downloaded
-app.get('/pdf/delete/:filename', (req, res) => {
+app.get('/report/delete/:filename', (req, res) => {
     const filename = req.params.filename
     // delete file
     res.status(202).json({"msg": "deleted file"})
@@ -262,10 +279,6 @@ app.put("/api/meals", function(req, res) {
     })
 })
 
-app.listen(app.get('port'), function () {
-    console.log("[*] mealtally running on port", app.get('port'));
-})
-
 const prepareSearchQuery = (searchQuery) => {
     if (searchQuery.interests) {
         searchQuery.interests = {
@@ -293,9 +306,20 @@ app.post('/api/admin/search/users', (req, res) => {
     if (auth.isAdmin(req)) {
         searchQuery = prepareSearchQuery(req.body)
         db.findAll('user', searchQuery).then(users => {
-            return res.json(users);
+            return res.json(users)
         });
     } else {
-        return res.json({ error: 'You do not have permission to access this resource...' });
+        return res.json({ error: 'You do not have permission to access this resource...' })
     }
-});
+})
+
+app.get('/api/auth/facebook', passport.authenticate('facebook'))
+
+app.get('/api/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+    res.redirect(`/profile/${req.user._id}`)
+})
+
+
+app.listen(app.get('port'), function () {
+    console.log("[*] mealtally running on port", app.get('port'))
+})
