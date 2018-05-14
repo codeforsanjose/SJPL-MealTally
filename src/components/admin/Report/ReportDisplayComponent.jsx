@@ -46,6 +46,9 @@ class ReportDisplayComponent extends React.Component {
                     {this.props.reportData.type}
                 </td>
                 <td>
+                    {this.props.reportData.comments}
+                </td>
+                <td>
                     {this.props.reportData.signature}
                 </td>
                 

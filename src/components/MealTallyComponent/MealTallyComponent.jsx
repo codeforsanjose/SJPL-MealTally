@@ -138,6 +138,17 @@ class MealTallyComponent extends React.Component {
             ...this.state,
             mealTallyDetails: {
                 ...this.state.mealTallyDetails,
+                comments: event.target.value
+            }
+        })
+    }
+
+    handleSignature = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            mealTallyDetails: {
+                ...this.state.mealTallyDetails,
                 signature: event.target.value
             }
         })
@@ -334,6 +345,9 @@ class MealTallyComponent extends React.Component {
 
                             </div>
                         </div>
+                    </div>
+                    <div className="signatureBox">
+                        <label>Comments: </label><input type="text" onChange={this.handleComments} />
                     </div>
                     <div className="signatureBox">
                         <label>Signature: </label><input type="text" onChange={this.handleSignature} />

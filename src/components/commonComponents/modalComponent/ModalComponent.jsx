@@ -141,6 +141,9 @@ class ModalComponent extends React.Component {
                     <div>
                         <span>Total meals served: {this.state.totalMealsServed}</span>
                     </div>
+                    <div>
+                        <span>Comments: {this.state.comments}</span>
+                    </div>
                 </div>
             </div>
         )
