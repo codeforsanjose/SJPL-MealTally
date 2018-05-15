@@ -15,11 +15,9 @@ class OptionsSelectorComponent extends React.Component {
     displayOptions() {
         let fieldName = this.props.optionsName
         return this.props.options.map( (option, index) => {
-            
             return (
                 <option key={index} value={option} >{option}</option>
             )
-            
         })
 
     }
@@ -32,7 +30,7 @@ class OptionsSelectorComponent extends React.Component {
         return (
             <div className="incrementContainer">
                 <span>{optionsName}</span>
-                <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} value={item} >
+                <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} >
                     {this.displayOptions()}
                 </select>
             </div>

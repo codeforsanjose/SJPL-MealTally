@@ -38,7 +38,7 @@ class MealTallyComponent extends React.Component {
         this.state = {
             showDate: false,
             libraries: [],
-            mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
+            mealTypes: ['Choose one...', 'Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             mealTallyDetails: this.props.report || this.INITIAL_MEAL_TALLY_DETAILS
         }
     }
