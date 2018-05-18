@@ -238,17 +238,11 @@ class ReportsComponent extends React.Component {
                             />
                         </div>
                         <div className="endDateContainer">
-                            <div onClick={(event) => this.toggleShowDate(event, 'endDate')}>
-                                <span> {moment(this.state.endDate).format('MMM, DD YYYY')}</span>
-                            </div>
-                            {this.state.showEndDate ? this.getDatePicker('endDate') : ''}
+                            {this.getDatePicker('endDate')}
                         </div>
                         <span>To</span>
                         <div className="startDateContainer">
-                            <div onClick={(event) => this.toggleShowDate(event, 'startDate')}>
-                                <span> {moment(this.state.startDate).format('MMM, DD YYYY')}</span>
-                            </div>
-                            {this.state.showStartDate ? this.getDatePicker('startDate') : ''}
+                            {this.getDatePicker('startDate')}
                         </div>
                         </div>
                         <OptionsSelectorComponent
