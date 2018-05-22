@@ -233,13 +233,11 @@ class MealTallyComponent extends React.Component {
                                 <h3 className="infoContainerTitle">Meal Plan</h3>
                             </div>
                             <div className="dateContainer">
-                                <span className="dateDisplay" onClick={this.toggleShowDate} >Date: {moment(this.state.mealTallyDetails.date).format('MMM DD YYYY')}</span>
-                                {this.state.showDate ? <DatePickerComponent
+                                <DatePickerComponent
                                     name={'Date'}
                                     dateSelected={this.state.mealTallyDetails.date}
                                     handleDateSelected={this.handleDateField}
                                 />
-                                : ''}
                             </div>
                         </div>
                         <div className="libraryType">
