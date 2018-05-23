@@ -3,7 +3,6 @@ body {
     padding-bottom: 3em;
     font-family: Helvetica, sans-serif;
     touch-action: none;
-    
 }
 
     button:focus {outline:0;}
@@ -34,24 +33,40 @@ body {
         padding-bottom: 3em !important;
     }
 
-    .servedContainer, .adultsContainer, .unusableMeals {
+    .childrenServed, .staffServed, .adultsServed, .unusableMeals {
         background-color: #F7F7F7;
-        width: 58%;
-        float:right;
+        display: block;
+    }
+
+    .unusableMeals {
+        padding-bottom: 3em;
     }
 
     
 
     select {
-        font-size: 2em;
+        font-size: 1.4em;
         background-color: #fff;
         border: 1px solid #000;
+    }
+
+    .totalsHeader {
+        background-color: #eee;
+        padding: .5em;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 2em;
+        width: 100%;
     }
 
     .tallyTotal {
         font-size: 1.6em;
         margin-bottom: 1em;
 
+    }
+
+    .totalsContainer {
+        display: block;
     }
 
     .totalNumber {
@@ -66,7 +81,11 @@ body {
             margin-bottom: .5em;
         }
     }
-
+    .totalServed {
+        display: inline-block;
+        margin: 3em 3em;
+        width: 40%;
+    }
     .servedTitle {
         background-color: #F7F7F7;
         width: 100%;
@@ -93,27 +112,27 @@ body {
 
         .dateContainer {
             cursor: pointer;
-            border-bottom: 2px dotted #ccc;
+            font-size: 1.4em;
             padding: .5em;
             width: auto;
             display: inline-block;
             margin: 2em 0 0 0;
-            &:hover {
-                background-color: #eee;
-            }
-            .dateDisplay span {
+            background-color: #eee;
+
+            input {
                 font-size: 1.4em;
                 display: block;
+                text-align: center;
             }
         }
     }
 
-    .signatureBox {
+    .commentsBox, .signatureBox {
         clear: both;
         margin: 2em;
-        border-top: 1px dashed #ccc;
-        padding-top: 2em;
+        padding: 2em;
         text-align: center;
+        background-color: #F7F7F7;
         label {
             font-size: 1.4em;
             display: block;
@@ -121,9 +140,23 @@ body {
         input {
             font-size: 1.4em;
             width: 40%;
+            height: 2em;
             margin: .5em;
+            border: 1px solid #000;
         }
     }
+
+    .commentsBox {
+        margin-bottom: 0;
+        input {
+            height: 4em;
+        }
+    }
+
+    .signatureBox {
+        margin-top: 0;
+    }
+
     .saveMealTally {
         margin: 10px;
         width: 50%;

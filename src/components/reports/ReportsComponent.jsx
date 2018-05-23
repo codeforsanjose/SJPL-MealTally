@@ -219,7 +219,7 @@ class ReportsComponent extends React.Component {
                 <div className="report-controls">
                     <div className="dateContainer">
                         <div>
-                            <h3 className="title">Report Settings</h3>
+                            <h3 className="title">Tally Reports</h3>
                         </div>
                         <div>
                             <div className="singleDay">
@@ -228,14 +228,8 @@ class ReportsComponent extends React.Component {
                                 </div>
                                 {this.state.showSelectedDate ? this.getDatePicker('selectedDate') : ''}
                             </div>
-                            <button onClick={this.getLastSevenDays}>Last 7 Days</button>
-                            <OptionsSelectorComponent
-                                optionsName={'Month'}
-                                fieldName={'selectedMonth'}
-                                options={this.state.months}
-                                itemSelected={this.state.selectedMonth}
-                                optionsHandler={this.getMonthStartEndDates}
-                            />
+                           
+                      
                         </div>
                         <div className="endDateContainer">
                             {this.getDatePicker('endDate')}
@@ -246,14 +240,14 @@ class ReportsComponent extends React.Component {
                         </div>
                         </div>
                         <OptionsSelectorComponent
-                            optionsName={'library'}
+                            
                             fieldName={'library'}
                             options={libraryOptions}
                             itemSelected={this.state.library}
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />
                         <OptionsSelectorComponent
-                            optionsName={'Type'}
+                            
                             fieldName={'type'}
                             options={this.props.mealTypes}
                             itemSelected={this.state.type}

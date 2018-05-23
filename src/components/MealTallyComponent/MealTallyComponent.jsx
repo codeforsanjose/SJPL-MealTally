@@ -38,7 +38,7 @@ class MealTallyComponent extends React.Component {
         this.state = {
             showDate: false,
             libraries: [],
-            mealTypes: ['Choose one...', 'Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
+            mealTypes: ['Choose meal...', 'Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             mealTallyDetails: this.props.report || this.INITIAL_MEAL_TALLY_DETAILS
         }
     }
@@ -217,7 +217,7 @@ class MealTallyComponent extends React.Component {
         let libraryOptions = this.state.libraries.map(library => {
             return library.name
         })
-        libraryOptions.splice(0, 0, 'Choose one...')
+        libraryOptions.splice(0, 0, 'Choose location...')
 
         return (
             <div className="mealTallyContainer">
@@ -230,7 +230,7 @@ class MealTallyComponent extends React.Component {
                         <div className="infoContainer">
                         <div className="introContainer">
                             <div>
-                                <h3 className="infoContainerTitle">Meal Plan</h3>
+                                <h3 className="infoContainerTitle">Meal Tally</h3>
                             </div>
                             <div className="dateContainer">
                                 <DatePickerComponent
@@ -243,14 +243,14 @@ class MealTallyComponent extends React.Component {
                         <div className="libraryType">
                             <div className="infoContainer">
                                 <OptionsSelectorComponent
-                                    optionsName={'Library'}
+                                    
                                     fieldName={'library'}
                                     options={libraryOptions}
                                     itemSelected={this.state.mealTallyDetails.library}
                                     optionsHandler={this.handleMealTallyDetailsOptionsField}
                                 />
                                 <OptionsSelectorComponent
-                                    optionsName={'Type'}
+                                   
                                     fieldName={'type'}
                                     options={this.state.mealTypes}
                                     itemSelected={this.state.mealTallyDetails.type}
@@ -283,32 +283,40 @@ class MealTallyComponent extends React.Component {
                             <h3 className="infoContainerTitle">Served Meals</h3>
                         </div>
                     <div className="infoContainer servedContainer">
-                        
-                        <IncrementComponent 
-                            incrementerName={'Children and Teens'}
+                        <div className="childrenServed">
+                            <IncrementComponent 
+                                incrementerName={'Children and Teens'}
 
-                            fieldName={'childrenAndTeens'}
-                            itemCount={this.state.mealTallyDetails.childrenAndTeens} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={'Teen Staff and Volunteers'}
-                            fieldName={'teenStaffAndVolunteers'}
-                            itemCount={this.state.mealTallyDetails.teenStaffAndVolunteers} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={"Adults"} 
-                            fieldName={'adult'}
-                            itemCount={this.state.mealTallyDetails.adult} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
-                        <IncrementComponent 
-                            incrementerName={"Unusable Meals"}
-                            fieldName={'unusable'}
-                            itemCount={this.state.mealTallyDetails.unusable} 
-                            incrementerHandler={this.handleMealTallyDetailsIncrementField} 
-                        />
+                                fieldName={'childrenAndTeens'}
+                                itemCount={this.state.mealTallyDetails.childrenAndTeens} 
+                                incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                            />
+                        </div>
+                        <div className="staffServed">
+                            <IncrementComponent 
+                                incrementerName={'Teen Staff and Volunteers'}
+                                fieldName={'teenStaffAndVolunteers'}
+                                itemCount={this.state.mealTallyDetails.teenStaffAndVolunteers} 
+                                incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                            />
+                        </div>
+                        <div className="adultsServed">
+                            <IncrementComponent 
+                                incrementerName={"Adults"} 
+                                fieldName={'adult'}
+                                itemCount={this.state.mealTallyDetails.adult} 
+                                incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                            />
+                        </div>
+                        <div className="unusableMeals">
+                            <IncrementComponent 
+                                incrementerName={"Unusable Meals"}
+                                fieldName={'unusable'}
+                                itemCount={this.state.mealTallyDetails.unusable} 
+                                incrementerHandler={this.handleMealTallyDetailsIncrementField} 
+                            />
+                        </div>
+
                     </div>
                     
                     <div className="infoContainer">
@@ -316,6 +324,7 @@ class MealTallyComponent extends React.Component {
                        
                     </div>
                     <div className="totalsContainer">
+                        <div className="totalsHeader">Tally Totals</div>
                         <div className="totalServed">
                             <span className="tallyTotal">18 and under:</span>
                             <div className="totalNumber">
@@ -344,7 +353,8 @@ class MealTallyComponent extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="signatureBox">
+
+                    <div className="commentsBox">
                         <label>Comments: </label><input type="text" onChange={this.handleComments} />
                     </div>
                     <div className="signatureBox">
