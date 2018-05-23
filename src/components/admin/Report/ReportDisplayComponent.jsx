@@ -53,7 +53,7 @@ class ReportDisplayComponent extends React.Component {
                 </td>
                 
             </tr>,
-            <div key={this.props.reportData._id + this.props.reportData.signature}>
+            <div key={moment()}>
                 {this.state.showDetails ? this.showReportDetails(): ''}
             </div>
         ]

@@ -54,6 +54,7 @@ class ModalComponent extends React.Component {
     }
 
     showMealDetails = () => {
+        console.log("show details in props report", this.props.report)
         return (
             <div >
                 <button className="closeButton" onClick={this.props.closeReport}>X</button>
@@ -142,7 +143,10 @@ class ModalComponent extends React.Component {
                         <span>Total meals served: {this.state.totalMealsServed}</span>
                     </div>
                     <div>
-                        <span>Comments: {this.state.comments}</span>
+                        <span>Comments: {this.props.report.comments}</span>
+                    </div>
+                    <div>
+                        <span>Signature: {this.props.report.signature}</span>
                     </div>
                 </div>
             </div>

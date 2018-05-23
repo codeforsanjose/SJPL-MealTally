@@ -121,7 +121,6 @@ class MealTallyComponent extends React.Component {
         event.preventDefault()
         // if no _id then is a new meal if _id then editing one from report component
         if (this.state.mealTallyDetails._id !== '') {
-            console.log("this.props", this.props)
             this.props.editReport(event, this.state.mealTallyDetails)
         }
         else {
@@ -233,8 +232,6 @@ class MealTallyComponent extends React.Component {
         const libraryOptions = this.state.libraries.map(library => {
             return library.name
         })
-
-        console.log("libs: ",libraryOptions)
 
         return (
             <div className="mealTallyContainer">
@@ -372,10 +369,10 @@ class MealTallyComponent extends React.Component {
                     </div>
 
                     <div className="commentsBox">
-                        <label>Comments: </label><input type="text" onChange={this.handleComments} />
+                        <label>Comments: </label><input type="text" value={this.state.mealTallyDetails.comments} onChange={this.handleComments} />
                     </div>
                     <div className="signatureBox">
-                        <label>Signature: </label><input type="text" onChange={this.handleSignature} />
+                        <label>Signature: </label><input type="text" value={this.state.mealTallyDetails.signature} onChange={this.handleSignature} />
                     </div>
 
                     <button className="saveMealTally" onClick={this.handleSaveMealTally}>Done</button>
