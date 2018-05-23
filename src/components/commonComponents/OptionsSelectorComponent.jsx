@@ -9,11 +9,22 @@ import appConfig from '../../AppContentConfig.json'
 class OptionsSelectorComponent extends React.Component {
     constructor(props) {
         super(props)
+        this.props = props
         var chooseText = 'Choose ' + this.props.fieldName + '...'
+        var options = [chooseText, ...this.props.options]
         this.state = {
-            options: [chooseText, ...this.props.options]
+            options: options
         }
     }
+    componentWillReceiveProps = (props) => {
+        this.props = props
+        var chooseText = 'Choose ' + this.props.fieldName + '...'
+        var options = [chooseText, ...this.props.options]
+        this.setState({
+            options: options
+        })
+    }
+
     displayOptions() {
         let fieldName = this.props.optionsName
         return this.state.options.map( (option, index) => {

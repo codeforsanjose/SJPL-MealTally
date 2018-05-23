@@ -30,6 +30,7 @@ class MealTallyComponent extends React.Component {
         teenagers: 0,
         unusable: 0,
         createdBy: {},
+        comments: '',
         signature:''
     }
     
@@ -147,7 +148,7 @@ class MealTallyComponent extends React.Component {
         //this.handleCreateMeal({})
     }
 
-    handleSignature = (event) => {
+    handleComments = (event) => {
         event.preventDefault()
         this.setState({
             ...this.state,
@@ -228,10 +229,10 @@ class MealTallyComponent extends React.Component {
         const totalMealServed = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers + this.state.mealTallyDetails.adult
         const totalLeftover = totalMealAvailable - totalMealServed - this.state.mealTallyDetails.unusable
         const totalMinors = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers
-        let librariesList = []
-        let libraryOptions = this.state.libraries.map(library => {
+        const libraryOptions = this.state.libraries.map(library => {
             return library.name
         })
+        console.log("libs: ",libraryOptions)
 
         return (
             <div className="mealTallyContainer">
