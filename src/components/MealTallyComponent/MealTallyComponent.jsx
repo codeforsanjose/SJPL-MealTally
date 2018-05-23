@@ -13,6 +13,7 @@ import { createMeal, getLibraries } from '../../api/api'
 require('./MealTallyComponent.scss');
 
 class MealTallyComponent extends React.Component {
+    
     INITIAL_MEAL_TALLY_DETAILS = {
         _id: '',
         library: '',
@@ -38,7 +39,7 @@ class MealTallyComponent extends React.Component {
         this.state = {
             showDate: false,
             libraries: [],
-            mealTypes: ['Choose one...', 'Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
+            mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             mealTallyDetails: this.props.report || this.INITIAL_MEAL_TALLY_DETAILS
         }
     }
@@ -122,11 +123,25 @@ class MealTallyComponent extends React.Component {
             this.props.editReport(event, this.state.mealTallyDetails)
         }
         else {
-            this.setState({
-                ...this.state,
-                loadingMessage: 'Saving please wait...',
-                showModal: true,
-                modalMessage: 'Please review report before saving.'
+            const data = this.state.mealTallyDetails
+            data['createdBy'] = (this.props.user && this.props.user._id) || 'guest'
+            createMeal(data).then(response => {
+                this.setState({
+                    ...this.state,
+                    mealTallyDetails: this.INITIAL_MEAL_TALLY_DETAILS,
+                    showLoading: false,
+                    showAlert: true,
+                    showModal: false,
+                    alertMessage: 'Successfully saved!'
+                })
+            }).catch(error => {
+                console.log('create meal error: ', error)
+                this.setState({
+                    ...this.state,
+                    showLoading: false,
+                    showAlert: true,
+                    alertMessage: 'Error saving please try again later!'
+                })
             })
         }
         //this.handleCreateMeal({})
@@ -217,7 +232,6 @@ class MealTallyComponent extends React.Component {
         let libraryOptions = this.state.libraries.map(library => {
             return library.name
         })
-        libraryOptions.splice(0, 0, 'Choose one...')
 
         return (
             <div className="mealTallyContainer">
@@ -235,7 +249,7 @@ class MealTallyComponent extends React.Component {
                             <div className="dateContainer">
                                 <DatePickerComponent
                                     name={'Date'}
-                                    dateSelected={this.state.mealTallyDetails.date}
+                                    dateSelected={moment(this.state.mealTallyDetails.date)}
                                     handleDateSelected={this.handleDateField}
                                 />
                             </div>
