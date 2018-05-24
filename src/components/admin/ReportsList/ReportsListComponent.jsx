@@ -26,7 +26,7 @@ class ReportListComponent extends React.Component {
                         <tbody className="reportList">
                         {
                             this.props.allReports.map( (report, index) => {
-                                return ( <ReportDisplayComponent key={index} reportData={report} />)
+                                return ( <ReportDisplayComponent key={index} reportData={report} handleGetReportsInRange={this.props.handleGetReportsInRange} />)
                             })
                         }
                         </tbody>

@@ -259,7 +259,7 @@ class ReportsComponent extends React.Component {
                     </div>
              
 
-                    <ReportsListComponent allReports={this.state.reports} />
+                    <ReportsListComponent allReports={this.state.reports} handleGetReportsInRange={this.handleGetReportsInRange} />
                     
                 
             </div>

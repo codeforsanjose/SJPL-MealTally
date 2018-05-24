@@ -29,6 +29,9 @@ class ModalComponent extends React.Component {
 
     handleDisplayEdit = (event) => {
         event.preventDefault()
+        let today = moment()
+        let lastSeven = moment().subtract(7,'d')
+        
         this.setState({
             ...this.state,
             showEdit: !this.state.showEdit
