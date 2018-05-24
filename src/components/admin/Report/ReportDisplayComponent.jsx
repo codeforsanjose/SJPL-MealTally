@@ -35,7 +35,7 @@ class ReportDisplayComponent extends React.Component {
 
     render () {
         return [
-            <tr key={this.props.reportData._id} onClick={this.toggleDetails}>
+            <tr key={this.props.reportData._id} onClick={this.toggleDetails} handleGetReportsInRange={this.props.handleGetReportsInRange}>
                 <td className="date">
                     {moment(this.props.reportData.date).format('MMM, DD YYYY')}
                 </td>

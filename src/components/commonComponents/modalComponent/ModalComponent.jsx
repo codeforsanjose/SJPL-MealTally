@@ -29,6 +29,9 @@ class ModalComponent extends React.Component {
 
     handleDisplayEdit = (event) => {
         event.preventDefault()
+        let today = moment()
+        let lastSeven = moment().subtract(7,'d')
+        
         this.setState({
             ...this.state,
             showEdit: !this.state.showEdit
@@ -62,7 +65,7 @@ class ModalComponent extends React.Component {
                 <div className="reportActions">
                     <button className="closeButton" onClick={this.props.closeReport}>Cancel</button>
                     {this.props.handleExport ? <button onClick={this.props.handleExport}>Export</button>: ''}
-                    {this.props.handleEdit ? <button onClick={this.props.handleEdit}>Edit</button>: <button onClick={this.handleDisplayEdit}>Edit</button>}
+                    {(!this.state.showEdit) ? <button onClick={this.handleDisplayEdit}>Edit</button>: <button onClick={this.handleDisplayEdit}>Close</button>}
                     {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
                 </div>
                 <div className="editReportContainer">
