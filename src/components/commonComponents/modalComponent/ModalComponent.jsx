@@ -57,9 +57,10 @@ class ModalComponent extends React.Component {
         console.log("show details in props report", this.props.report)
         return (
             <div >
-                <button className="closeButton" onClick={this.props.closeReport}>X</button>
+                
                 {this.state.showEdit ? '': this.showTallies()}
                 <div className="reportActions">
+                    <button className="closeButton" onClick={this.props.closeReport}>Cancel</button>
                     {this.props.handleExport ? <button onClick={this.props.handleExport}>Export</button>: ''}
                     {this.props.handleEdit ? <button onClick={this.props.handleEdit}>Edit</button>: <button onClick={this.handleDisplayEdit}>Edit</button>}
                     {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
@@ -102,51 +103,44 @@ class ModalComponent extends React.Component {
                 <div>
                     <h3>{this.props.message}</h3>
                     <div>
-                        Meal Inventory
-                        <div>
-                            <span>{this.props.report.library}</span>
-                            <br />
-                            <span>{this.props.report.type}</span>
+                        
+                        <div className="typeBox">
+                            <span className="mealPlace">{this.props.report.library}</span>
+                            <span className="mealType">{this.props.report.type}</span>
                         </div>
                     </div>
-                    <span>Meals received from Vendor: {this.props.report.received}</span>
-                    <br />
-                    <span>Meals leftover from previous day: {this.props.report.leftovers}</span>
-                    <div>
-                        <span>Total meals available: {this.state.totalMealsAvailable}</span>
+                    <div className="inventoyBox">
+                        <div><h3>Day's Inventory</h3></div>
+                        <span className="received"><p>Meals from Vendor: {this.props.report.received}</p></span>
+                        <span className="leftoverBefore">Leftover from day before: {this.props.report.leftovers}</span>
+                        <span className="totalMealsAvailable">Total meals available: {this.state.totalMealsAvailable}</span>
                     </div>
-                </div>
-                <hr />
-                <div>
-                    <div>
-                        Unuasable Meals
-                    </div>
-                    <span>Unuasable: {this.props.report.unusable}</span>
-                    <br />
-                    <span>Meals leftover: {this.state.totalLeftover}</span>
-                    <div>
-                        <span>Total meals unserved available: {this.state.totalLeftover}</span>
-                    </div>
-                </div>
-                <hr />
-                <div>
-                    <div>
+              
+                    <div className="servedBox">
                         Distributed Meals
+                    
+                        <span>Child and Teens: {this.props.report.childrenAndTeens}</span>
+                        <span>Teens Staff and Volunteers: {this.props.report.teenStaffAndVolunteers}</span>
+                        <span>Adults: {this.props.report.adult}</span>
+                 
+                        
                     </div>
-                    <span>Child and Teens: {this.props.report.childrenAndTeens}</span>
-                    <br />
-                    <span>Teens Staff and Volunteers: {this.props.report.teenStaffAndVolunteers}</span>
-                    <br />
-                    <span>Adults: {this.props.report.adult}</span>
-                    <br />
-                    <div>
-                        <span>Total meals served: {this.state.totalMealsServed}</span>
-                    </div>
+                   
+                </div>
+
+                <div className="totalsBox">
+                    
+                    <span>Unuasable: {this.props.report.unusable}</span>
+                    <span>Meals leftover: {this.state.totalLeftover}</span>
+                    <span>Total meals served: {this.state.totalMealsServed}</span>
+                </div>
+
+                <div className="commentsBox">
                     <div>
                         <span>Comments: {this.props.report.comments}</span>
                     </div>
                     <div>
-                        <span>Signature: {this.props.report.signature}</span>
+                        <span>Signed by:</span> <span class="value">{this.props.report.signature}</span>
                     </div>
                 </div>
             </div>

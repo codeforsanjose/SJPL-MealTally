@@ -222,12 +222,7 @@ class ReportsComponent extends React.Component {
                             <h3 className="title">Tally Reports</h3>
                         </div>
                         <div>
-                            <div className="singleDay">
-                                <div onClick={(event) => this.toggleShowDate(event, 'selectedDate')}>
-                                    <span> {moment(this.state.selectedDate).format('MMM, DD YYYY')}</span>
-                                </div>
-                                {this.state.showSelectedDate ? this.getDatePicker('selectedDate') : ''}
-                            </div>
+                            
                            
                       
                         </div>
