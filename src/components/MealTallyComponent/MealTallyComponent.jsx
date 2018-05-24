@@ -375,7 +375,8 @@ class MealTallyComponent extends React.Component {
                         <label>Signature: </label><input type="text" value={this.state.mealTallyDetails.signature} onChange={this.handleSignature} />
                     </div>
 
-                    <button className="saveMealTally" onClick={this.handleSaveMealTally}>Done</button>
+                    {this.state.mealTallyDetails._id ? <button className="saveMealTally" onClick={this.handleSaveMealTally}>Save</button>: <button className="saveMealTally" onClick={this.handleSaveMealTally}>Done</button>}
+                    {this.state.mealTallyDetails._id ? <button className="saveMealTally" onClick={this.handleModalEdit}>Close</button>: null}
                 </Paper>
             </div>
         )

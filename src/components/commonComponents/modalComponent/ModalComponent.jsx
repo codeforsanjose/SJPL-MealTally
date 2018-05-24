@@ -61,7 +61,7 @@ class ModalComponent extends React.Component {
                 {this.state.showEdit ? '': this.showTallies()}
                 <div className="reportActions">
                     {this.props.handleExport ? <button onClick={this.props.handleExport}>Export</button>: ''}
-                    {this.props.handleEdit ? <button onClick={this.props.handleEdit}>Edit</button>: <button onClick={this.handleDisplayEdit}>Edit</button>}
+                    {(!this.state.showEdit) ? <button onClick={this.handleDisplayEdit}>Edit</button>: <button onClick={this.handleDisplayEdit}>Close</button>}
                     {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
                 </div>
                 <div className="editReportContainer">
