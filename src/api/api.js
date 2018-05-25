@@ -3,7 +3,7 @@ const DefaultHeaders = {
     'Content-Type': 'application/json',
 }
 
-const makeRequest = (uploadData = {}, method, path, headers = DefaultHeaders) => {
+const makeRequest = (uploadData, method, path, headers = DefaultHeaders) => {
     if (method == 'GET') {
         return fetch(path, {
             method: method,
@@ -54,7 +54,7 @@ const registerUser = (newUser) => {
 
 const getUser = (id) => {
     return new Promise((resolve, reject) => {
-        return makeRequest(undefined, 'GET', `/api/user/${id}`).then(response => {  
+        return makeRequest({}, 'GET', `/api/user/${id}`).then(response => {  
             return resolve(response.json())
         }).catch(error => {
             window.alert('Error retrieving user')
@@ -65,7 +65,7 @@ const getUser = (id) => {
 }
 const getAllUsers = (id) => {
     return new Promise((resolve, reject) => {
-        return makeRequest(undefined, 'GET', '/api/admin/users').then(response => {
+        return makeRequest({}, 'GET', '/api/admin/users').then(response => {
             return resolve(response.json())
         }).catch(error => {
             window.alert('Error retrieving user')
@@ -138,11 +138,8 @@ const getReportsInRange = (range) => {
     })
 }
 
-const deletePDF = (filename) => {
-    return makeRequest(reports, 'GET', `/pdf/delete/${filename}`).then(response => {
-        response.json().then( result => {
-            //downloadPDF(result.filename)
-        })
+const deleteReport = (filename) => {
+    return makeRequest({}, 'GET', `/report/delete/${filename}`).then(response => {
         return {}
     }).catch(error => {
         console.log("error in api js", error)
@@ -153,7 +150,7 @@ const downloadPDF = (filename) => {
     window.location.href = `/report/${filename}`
     // easiest way I can think of to avoid a race condition while using window.location
     setTimeout(function() {
-        deletePDF(filename)
+        deleteReport(filename)
     }, 3000)
 }
 

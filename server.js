@@ -3,6 +3,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 var bcrypt = require('bcrypt')
+var fs = require('fs')
 var app = express()
 const session = require('express-session')
 const _ = require('lodash')
@@ -203,14 +204,15 @@ const createReport = (reports, type = 'excel') => {
 // need to delete once sent or get an s3 bucket since not good idea or best practice to keep on our server
 app.get('/report/:filename', (req, res) => {
     const filename = req.params.filename
-    console.log('getting file: ', filename)
     res.download('./reports/' + filename)
 })
 
 // delete the file after downloaded
 app.get('/report/delete/:filename', (req, res) => {
     const filename = req.params.filename
-    // delete file
+    fs.unlink('./reports/' + filename, function(response, error){
+        console.log("deleteed report ", filename)
+    })
     res.status(202).json({"msg": "deleted file"})
 })
 
