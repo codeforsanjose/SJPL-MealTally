@@ -42,7 +42,7 @@ class ModalComponent extends React.Component {
         event.preventDefault()
 
         editReport(editedReport).then( response => {
-            console.log("response in modal compt", response)
+            window.location.reload()
             this.setState({
                 ...this.state,
                 showEdit: !this.state.showEdit
@@ -57,7 +57,6 @@ class ModalComponent extends React.Component {
     }
 
     showMealDetails = () => {
-        console.log("show details in props report", this.props.report)
         return (
             <div >
                 

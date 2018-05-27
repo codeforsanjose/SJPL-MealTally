@@ -101,7 +101,6 @@ class ReportsComponent extends React.Component {
             startDate: startDate,
             endDate: endDate
         }
-        console.log(data)
         this.handleGetReportsInRange(data)
         
     }

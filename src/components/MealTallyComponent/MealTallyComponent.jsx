@@ -18,7 +18,7 @@ class MealTallyComponent extends React.Component {
         _id: '',
         library: '',
         date: moment(),
-        type: 'Lunch',
+        type: '',
         received: 0,
         leftovers: 0,
         childrenAndTeens: 0,
@@ -257,14 +257,12 @@ class MealTallyComponent extends React.Component {
                         <div className="libraryType">
                             <div className="infoContainer">
                                 <OptionsSelectorComponent
-                                    
                                     fieldName={'library'}
                                     options={libraryOptions}
                                     itemSelected={this.state.mealTallyDetails.library}
                                     optionsHandler={this.handleMealTallyDetailsOptionsField}
                                 />
                                 <OptionsSelectorComponent
-                                   
                                     fieldName={'type'}
                                     options={this.state.mealTypes}
                                     itemSelected={this.state.mealTallyDetails.type}

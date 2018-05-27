@@ -13,6 +13,7 @@ class OptionsSelectorComponent extends React.Component {
         var chooseText = 'Choose ' + this.props.fieldName + '...'
         var options = [chooseText, ...this.props.options]
         this.state = {
+            chooseText: chooseText,
             options: options
         }
     }
@@ -21,6 +22,7 @@ class OptionsSelectorComponent extends React.Component {
         var chooseText = 'Choose ' + this.props.fieldName + '...'
         var options = [chooseText, ...this.props.options]
         this.setState({
+            chooseText: chooseText,
             options: options
         })
     }
@@ -35,15 +37,16 @@ class OptionsSelectorComponent extends React.Component {
 
     }
     render() {
-        const { optionsName, itemSelected } = this.props
-        let item = 'Lunch'
+        const optionsName = this.props.fieldName
+        const itemSelected = this.props.itemSelected
+        let item = this.state.chooseText
         if (this.props.itemSelected !== '') {
             item = this.props.itemSelected
         }
         return (
             <div className="incrementContainer">
                 <span>{optionsName}</span>
-                <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} >
+                <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} value={item}>
                     {this.displayOptions()}
                 </select>
             </div>

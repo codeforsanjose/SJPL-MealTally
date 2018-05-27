@@ -151,7 +151,7 @@ const downloadPDF = (filename) => {
     // easiest way I can think of to avoid a race condition while using window.location
     setTimeout(function() {
         deleteReport(filename)
-    }, 3000)
+    }, 5000)
 }
 
 const generateReport = (reports) => {
