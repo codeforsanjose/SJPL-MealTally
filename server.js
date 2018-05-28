@@ -204,12 +204,14 @@ const createReport = (reports, type = 'excel') => {
 // need to delete once sent or get an s3 bucket since not good idea or best practice to keep on our server
 app.get('/report/:filename', (req, res) => {
     const filename = req.params.filename
+    console.log("GET THE REPORT: ", filename)
     res.download('./reports/' + filename)
 })
 
 // delete the file after downloaded
 app.get('/report/delete/:filename', (req, res) => {
     const filename = req.params.filename
+    console.log("DELETE THE REPORT: ", filename)
     fs.unlink('./reports/' + filename, function(response, error){
         console.log("deleteed report ", filename)
     })
