@@ -29,9 +29,7 @@ class ModalComponent extends React.Component {
 
     handleDisplayEdit = (event) => {
         event.preventDefault()
-        let today = moment()
-        let lastSeven = moment().subtract(7,'d')
-        
+
         this.setState({
             ...this.state,
             showEdit: !this.state.showEdit
@@ -68,7 +66,7 @@ class ModalComponent extends React.Component {
                     {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
                 </div>
                 <div className="editReportContainer">
-                    {this.state.showEdit ? <MealTallyComponent report={this.props.report} editReport={this.handleEditReport} /> : ''}
+                    {this.state.showEdit ? <MealTallyComponent report={this.props.report} editReport={this.handleEditReport} closeModal={this.props.closeReport} /> : ''}
                 </div>
             </div>
         )
@@ -142,7 +140,7 @@ class ModalComponent extends React.Component {
                         <span>Comments: {this.props.report.comments}</span>
                     </div>
                     <div>
-                        <span>Signed by:</span> <span class="value">{this.props.report.signature}</span>
+                        <span>Signed by:</span> <span className="value">{this.props.report.signature}</span>
                     </div>
                 </div>
             </div>

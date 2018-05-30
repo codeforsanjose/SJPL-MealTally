@@ -46,6 +46,9 @@ class MealTallyComponent extends React.Component {
         }
     }
 
+    componentWillReceiveProps = (newProps) => {
+        this.props = newProps
+    }
     componentWillMount(props) {
         this.props = props
         getLibraries().then(libraries => {
@@ -172,11 +175,7 @@ class MealTallyComponent extends React.Component {
 
     handleModalEdit = (event) => {
         event.preventDefault()
-        this.setState({
-            ...this.state,
-            showModal: false,
-            showLoading: false
-        })
+        this.props.closeModal(event)
     }
 
     handleCreateMeal = (event) => {
@@ -235,13 +234,12 @@ class MealTallyComponent extends React.Component {
 
         return (
             <div className="mealTallyContainer">
-                {this.state.showModal ? <ModalComponent message={this.state.modalMessage} handleEdit={this.handleModalEdit} handleSave={this.handleCreateMeal} report={this.state.mealTallyDetails} />: ''}
                 {this.state.showLoading ? <AlertComponent isLoading={true} message={this.state.loadingMessage} />: ''}
                 {this.state.showAlert ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.alertMessage} />: ''}
                 {this.state.showError ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.errorMessage} />: ''}
                 <Paper>
                     
-                        <div className="infoContainer">
+                    <div className="infoContainer">
                         <div className="introContainer">
                             <div>
                                 <h3 className="infoContainerTitle">Meal Tally</h3>
@@ -374,7 +372,7 @@ class MealTallyComponent extends React.Component {
                     </div>
 
                     {this.state.mealTallyDetails._id ? <button className="saveMealTally" onClick={this.handleSaveMealTally}>Save</button>: <button className="saveMealTally" onClick={this.handleSaveMealTally}>Done</button>}
-                    {this.state.mealTallyDetails._id ? <button className="saveMealTally" onClick={this.handleModalEdit}>Close</button>: null}
+                    {this.state.mealTallyDetails._id ? <button className="" onClick={this.handleModalEdit}>Close</button>: null}
                 </Paper>
             </div>
         )

@@ -16,8 +16,6 @@ const auth = require('./lib/auth')
 const pdfCreator = require('./lib/pdfCreator')
 const excelCreator = require('./lib/excelCreator')
 const publicDir = __dirname + '/public'
-
-
 let meals_db_name = ''
 
 if (process.env.NODE_ENV === 'production') {
@@ -29,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-app.use('/public', express.static("public"));
+app.use('/public', express.static('public'));
 app.use(cookieParser())
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
 auth.init(app)
@@ -92,12 +90,12 @@ app.post('/api/reportsRange', (req, res) => {
             response['allMeals'] = meals
             return res.json(response)
         }).catch(error => {
-            console.log("error in server js: ", error)
-            return res.status(422).json({"errormsg": error})
+            console.log('error in server js: ', error)
+            return res.status(422).json({'errormsg': error})
         })
     }
     else {
-        return res.status(422).json({"errormsg": "no access"})
+        return res.status(422).json({'errormsg': 'no access'})
     }
 })
 
@@ -178,8 +176,8 @@ const createReport = (reports, type = 'excel') => {
         if (type === 'excel') {
             excelCreator.createExcelReport(reports).then( (result) => {
                 return resolve({
-                    "filename": result,
-                    "allMeals": reports
+                    'filename': result,
+                    'allMeals': reports
                 })
             }).catch(error => {
                 console.log(error)
@@ -189,8 +187,8 @@ const createReport = (reports, type = 'excel') => {
         else {
             pdfCreator.createPDFReport(reports).then( (result) => {
                 return resolve({
-                    "filename": result,
-                    "allMeals": reports
+                    'filename': result,
+                    'allMeals': reports
                 })
             }).catch(error => {
                 console.log(error)
@@ -204,18 +202,16 @@ const createReport = (reports, type = 'excel') => {
 // need to delete once sent or get an s3 bucket since not good idea or best practice to keep on our server
 app.get('/report/:filename', (req, res) => {
     const filename = req.params.filename
-    console.log("GET THE REPORT: ", filename)
     res.download('./reports/' + filename)
 })
 
 // delete the file after downloaded
 app.get('/report/delete/:filename', (req, res) => {
     const filename = req.params.filename
-    console.log("DELETE THE REPORT: ", filename)
     fs.unlink('./reports/' + filename, function(response, error){
-        console.log("deleteed report ", filename)
+        console.log('deleteed report ', filename)
     })
-    res.status(202).json({"msg": "deleted file"})
+    res.status(202).json({'msg': 'deleted file'})
 })
 
 app.post('/api/admin/user/makeAdmin', (req, res) => {
@@ -253,7 +249,7 @@ app.put('/api/user', (req, res) => {
     }
 })
 
-app.get("/api/libraries", function(req, res) {
+app.get('/api/libraries', function(req, res) {
     db.getAll('libraries', {name: 1}).then(result => {
         return res.json(result)
     }).catch(error => {
@@ -263,23 +259,22 @@ app.get("/api/libraries", function(req, res) {
 });
 
 // POST: create a new meal
-app.post("/api/meals", function(req, res) {
+app.post('/api/meals', function(req, res) {
     delete req.body['_id']
     db.insertOne(meals_db_name, req.body).then(response => {
         res.status(201).json(response);
     }).catch(error => {
-        res.status(406).json({"error": error})
+        res.status(406).json({'error': error})
     })
 })
 
 // PUT: edit a new meal
-app.put("/api/meals", function(req, res) {
+app.put('/api/meals', function(req, res) {
     db.updateOneById(meals_db_name, req.body).then(response => {
-        console.log("success response")
-        res.status(201).json({msg: 'successfully edited user'});
+        res.status(201).json({msg: 'successfully edited report'});
     }).catch(error => {
-        console.log("error is", error)
-        res.status(406).json({"error": error})
+        console.log('error is', error)
+        res.status(406).json({'error': error})
     })
 })
 
@@ -291,7 +286,7 @@ const prepareSearchQuery = (searchQuery) => {
     }
     else if (searchQuery.skills) {
         const regexSkills = searchQuery.skills.map( (skill) => {
-            return new RegExp(skill, "gi")
+            return new RegExp(skill, 'gi')
         })
         searchQuery.skills = {
             $in: regexSkills
@@ -323,7 +318,6 @@ app.get('/api/auth/facebook/callback', passport.authenticate('facebook', { failu
     res.redirect(`/profile/${req.user._id}`)
 })
 
-
 app.listen(app.get('port'), function () {
-    console.log("[*] mealtally running on port", app.get('port'))
+    console.log('[*] mealtally running on port', app.get('port'))
 })
