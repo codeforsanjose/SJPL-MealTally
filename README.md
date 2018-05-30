@@ -1,6 +1,13 @@
 
 ## Running the web app locally
 
+
+
+0. Read Code of Conduct (https://github.com/codeforsanjose/codeofconduct) and CONTRIBUTING.md!!!
+
+
+
+
 1. In your terminal, cd into your project folder and clone this repo and navigate to correct branch:
 ```
 $ git clone https://github.com/codeforsanjose/SJPL-MealTally
