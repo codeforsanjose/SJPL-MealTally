@@ -87,11 +87,33 @@ class ReportsComponent extends React.Component {
         }
     }
 
-    handleGenerateReport = (event) => {
-        const data = {
-            reports: this.state.reports
+    validateExportRequest = () => {
+        let errors = {}
+        if (this.state.library === '') {
+            errors['library'] = 'Please select a library'
         }
-        generateReport(data)
+        if (this.state.type === '') {
+            errors['type'] = 'Please select meal type'
+        }
+        if (this.state.reports.length === 0) {
+            errors['reports'] = 'Please export at least one report'
+        }
+        
+        return Object.values(errors).join(' : ')
+        
+
+    }
+    handleGenerateReport = (event) => {
+        const errors = this.validateExportRequest()
+        if (Object.keys(errors).length > 0) {
+            window.alert(errors)
+        }
+        else {
+            const data = {
+                reports: this.state.reports
+            }
+            generateReport(data)
+        }
     }
 
     getSelectedDay = (date, type) => {
