@@ -11,7 +11,6 @@
 1. In your terminal, cd into your project folder and clone this repo and navigate to correct branch:
 ```
 $ git clone https://github.com/codeforsanjose/SJPL-MealTally
-$ git checkout react-meal-tally
 ```
 
 2. cd into SJPL-MealTally and run `npm install`
