@@ -3,11 +3,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var app = express();
+var path = require("path");
 
 var mongodb = require('mongodb');
 var mongoClient = mongodb.MongoClient;
 var ObjectID = mongodb.ObjectID;  // Used in API endpoints
 var db;
+
 
 const publicDir = __dirname + '/public'
 

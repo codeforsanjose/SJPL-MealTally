@@ -1,6 +1,5 @@
 
-## Running the web app locally
-
+## How to Run Locally
 1. In your terminal, cd into your project folder and clone this repo:
 ```
 $ git clone https://github.com/codeforsanjose/SJPL-MealTally
@@ -9,7 +8,8 @@ $ git clone https://github.com/codeforsanjose/SJPL-MealTally
 ``` 
 $ git checkout react-skeleton-frontend
 ```
-2. Cd into SJPL-MealTally and run `npm install`
+3. Cd into SJPL-MealTally and run `npm install`
+
 
 4. Open a new tab in your terminal and start the express server in it:
 ```
@@ -19,4 +19,9 @@ Replace <> with a mongolab URI -- you can create your own on [mLab](https://mlab
 
 5. Start the web app in another tab:
 
-6. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
+6. Generate the bundle.js within /public alongside index.html
+```
+$ npm run build
+```
+
+7. Open `localhost:8080` (or whichever port is specified in the Ionic tab)  to enter from the web app's Home page.
