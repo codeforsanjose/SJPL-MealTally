@@ -1,14 +1,17 @@
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var app = express();
-var path = require("path");
+var express = require('express')
+var bodyParser = require('body-parser')
+var cors = require('cors')
+var app = express()
+var path = require("path")
+const auth = require('./lib/auth')
+const bcrypt = require('bcrypt')
+const passport = require('passport')
 
-var mongodb = require('mongodb');
-var mongoClient = mongodb.MongoClient;
+var mongodb = require('mongodb')
+var mongoClient = mongodb.MongoClient
 var ObjectID = mongodb.ObjectID;  // Used in API endpoints
-var db;
+const db = require('./lib/db')
 
 
 const publicDir = __dirname + '/public'
@@ -17,97 +20,62 @@ app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.use(express.static("public"));
-
-var MONGODB_URI = process.env.MONGODB_URI;
-
-// Initialize database connection and then start the server.
-mongoClient.connect(MONGODB_URI, function (err, database) {
-  if (err) {
-    process.exit(1);
-  }
-  db = database;  // Our database object from mLab
-  console.log("Database connection ready");
-  // Initialize the app.
-  app.listen(app.get('port'), function () {
-    console.log("[*] mealtally running on port", app.get('port'));
-  });
-});
+auth.init(app)
 
 app.get(["/", "/login", "/signup", "/admin"], (reqest, response) => {
     response.sendFile(path.join(publicDir, '/index.html'))
 })
 
-/*
-* Endpoint --> "/api/libraries"
-*/
+app.post('/api/login', (req, res, next) => {
+  // See: https://github.com/jaredhanson/passport-local
+  passport.authenticate('local', (err, user, info) => {
+      if (err || !user) {
+          console.log('error with login:', err, user)
+          return res.status(422).json(err)
+      }
+      req.login(user, () => {
+          return res.json(user)
+      })
+  })(req, res, next)
 
-// GET: retrieve all libraries
-app.get("/api/libraries", function(req, res) {
-  db.collection("libraries").find({}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get libraries");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
+})
+
+app.get('/api/user/:id', (req, res) => {
+  if (req.user) {
+      var user = req.user
+      return res.json({ user });
+  }
+  if (req.isAuthenticated() && req.params.id === req.user._id.toString()) {
+      db.getById('user', req.params.id).then(user => {
+          req.user = user
+          return res.json({ user })
+      })
+  } else {
+      return res.status(401).json({ error: 'Not authenticated' })
+  }
+})
+
+app.post('/api/user', (req, res) => {
+  // It is good practice to specifically pick the fields we want to insert here *in the backend*,
+  // even if we have already done so on the front end. This is to prevent malicious users
+  // from adding unexpected fields by modifying the front end JS in the browser.
+
+  var newUser =  _.pick(req.body, [
+      'name', 'email', 'phone', 'passphrase'])
+  bcrypt.hash(newUser.passphrase, 10, (err, hash) => {
+      // Store hash in database
+      newUser.passphrase = hash
+      db.insertOne('user', newUser).then(result => {
+          var userRecord = req.body
+
+          return res.json(result)
+      }).catch(error => {
+          console.log(error)
+          return res.status(422).json(error)
+      })
+  })
+})
+
+app.listen(app.get('port'), function () {
+    console.log("[*] mealtally running on port", app.get('port'));
 });
-
-/*
-* Endpoint --> "/api/meals"
-*/
-
-// GET: retrieve meals in date range of one week
-app.get("/api/meals/:start/:end", function(req, res) {
-  var cursor = db.collection("meals").aggregate([
-    { $match: { date: {$gte: req.params.start, $lte: req.params.end}}},
-    { $group: { _id: { library: "$library", mealType: "$mealType" },
-                totalReceived: { $sum: "$numReceivedMeals"},
-                totalLeftover: { $sum: "$numLeftoverMeals"},
-                totalStaff: { $sum: "$numStaffMeals"},
-                totalChildren: { $sum: "$numChildrenMeals"},
-                totalAdult: { $sum: "$numAdultMeals"},
-                totalVolunteer: { $sum: "$numVolunteerMeals"},
-                totalWasted: { $sum: "$numWastedMeals"}
-              }
-    }
-  ]).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get meals in date range");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
-
-
-// POST: create a new todo
-app.post("/api/meals", function(req, res) {
-  db.collection("meals").insertOne(req.body, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to post meal");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
-
-/*
-* Endpoint --> "/api/logs"
-*/
-
-// POST: create a new log
-app.post("/api/logs", function(req, res) {
-  db.collection("logs").insertOne(req.body, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to post log");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
-
-// Error handler for the api
-function handleError(res, reason, message, code) {
-  console.log("API Error: " + reason);
-  res.status(code || 500).json({"Error": message});
-}

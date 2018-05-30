@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import { validateEmail } from '../../../lib/validation.js'
 
-import MealTallyLogoComponent from '../commonComponents/LogoComponent'
+import LogoComponent from '../commonComponents/LogoComponent'
 
 import { registerUser, signupFacebook } from '../../api/api'
 
@@ -18,8 +18,6 @@ require('../facebook/FacebookButton.css')
 class SignupComponent extends React.Component {
     constructor(props) {
         super(props)
-        const checkInter = interests.map(interest => ({ interest: interest, checked: false }))
-        
         this.state = {
             name: '',
             email: '',
