@@ -2,6 +2,7 @@
 import * as React from 'react'
 import moment from 'moment'
 import Paper from 'material-ui/Paper'
+import NoSleep from 'nosleep.js'
 
 import IncrementComponent from '../commonComponents/incrementComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
@@ -44,6 +45,9 @@ class MealTallyComponent extends React.Component {
             mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             mealTallyDetails: this.props.report || this.INITIAL_MEAL_TALLY_DETAILS
         }
+        
+        var noSleep = new NoSleep()
+        noSleep.enable()
     }
 
     componentWillReceiveProps = (newProps) => {
