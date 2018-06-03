@@ -103,8 +103,8 @@ class ModalComponent extends React.Component {
                 <div>
                     <h3>{this.props.message}</h3>
                     <div>
-                        
                         <div className="typeBox">
+                            <span>{moment(this.props.report.date).format('MMM DD, YYYY, hh:mm:ss a')}</span>
                             <span className="mealPlace">{this.props.report.library}</span>
                             <span className="mealType">{this.props.report.type}</span>
                         </div>
