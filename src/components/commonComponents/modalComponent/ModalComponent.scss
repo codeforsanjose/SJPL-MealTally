@@ -3,7 +3,7 @@
     width: 100%;
     position: fixed;
     top: 0;
-    left: 4em;
+    left: 0;
     right: 0;
     bottom: 0;
     background-color: white;
@@ -44,6 +44,13 @@
     }
 
     .closeButton {
-        background-color: #c4c4c4;
+    	border: 0;
+        background-color: transparent;
+        position: fixed;
+        top: 0;
+        left: 1em;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
     }
 }

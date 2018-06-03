@@ -64,7 +64,7 @@ class ModalComponent extends React.Component {
                 <div className="reportActions">
                     <button className="closeButton" onClick={this.props.closeReport}>X</button>
                     {this.props.handleExport ? <button onClick={this.props.handleExport}>Export</button>: ''}
-                    {(!this.state.showEdit) ? <button onClick={this.handleDisplayEdit}>Edit</button>: ''}
+                    {(!this.state.showEdit) ? <button className="editButton" onClick={this.handleDisplayEdit}>Edit</button>: ''}
                     {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
                 </div>
                 <div className="editReportContainer">
@@ -109,6 +109,7 @@ class ModalComponent extends React.Component {
                         <div className="typeBox">
                             <span className="mealPlace">{this.props.report.library}</span>
                             <span className="mealType">{this.props.report.type}</span>
+                            <span>{this.props.report.date}</span>
                         </div>
                     </div>
                     <div className="inventoyBox">
