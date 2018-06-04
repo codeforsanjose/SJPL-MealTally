@@ -32,18 +32,22 @@
     }
     
 
-    button {
-    	margin: 10px;
-        width: auto;
-        height: 100px;
-        font-size: 1.4em;
-        margin-bottom: 2em;
-        background-color: #75d085;
-        border-radius: 10px;
-        padding: .5em 1em .5em 1em;
-    }
+
 
     .closeButton {
         background-color: #c4c4c4;
+    }
+
+    .editButton {
+    
+    	font-size: 1em;
+    	padding: .5em;
+    	
+    	text-align: center;
+    	
+    	cursor: pointer;
+    	background-color: #75d085;
+        border-radius: 10px;
+        color: #fff;
     }
 }
