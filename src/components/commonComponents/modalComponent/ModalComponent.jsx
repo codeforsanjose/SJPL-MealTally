@@ -62,7 +62,7 @@ class ModalComponent extends React.Component {
                 <div className="reportActions">
                     <button className="closeButton" onClick={this.props.closeReport}>X</button>
                     {this.props.handleExport ? <button onClick={this.props.handleExport}>Export</button>: ''}
-                    {(!this.state.showEdit) ? <button className="editButon" onClick={this.handleDisplayEdit}>Edit</button>: ''}
+                    {(!this.state.showEdit) ? <button className="editButton" onClick={this.handleDisplayEdit}>Edit</button>: ''}
                     {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
                 </div>
                 <div className="editReportContainer">
@@ -110,15 +110,14 @@ class ModalComponent extends React.Component {
                         </div>
                     </div>
                     <div className="inventoyBox">
-                        <div><h3>Day's Inventory</h3></div>
-                        <span className="received"><p>Meals from Vendor: {this.props.report.received}</p></span>
+                        <div><h4>Day's Inventory</h4></div>
+                        <span className="received">Meals from Vendor: {this.props.report.received}</span>
                         <span className="leftoverBefore">Leftover from day before: {this.props.report.leftovers}</span>
                         <span className="totalMealsAvailable">Total meals available: {this.state.totalMealsAvailable}</span>
                     </div>
               
                     <div className="servedBox">
-                        Distributed Meals
-                    
+                        <div><h4>Distributed Meals</h4></div>
                         <span>Child and Teens: {this.props.report.childrenAndTeens}</span>
                         <span>Teens Staff and Volunteers: {this.props.report.teenStaffAndVolunteers}</span>
                         <span>Adults: {this.props.report.adult}</span>
