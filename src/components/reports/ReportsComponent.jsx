@@ -146,7 +146,7 @@ class ReportsComponent extends React.Component {
         event.preventDefault()
         
         const year = +moment().format('YYYY')
-        let startDate = moment([year, event.target.selectedIndex])
+        let startDate = moment([year, event.target.selectedIndex - 1])
         let endDate = moment(startDate).endOf('month')
 
         const data = {
