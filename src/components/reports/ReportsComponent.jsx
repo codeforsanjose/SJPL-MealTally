@@ -10,6 +10,7 @@ require('./ReportsComponent.scss')
 
 class ReportsComponent extends React.Component {
     MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    //YEARS = 
     constructor(props) {
         super(props)
         this.props = props
@@ -242,10 +243,14 @@ class ReportsComponent extends React.Component {
                         <div>
                             <h3 className="title">Tally Reports</h3>
                         </div>
-                        <div>
-                            
-                           
-                      
+                        <div className="monthSelector">
+                            <OptionsSelectorComponent
+                                
+                                fieldName={'month'}
+                                options={this.MONTHS}
+                                itemSelected={this.state.selectedMonth}
+                                optionsHandler={this.getMonthStartEndDates}
+                            />
                         </div>
                         <div className="endDateContainer">
                             {this.getDatePicker('endDate')}
