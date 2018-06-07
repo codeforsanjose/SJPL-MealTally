@@ -29,21 +29,20 @@ class ReportsComponent extends React.Component {
             reports: [],
             months: this.MONTHS,
             selectedMonth: this.MONTHS[0],
-            
+            tabs: 0,
         }
     }
     componentDidMount() {
         
     }
     componentWillMount(newProps) {
-        const data = {
+        this.setState({
+            ...this.state,
             startDate: moment(),
             endDate: moment().subtract(7,'d'),
             library: '',
             type: ''
-        }
-        this.handleGetReportsInRange(data)
-        
+        })
     }
 
     handleDate = (date, type) => {
@@ -88,6 +87,16 @@ class ReportsComponent extends React.Component {
         }
     }
 
+    enableExportButton = () => {
+        if (this.state.library === '' || this.state.type === '' || this.state.reports.length === 0) {
+            return (<button className="disableGenerateReport" disabled onClick={this.handleGenerateReport}>Export Reports</button>)
+        }
+        else {
+            return (<button className="enableGenerateReport" onClick={this.handleGenerateReport}>Export Reports</button>)
+        }
+    }
+
+    // may not need anymore due to disabling the export button if none these valid
     validateExportRequest = () => {
         let errors = {}
         if (this.state.library === '') {
@@ -99,10 +108,7 @@ class ReportsComponent extends React.Component {
         if (this.state.reports.length === 0) {
             errors['reports'] = 'Please export at least one report'
         }
-        
         return Object.values(errors).join(' : ')
-        
-
     }
     handleGenerateReport = (event) => {
         const errors = this.validateExportRequest()
@@ -232,6 +238,41 @@ class ReportsComponent extends React.Component {
         return itemTotals
     }
 
+    getMonthSelector = () => {
+        return (
+            <div className="monthSelector">
+                <OptionsSelectorComponent
+                    fieldName={'month'}
+                    options={this.MONTHS}
+                    itemSelected={this.state.selectedMonth}
+                    optionsHandler={this.getMonthStartEndDates}
+                />
+            </div>
+        )
+    }
+
+    getDateRangeSelector = () => {
+        return (
+            <div className="dateRangeSelector">
+                <div className="endDateContainer">
+                    {this.getDatePicker('endDate')}
+                </div>
+                <span>To</span>
+                <div className="startDateContainer">
+                    {this.getDatePicker('startDate')}
+                </div>
+            </div>
+        )
+    }
+
+    setTabs = (event, tab) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            tabs: tab
+        })
+    }
+
     render() {
         const libraryOptions = this.props.libraries.map(library => {
             return library.name
@@ -243,46 +284,30 @@ class ReportsComponent extends React.Component {
                         <div>
                             <h3 className="title">Tally Reports</h3>
                         </div>
-                        <div className="monthSelector">
-                            <OptionsSelectorComponent
-                                
-                                fieldName={'month'}
-                                options={this.MONTHS}
-                                itemSelected={this.state.selectedMonth}
-                                optionsHandler={this.getMonthStartEndDates}
-                            />
+                        <hr />
+                        <div className="report-controls-nav">
+                            <a className="nav-item" href="#" onClick={(event) => this.setTabs(event, 0)}>Date Range</a>
+                            <a className="nav-item" href="#" onClick={(event) => this.setTabs(event, 1)}>Month</a>
                         </div>
-                        <div className="endDateContainer">
-                            {this.getDatePicker('endDate')}
-                        </div>
-                        <span>To</span>
-                        <div className="startDateContainer">
-                            {this.getDatePicker('startDate')}
-                        </div>
-                        </div>
-                        <OptionsSelectorComponent
-                            
-                            fieldName={'library'}
-                            options={libraryOptions}
-                            itemSelected={this.state.library}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-                        <OptionsSelectorComponent
-                            
-                            fieldName={'type'}
-                            options={this.props.mealTypes}
-                            itemSelected={this.state.type}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-
-                        <button className="generateReport" onClick={this.handleGenerateReport}>Export Reports</button>
-                        
+                        {this.state.tabs === 0 ? this.getDateRangeSelector(): this.getMonthSelector()}
                     </div>
-             
-
-                    <ReportsListComponent allReports={this.state.reports} handleGetReportsInRange={this.handleGetReportsInRange} />
-                    
-                
+                    <OptionsSelectorComponent
+                        
+                        fieldName={'library'}
+                        options={libraryOptions}
+                        itemSelected={this.state.library}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+                    <OptionsSelectorComponent
+                        
+                        fieldName={'type'}
+                        options={this.props.mealTypes}
+                        itemSelected={this.state.type}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+                    {this.enableExportButton()}
+                </div>
+                <ReportsListComponent allReports={this.state.reports} handleGetReportsInRange={this.handleGetReportsInRange} />
             </div>
         )
         
