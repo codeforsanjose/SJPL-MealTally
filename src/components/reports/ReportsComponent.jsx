@@ -242,7 +242,7 @@ class ReportsComponent extends React.Component {
         return (
             <div className="monthSelector">
                 <OptionsSelectorComponent
-                    fieldName={'month'}
+                    
                     options={this.MONTHS}
                     itemSelected={this.state.selectedMonth}
                     optionsHandler={this.getMonthStartEndDates}
@@ -280,17 +280,11 @@ class ReportsComponent extends React.Component {
         return (
             <div className="ReportContainer">
                 <div className="report-controls">
-                    <div className="dateContainer">
-                        <div>
-                            <h3 className="title">Tally Reports</h3>
-                        </div>
-                        <hr />
-                        <div className="report-controls-nav">
-                            <a className="nav-item" href="#" onClick={(event) => this.setTabs(event, 0)}>Date Range</a>
-                            <a className="nav-item" href="#" onClick={(event) => this.setTabs(event, 1)}>Month</a>
-                        </div>
-                        {this.state.tabs === 0 ? this.getDateRangeSelector(): this.getMonthSelector()}
+
+                    <div>
+                        <h3 className="title">Tally Reports</h3>
                     </div>
+                    
                     <OptionsSelectorComponent
                         
                         fieldName={'library'}
@@ -305,7 +299,20 @@ class ReportsComponent extends React.Component {
                         itemSelected={this.state.type}
                         optionsHandler={this.handleMealTallyDetailsOptionsField}
                     />
-                    {this.enableExportButton()}
+                    <div className="dateContainerContainer">
+                        <div className="dateContainer">
+                            
+                        
+                            <div className="report-controls-nav">
+                                <a className="nav-item range" href="#" onClick={(event) => this.setTabs(event, 0)}>Choose a Date Range</a>
+                                <a className="nav-item month" href="#" onClick={(event) => this.setTabs(event, 1)}>Choose a Month</a>
+                            </div>
+                            {this.state.tabs === 0 ? this.getDateRangeSelector(): this.getMonthSelector()}
+                        </div>
+
+
+                        {this.enableExportButton()}
+                    </div>
                 </div>
                 <ReportsListComponent allReports={this.state.reports} handleGetReportsInRange={this.handleGetReportsInRange} />
             </div>

@@ -16,10 +16,40 @@
         background-color: #fff;
         border: 1px solid #000;
     }
-	.dateConntainer {
+
+    .dateContainerContainer {
+    	border: 1px solid #666;
+    	margin: 2em;
+    	background-color: #eee;
+    }
+
+	.dateContainer {
 		display: block;
 		vertical-align: text-top;
 		text-align: center;
+		margin: 2em 0 0 0;
+	}
+
+	.report-controls-nav {
+		.nav-item {
+			padding: 1em 3em;
+			margin: 2em 0;
+			background-color: #A3A3A3;
+			border: 1px solid #666;
+			color: #fff;
+			text-decoration: none;
+			cursor: pointer;
+			&:hover {
+				background-color: #666;
+			}
+		}
+		.nav-item.range {
+			background-color: #666;
+			
+		}
+		.nav-item.month {
+
+		}
 	}
 
 
