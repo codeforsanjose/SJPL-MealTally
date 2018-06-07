@@ -285,21 +285,8 @@ class ReportsComponent extends React.Component {
                         <h3 className="title">Tally Reports</h3>
                     </div>
                     
-                    <OptionsSelectorComponent
-                        
-                        fieldName={'library'}
-                        options={libraryOptions}
-                        itemSelected={this.state.library}
-                        optionsHandler={this.handleMealTallyDetailsOptionsField}
-                    />
-                    <OptionsSelectorComponent
-                        
-                        fieldName={'type'}
-                        options={this.props.mealTypes}
-                        itemSelected={this.state.type}
-                        optionsHandler={this.handleMealTallyDetailsOptionsField}
-                    />
-                    <div className="dateContainerContainer">
+                    
+                    
                         <div className="dateContainer">
                             
                         
@@ -311,9 +298,28 @@ class ReportsComponent extends React.Component {
                         </div>
 
 
-                        {this.enableExportButton()}
-                    </div>
+                       
+                
                 </div>
+
+                <div className="dateContainerContainer">
+                    <OptionsSelectorComponent
+                            
+                            fieldName={'library'}
+                            options={libraryOptions}
+                            itemSelected={this.state.library}
+                            optionsHandler={this.handleMealTallyDetailsOptionsField}
+                        />
+                        <OptionsSelectorComponent
+                            
+                            fieldName={'type'}
+                            options={this.props.mealTypes}
+                            itemSelected={this.state.type}
+                            optionsHandler={this.handleMealTallyDetailsOptionsField}
+                        />
+
+                         {this.enableExportButton()}
+                     </div>
                 <ReportsListComponent allReports={this.state.reports} handleGetReportsInRange={this.handleGetReportsInRange} />
             </div>
         )
