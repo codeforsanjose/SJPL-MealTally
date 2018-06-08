@@ -41,7 +41,7 @@ class OptionsSelectorComponent extends React.Component {
         const optionsName = this.props.fieldName
         const itemSelected = this.props.itemSelected
         let item = this.state.chooseText
-        if (this.props.itemSelected !== '') {
+        if (this.props.itemSelected && this.props.itemSelected !== '') {
             item = this.props.itemSelected
         }
         return (

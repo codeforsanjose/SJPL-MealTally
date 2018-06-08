@@ -28,7 +28,7 @@ class ReportsComponent extends React.Component {
             totals: totals,
             reports: [],
             months: this.MONTHS,
-            selectedMonth: this.MONTHS[0],
+            selectedMonth: '',
             tabs: 0,
         }
     }
@@ -242,8 +242,8 @@ class ReportsComponent extends React.Component {
         return (
             <div className="monthSelector">
                 <OptionsSelectorComponent
-                    overrideText={'Select Month'}
                     options={this.MONTHS}
+                    fieldName={'month'}
                     itemSelected={this.state.selectedMonth}
                     optionsHandler={this.getMonthStartEndDates}
                 />
@@ -283,7 +283,6 @@ class ReportsComponent extends React.Component {
         return (
             <div className="ReportContainer">
                 <div className="report-controls">
-
                     <div>
                         <h3 className="title">Tally Reports</h3>
                     </div>
@@ -298,14 +297,12 @@ class ReportsComponent extends React.Component {
 
                 <div className="dateContainerContainer">
                     <OptionsSelectorComponent
-                            
                             fieldName={'library'}
                             options={libraryOptions}
                             itemSelected={this.state.library}
                             optionsHandler={this.handleMealTallyDetailsOptionsField}
                         />
                         <OptionsSelectorComponent
-                            
                             fieldName={'type'}
                             options={this.props.mealTypes}
                             itemSelected={this.state.type}
