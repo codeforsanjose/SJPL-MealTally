@@ -242,7 +242,7 @@ class ReportsComponent extends React.Component {
         return (
             <div className="monthSelector">
                 <OptionsSelectorComponent
-                    
+                    overrideText={'Select Month'}
                     options={this.MONTHS}
                     itemSelected={this.state.selectedMonth}
                     optionsHandler={this.getMonthStartEndDates}
@@ -272,6 +272,9 @@ class ReportsComponent extends React.Component {
             tabs: tab
         })
     }
+    isActiveTab = (tab) => {
+        return tab === this.state.tabs ? 'nav-item active': 'nav-item'
+    }
 
     render() {
         const libraryOptions = this.props.libraries.map(library => {
@@ -284,22 +287,13 @@ class ReportsComponent extends React.Component {
                     <div>
                         <h3 className="title">Tally Reports</h3>
                     </div>
-                    
-                    
-                    
                         <div className="dateContainer">
-                            
-                        
                             <div className="report-controls-nav">
-                                <a className="nav-item range" href="#" onClick={(event) => this.setTabs(event, 0)}>Choose a Date Range</a>
-                                <a className="nav-item month" href="#" onClick={(event) => this.setTabs(event, 1)}>Choose a Month</a>
+                                <a className={this.isActiveTab(0)} href="#" onClick={(event) => this.setTabs(event, 0)}>Choose a Date Range</a>
+                                <a className={this.isActiveTab(1)} href="#" onClick={(event) => this.setTabs(event, 1)}>Choose a Month</a>
                             </div>
                             {this.state.tabs === 0 ? this.getDateRangeSelector(): this.getMonthSelector()}
                         </div>
-
-
-                       
-                
                 </div>
 
                 <div className="dateContainerContainer">

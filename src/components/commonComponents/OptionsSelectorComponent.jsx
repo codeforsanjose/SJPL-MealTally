@@ -10,10 +10,11 @@ class OptionsSelectorComponent extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
+        const overrideText = this.props.overrideText
         var chooseText = 'Choose ' + this.props.fieldName + '...'
         var options = [chooseText, ...this.props.options]
         this.state = {
-            chooseText: chooseText,
+            chooseText: overrideText | chooseText,
             options: options
         }
     }
@@ -45,7 +46,6 @@ class OptionsSelectorComponent extends React.Component {
         }
         return (
             <div className="incrementContainer">
-                <span>{optionsName}</span>
                 <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} value={item}>
                     {this.displayOptions()}
                 </select>

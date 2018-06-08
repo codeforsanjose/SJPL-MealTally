@@ -39,16 +39,16 @@
 			color: #fff;
 			text-decoration: none;
 			cursor: pointer;
+			&.active {
+				background-color: #0682FE;
+
+				&:hover {
+					background-color: #0999FE;
+				}
+			}
 			&:hover {
 				background-color: #666;
 			}
-		}
-		.nav-item.range {
-			background-color: #666;
-			
-		}
-		.nav-item.month {
-
 		}
 	}
 
