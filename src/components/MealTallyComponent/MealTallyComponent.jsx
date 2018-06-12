@@ -120,7 +120,8 @@ class MealTallyComponent extends React.Component {
         event.preventDefault()
         this.setState({
             ...this.state,
-            showAlert: false
+            showAlert: false,
+            showError: false
         })
     }
     handleSaveMealTally = (event) => {
@@ -168,6 +169,7 @@ class MealTallyComponent extends React.Component {
         if (Object.keys(errors).length > 0) {
             this.setState({
                 ...this.state,
+                showError: true,
                 errors: errors
             })
         }
@@ -207,6 +209,9 @@ class MealTallyComponent extends React.Component {
         if (this.state.mealTallyDetails.type === '') {
             errors.type = 'Please select meal type'    
         }
+        if (this.state.mealTallyDetails.signature === '') {
+            errors.signature = 'Please sign with name'    
+        }
         return errors
     }
 
@@ -221,11 +226,10 @@ class MealTallyComponent extends React.Component {
 
         return (
             <div className="mealTallyContainer">
-                {this.state.showLoading ? <AlertComponent className="loadingModal" isLoading={true} message={'Saving report please wait...'} />: ''}
+                {this.state.showLoading ? <AlertComponent isLoading={true} message={'Saving report please wait...'} />: ''}
                 {this.state.showAlert ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.alertMessage} />: ''}
-                {this.state.showError ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.errorMessage} />: ''}
+                {this.state.showError ? <AlertComponent isError={true} errors={this.state.errors} isLoading={false} handleAlert={this.alertHandler} message={'Errors with report please review'} />: ''}
                 <Paper>
-                    
                     <div className="infoContainer">
                         <div className="introContainer">
                             <div>
@@ -246,12 +250,14 @@ class MealTallyComponent extends React.Component {
                                     options={libraryOptions}
                                     itemSelected={this.state.mealTallyDetails.library}
                                     optionsHandler={this.handleMealTallyDetailsOptionsField}
+                                    errorMessage={this.state.errors ? this.state.errors.library: ''}
                                 />
                                 <OptionsSelectorComponent
                                     fieldName={'type'}
                                     options={this.state.mealTypes}
                                     itemSelected={this.state.mealTallyDetails.type}
                                     optionsHandler={this.handleMealTallyDetailsOptionsField}
+                                    errorMessage={this.state.errors ? this.state.errors.type: ''}
                                 />
                                 
                             </div>
@@ -356,6 +362,9 @@ class MealTallyComponent extends React.Component {
                     </div>
                     <div className="signatureBox">
                         <label>Signature: </label><input type="text" value={this.state.mealTallyDetails.signature} onChange={this.handleSignature} />
+                        <div className="errorContainer">
+                            <span className="errorMessage">{this.state.errors ? this.state.errors.signature: ''}</span>
+                        </div>
                     </div>
 
                     {this.state.mealTallyDetails._id ? <button className="saveMealTally" onClick={this.handleSaveMealTally}>Save</button>: <button className="saveMealTally" onClick={this.handleSaveMealTally}>Done</button>}

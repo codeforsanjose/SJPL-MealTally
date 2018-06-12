@@ -13,12 +13,31 @@ class AlertComponent extends React.Component {
         }
     }
 
+    displayErrors = () => {
+        return Object.keys(this.props.errors).map((key, index) => {
+            return (
+                <div key={index}>
+                    {key} : {this.props.errors[key]}
+                </div>
+            )
+        })
+    }
     showDetails = () => {
-        console.log("show details called for alert copoentntntntn", this.props)
         if (this.props.isLoading) {
             return (
                 <div className="loadingMessageContainer">
                     {this.props.message}
+                </div>
+            )
+        }
+        if (this.props.isError) {
+            return (
+                <div className="errorMessageContainer">
+                    {Object.keys(this.props.errors).length} {this.props.message}<br />
+                    {this.displayErrors()}
+                    <div className="alertActions">
+                        <button className="okButton" onClick={this.props.handleAlert}>O.K</button>
+                    </div>
                 </div>
             )
         }

@@ -1,9 +1,8 @@
 
 
 import * as React from 'react'
-import appConfig from '../../AppContentConfig.json'
 
-//require('./incrementComponent.css');
+require('./OptionsSelectorComponent.scss');
 
 
 class OptionsSelectorComponent extends React.Component {
@@ -45,10 +44,13 @@ class OptionsSelectorComponent extends React.Component {
             item = this.props.itemSelected
         }
         return (
-            <div className="incrementContainer">
+            <div className="optionsSelectorContainer">
                 <select onChange={(e) => this.props.optionsHandler(e, this.props.fieldName)} value={item}>
                     {this.displayOptions()}
                 </select>
+                <div className="errorContainer">
+                    <span className="errorMessage">{this.props.errorMessage}</span>
+                </div>
             </div>
         )
     }
