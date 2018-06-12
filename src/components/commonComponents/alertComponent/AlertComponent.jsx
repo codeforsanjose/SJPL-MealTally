@@ -14,9 +14,10 @@ class AlertComponent extends React.Component {
     }
 
     showDetails = () => {
+        console.log("show details called for alert copoentntntntn", this.props)
         if (this.props.isLoading) {
             return (
-                <div className="messageContainer">
+                <div className="loadingMessageContainer">
                     {this.props.message}
                 </div>
             )

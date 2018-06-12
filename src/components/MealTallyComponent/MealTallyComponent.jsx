@@ -41,7 +41,6 @@ class MealTallyComponent extends React.Component {
         this.state = {
             showDate: false,
             libraries: [],
-
             mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             mealTallyDetails: this.props.report || this.INITIAL_MEAL_TALLY_DETAILS
         }
@@ -131,28 +130,8 @@ class MealTallyComponent extends React.Component {
             this.props.editReport(event, this.state.mealTallyDetails)
         }
         else {
-            const data = this.state.mealTallyDetails
-            data['createdBy'] = (this.props.user && this.props.user._id) || 'guest'
-            createMeal(data).then(response => {
-                this.setState({
-                    ...this.state,
-                    mealTallyDetails: this.INITIAL_MEAL_TALLY_DETAILS,
-                    showLoading: false,
-                    showAlert: true,
-                    showModal: false,
-                    alertMessage: 'Successfully saved!'
-                })
-            }).catch(error => {
-                console.log('create meal error: ', error)
-                this.setState({
-                    ...this.state,
-                    showLoading: false,
-                    showAlert: true,
-                    alertMessage: 'Error saving please try again later!'
-                })
-            })
+            this.handleCreateMeal()
         }
-        //this.handleCreateMeal({})
     }
 
     handleComments = (event) => {
@@ -182,49 +161,53 @@ class MealTallyComponent extends React.Component {
         this.props.closeModal(event)
     }
 
-    handleCreateMeal = (event) => {
+    handleCreateMeal = () => {
         // if event is empty object then don't call preventDefault when needing to call programatically without event
-        Object.keys(event).length > 0 ? event.preventDefault(): ''
-
-        const data = this.state.mealTallyDetails
-        data['createdBy'] = (this.props.user && this.props.user._id) || 'guest'
-        createMeal(data).then(response => {
+        //Object.keys(event).length > 0 ? event.preventDefault(): ''
+        let errors = this.validateMeal()
+        if (Object.keys(errors).length > 0) {
             this.setState({
                 ...this.state,
-                mealTallyDetails: this.INITIAL_MEAL_TALLY_DETAILS,
-                showLoading: false,
-                showAlert: true,
-                showModal: false,
-                alertMessage: 'Successfully saved!'
-            })
-        }).catch(error => {
-            console.log('create meal error: ', error)
-            this.setState({
-                ...this.state,
-                showLoading: false,
-                showAlert: true,
-                alertMessage: 'Error saving please try again later!'
-            })
-        })
-    }
-
-    validateMeal = () => {
-        let message = ''
-
-        if (this.state.mealTallyDetails.library === '') {
-            message += 'Please select a library.'
-        }
-        if (message !== '') {
-            return false
-            this.setState({
-                ...this.state,
-                showError: true,
-                errorMessage: message
+                errors: errors
             })
         }
         else {
-            return true
+            this.setState({
+                ...this.state,
+                showLoading: true
+            })
+            const data = this.state.mealTallyDetails
+            data['createdBy'] = (this.props.user && this.props.user._id) || 'guest'
+            createMeal(data).then(response => {
+                this.setState({
+                    ...this.state,
+                    mealTallyDetails: this.INITIAL_MEAL_TALLY_DETAILS,
+                    showAlert: true,
+                    showLoading: false,
+                    showModal: false,
+                    alertMessage: 'Successfully saved!'
+                })
+            }).catch(error => {
+                console.log('create meal error: ', error)
+                this.setState({
+                    ...this.state,
+                    showLoading: false,
+                    showAlert: true,
+                    alertMessage: 'Error saving please try again later!'
+                })
+            })
+        } 
+    }
+
+    validateMeal = () => {
+        let errors = {}
+        if (this.state.mealTallyDetails.library === '') {
+            errors.library = 'Please select a library.'
         }
+        if (this.state.mealTallyDetails.type === '') {
+            errors.type = 'Please select meal type'    
+        }
+        return errors
     }
 
     render() {
@@ -238,7 +221,7 @@ class MealTallyComponent extends React.Component {
 
         return (
             <div className="mealTallyContainer">
-                {this.state.showLoading ? <AlertComponent isLoading={true} message={this.state.loadingMessage} />: ''}
+                {this.state.showLoading ? <AlertComponent className="loadingModal" isLoading={true} message={'Saving report please wait...'} />: ''}
                 {this.state.showAlert ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.alertMessage} />: ''}
                 {this.state.showError ? <AlertComponent isLoading={false} handleAlert={this.alertHandler} message={this.state.errorMessage} />: ''}
                 <Paper>

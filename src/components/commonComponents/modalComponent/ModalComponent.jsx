@@ -41,10 +41,6 @@ class ModalComponent extends React.Component {
 
         editReport(editedReport).then( response => {
             window.location.reload()
-            this.setState({
-                ...this.state,
-                showEdit: !this.state.showEdit
-            })
         }).catch( error => {
             console.log("error in modal compt", error)
             this.setState({
