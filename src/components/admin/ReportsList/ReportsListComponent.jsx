@@ -25,12 +25,17 @@ class ReportListComponent extends React.Component {
         const filteredReports = this.state.allReports.filter(report => {
             return report._id !== reportId
         })
+        
         deleteMeal(reportId).then(response => {
             this.setState({
                 allReports: filteredReports
             })
         }).catch(error => {
             console.log('error with delete', error)
+            this.setState({
+                allReports: this.state.allReports,
+                showError: true
+            })
         })
         
 
