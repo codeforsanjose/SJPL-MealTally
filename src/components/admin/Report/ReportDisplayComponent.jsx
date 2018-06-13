@@ -40,7 +40,7 @@ class ReportDisplayComponent extends React.Component {
 
     render () {
         return [
-            <tr key={this.props.reportData._id} handleGetReportsInRange={this.props.handleGetReportsInRange}>
+            <tr key={this.props.reportData._id}>
                 <td className="deleteContainer">
                     <button className="deleteButton" onClick={(event) => this.handleDelete(event, this.props.reportData._id)} >X</button>
                 </td>
