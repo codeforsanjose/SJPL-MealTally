@@ -278,6 +278,16 @@ app.put('/api/meals', function(req, res) {
     })
 })
 
+app.get('/api/meals/delete/:id', function(req, res) {
+    const mealId = req.params.id
+    db.deleteOne(meals_db_name, mealId).then(response => {
+        res.status(201).json({msg: 'successfully deleted meal report'});
+    }).catch(error => {
+        console.log('error is', error)
+        res.status(406).json({'error': error})
+    })
+})
+
 const prepareSearchQuery = (searchQuery) => {
     if (searchQuery.interests) {
         searchQuery.interests = {

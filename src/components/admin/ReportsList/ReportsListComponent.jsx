@@ -1,5 +1,7 @@
 import * as React from 'react'
 import ReportDisplayComponent from '../Report/ReportDisplayComponent'
+import { deleteMeal } from '../../../api/api'
+import { AlertComponent } from '../../commonComponents/alertComponent/AlertComponent'
 
 require('./ReportsListComponent.scss');
 
@@ -7,12 +9,49 @@ class ReportListComponent extends React.Component {
     constructor (props) {
         super(props)
         this.props = props
+        this.state = {
+            allReports: this.props.allReports
+        }
+    }
+
+    componentWillReceiveProps = (newProps) => {
+        this.props = newProps
+        this.setState({
+            allReports: newProps.allReports
+        })
+    }
+
+    handleDeleteReport = (reportId) => {
+        const filteredReports = this.state.allReports.filter(report => {
+            return report._id !== reportId
+        })
+        deleteMeal(reportId).then(response => {
+            this.setState({
+                allReports: filteredReports
+            })
+        }).catch(error => {
+            console.log('error with delete', error)
+        })
+        
+
+    }
+
+    alertHandler = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            showLoading: false,
+            showError: false
+        })
     }
 
     render () {
-        if (this.props.allReports) {
+        if (this.state.allReports) {
             return (
                 <div className="reportListContainer">
+                {this.state.showLoading ? <AlertComponent isLoading={true} message={'Deleting report please wait...'} />: ''}
+                {this.state.showError ? <AlertComponent isError={true} errors={''} handleAlert={this.alertHandler} message={'Report not deleted'} />: ''}
+                
                     <table>
                         <thead>
                             <tr>
@@ -25,8 +64,8 @@ class ReportListComponent extends React.Component {
                         </thead>
                         <tbody className="reportList">
                         {
-                            this.props.allReports.map( (report, index) => {
-                                return ( <ReportDisplayComponent key={index} reportData={report} handleGetReportsInRange={this.props.handleGetReportsInRange} />)
+                            this.state.allReports.map( (report, index) => {
+                                return ( <ReportDisplayComponent key={index} handleDeleteReport={this.handleDeleteReport} reportData={report} />)
                             })
                         }
                         </tbody>

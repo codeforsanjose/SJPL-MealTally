@@ -146,6 +146,15 @@ const deleteReport = (filename) => {
         return console.log(error)
     })
 }
+
+const deleteMeal = (reportId) => {
+    return makeRequest({}, 'GET', `/api/meals/delete/${reportId}`).then(response => {
+        return response
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
 const downloadPDF = (filename) => {
     window.location.href = `/report/${filename}`
     // easiest way I can think of to avoid a race condition while using window.location
@@ -209,6 +218,7 @@ export {
     getAllUsers,
     searchVolunteers,
     getReportsInRange,
+    deleteMeal,
     generateReport,
     getLibraries,
     createMeal,

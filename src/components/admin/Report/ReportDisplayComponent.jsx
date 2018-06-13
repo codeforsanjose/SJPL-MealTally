@@ -3,6 +3,7 @@ import $ from 'jquery'
 import moment from 'moment'
 
 import ModalComponent from '../../commonComponents/modalComponent/ModalComponent'
+
 require('./ReportDisplayComponent.scss');
 
 
@@ -23,6 +24,10 @@ class ReportDisplayComponent extends React.Component {
         })
     }
 
+    handleDelete = (event, reportID) => {
+        event.preventDefault()
+        this.props.handleDeleteReport(reportID)
+    }
     showReportDetails = () => {
         const children = this.props.reportData.children
         const adults = this.props.reportData.adults
@@ -36,6 +41,9 @@ class ReportDisplayComponent extends React.Component {
     render () {
         return [
             <tr key={this.props.reportData._id} onClick={this.toggleDetails} handleGetReportsInRange={this.props.handleGetReportsInRange}>
+                <td className="deleteContainer">
+                    <button className="deleteButton" onClick={(event) => this.handleDelete(event, this.props.reportData._id)} >X</button>
+                </td>
                 <td className="date">
                     {moment(this.props.reportData.date).format('MMM DD, YYYY, hh:mm:ss a')}
                 </td>

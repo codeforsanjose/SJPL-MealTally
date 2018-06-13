@@ -1,5 +1,7 @@
 td {
     padding-right: 10px;
+    position: relative;
+    z-index: 0;
 
     .date {
         width: 150px;
@@ -11,5 +13,10 @@ td {
 
     .type {
         width: 100px;
+    }
+
+    .deleteButton {
+        position: relative;
+        z-index: 10;
     }
 }
