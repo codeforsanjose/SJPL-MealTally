@@ -311,7 +311,7 @@ class ReportsComponent extends React.Component {
 
                          {this.enableExportButton()}
                      </div>
-                <ReportsListComponent allReports={this.state.reports} handleGetReportsInRange={this.handleGetReportsInRange} />
+                <ReportsListComponent allReports={this.state.reports} />
             </div>
         )
         
