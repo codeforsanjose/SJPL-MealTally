@@ -40,23 +40,23 @@ class ReportDisplayComponent extends React.Component {
 
     render () {
         return [
-            <tr key={this.props.reportData._id} onClick={this.toggleDetails} handleGetReportsInRange={this.props.handleGetReportsInRange}>
+            <tr key={this.props.reportData._id} handleGetReportsInRange={this.props.handleGetReportsInRange}>
                 <td className="deleteContainer">
                     <button className="deleteButton" onClick={(event) => this.handleDelete(event, this.props.reportData._id)} >X</button>
                 </td>
-                <td className="date">
+                <td className="date" onClick={this.toggleDetails}>
                     {moment(this.props.reportData.date).format('MMM DD, YYYY, hh:mm:ss a')}
                 </td>
-                <td className="libraryName">
+                <td className="libraryName" onClick={this.toggleDetails}>
                     {this.props.reportData.library}
                 </td>
-                <td className="type">
+                <td className="type" onClick={this.toggleDetails}>
                     {this.props.reportData.type}
                 </td>
-                <td>
+                <td onClick={this.toggleDetails}>
                     {this.props.reportData.comments}
                 </td>
-                <td>
+                <td onClick={this.toggleDetails}>
                     {this.props.reportData.signature}
                 </td>
                 

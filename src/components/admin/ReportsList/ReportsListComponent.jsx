@@ -55,6 +55,7 @@ class ReportListComponent extends React.Component {
                     <table>
                         <thead>
                             <tr>
+                                <th ></th>
                                 <th className="date">Date</th>
                                 <th className="library">Library</th>
                                 <th className="type">Type</th>
