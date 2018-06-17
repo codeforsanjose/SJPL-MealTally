@@ -209,7 +209,7 @@ app.get('/report/:filename', (req, res) => {
 app.get('/report/delete/:filename', (req, res) => {
     const filename = req.params.filename
     fs.unlink('./reports/' + filename, function(response, error){
-        console.log('deleteed report ', filename)
+
     })
     res.status(202).json({'msg': 'deleted file'})
 })
