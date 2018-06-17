@@ -157,13 +157,28 @@ body {
         margin-top: 0;
     }
 
-    .saveMealTally {
+    .saveMealTally, .closeEdit {
         margin: 10px;
         width: 50%;
         height: 100px;
         font-size: 1.4em;
-        margin-bottom: 2em;
-        background-color: #75d085;
+   
+        background-color: #0682FE;
         border-radius: 10px;
+        display: block;
+        cursor: pointer;
+        margin: 1em auto;
+        color: #fff;
+        &:hover {
+            background-color: #005DBA;
+        }
+    }
+    .closeEdit {
+        background-color: #9c9c9c;
+        color: #fff;
+        &:hover {
+            background-color: #666;
+        }
+
     }
 }

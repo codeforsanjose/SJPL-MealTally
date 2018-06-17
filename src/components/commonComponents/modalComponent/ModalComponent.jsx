@@ -75,7 +75,7 @@ class ModalComponent extends React.Component {
             position: "fixed"
         }
         const editStyle = {
-            position: "absolute"
+            position: "fixed"
         }
         if (!this.state.showEdit) {
             return (

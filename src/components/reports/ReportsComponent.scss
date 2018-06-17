@@ -1,4 +1,4 @@
-.ReportContainer {
+.ReportContainer,  {
 	font-family: Helvetica, sans-serif;
 	.report-controls {
 		background-color: #F7F7F7;
@@ -40,14 +40,12 @@
 			text-decoration: none;
 			cursor: pointer;
 			&.active {
-				background-color: #0682FE;
-
-				&:hover {
-					background-color: #0999FE;
-				}
+				background-color: #666;
+				cursor: default;
 			}
 			&:hover {
 				background-color: #666;
+				cursor: pointer;
 			}
 		}
 	}
@@ -98,10 +96,10 @@
     	width: 200px;
     	height: 2em;
     	background-color: #9c9c9c;
-    	color: #fff;
+    	color: #000;
     	font-size: 1.4em;
     	margin: 2em auto;
-    	cursor: pointer;
+    	cursor: default;
     	&:hover {
     		background-color: #9c9c9c;
     	}

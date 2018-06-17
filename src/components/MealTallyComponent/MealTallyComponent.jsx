@@ -368,7 +368,7 @@ class MealTallyComponent extends React.Component {
                     </div>
 
                     {this.state.mealTallyDetails._id ? <button className="saveMealTally" onClick={this.handleSaveMealTally}>Save</button>: <button className="saveMealTally" onClick={this.handleSaveMealTally}>Done</button>}
-                    {this.state.mealTallyDetails._id ? <button className="" onClick={this.handleModalEdit}>Close</button>: null}
+                    {this.state.mealTallyDetails._id ? <button className="closeEdit" onClick={this.handleModalEdit}>Cancel</button>: null}
                 </Paper>
             </div>
         )
