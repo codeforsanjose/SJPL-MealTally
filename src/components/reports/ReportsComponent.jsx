@@ -297,20 +297,24 @@ class ReportsComponent extends React.Component {
 
                 <div className="dateContainerContainer">
                     <OptionsSelectorComponent
-                            fieldName={'library'}
-                            options={libraryOptions}
-                            itemSelected={this.state.library}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-                        <OptionsSelectorComponent
-                            fieldName={'type'}
-                            options={this.props.mealTypes}
-                            itemSelected={this.state.type}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-
-                         {this.enableExportButton()}
-                     </div>
+                        fieldName={'library'}
+                        options={libraryOptions}
+                        itemSelected={this.state.library}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+                    <OptionsSelectorComponent
+                        fieldName={'type'}
+                        options={this.props.mealTypes}
+                        itemSelected={this.state.type}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+                    {this.enableExportButton()}
+                </div>
+                <div>
+                    <SignatureCanvas penColor='black' onEnd={this.handleCanvasSignature} ref={(ref) => { this.sigCanvas = ref }} canvasProps={{width: 600, height: 200, className: 'sigCanvas'}} />
+                    <br />
+                    <button onClick={this.clearCanvas}>Clear Signature</button>
+                </div>
                 <ReportsListComponent allReports={this.state.reports} />
             </div>
         )
