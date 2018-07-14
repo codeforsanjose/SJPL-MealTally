@@ -44,7 +44,7 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "latest",
     "excel-export": "^0.5.1",
-    "exceljs": "^0.7.1",
+    "exceljs": "^1.5.1",
     "express": "^4.1.2",
     "express-session": "^1.15.6",
     "handlebars": "^4.0.11",
