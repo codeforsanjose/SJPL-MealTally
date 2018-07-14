@@ -30,6 +30,7 @@ class ReportsComponent extends React.Component {
             months: this.MONTHS,
             selectedMonth: '',
             tabs: 0,
+            esigbase64: ''
         }
     }
     componentDidMount() {
@@ -117,7 +118,8 @@ class ReportsComponent extends React.Component {
         }
         else {
             const data = {
-                reports: this.state.reports
+                reports: this.state.reports,
+                esigbase64: this.state.esigbase64
             }
             generateReport(data)
         }
@@ -274,6 +276,18 @@ class ReportsComponent extends React.Component {
     }
     isActiveTab = (tab) => {
         return tab === this.state.tabs ? 'nav-item active': 'nav-item'
+    }
+
+    handleCanvasSignature = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            esigbase64: this.sigCanvas.toDataURL()
+        })
+    }
+    clearCanvas = (event) => {
+        event.preventDefault()
+        this.sigCanvas.clear()
     }
 
     render() {
