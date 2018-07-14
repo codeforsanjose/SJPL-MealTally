@@ -3,6 +3,7 @@ import * as React from 'react'
 import moment from 'moment'
 import Paper from 'material-ui/Paper'
 import NoSleep from 'nosleep.js'
+import SignatureCanvas from 'react-signature-canvas'
 
 import IncrementComponent from '../commonComponents/incrementComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
@@ -32,7 +33,8 @@ class MealTallyComponent extends React.Component {
         unusable: 0,
         createdBy: {},
         comments: '',
-        signature:''
+        signature:'',
+        esigbase64: ''
     }
     
     constructor(props) {
@@ -44,16 +46,20 @@ class MealTallyComponent extends React.Component {
             mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
             mealTallyDetails: this.props.report || this.INITIAL_MEAL_TALLY_DETAILS
         }
-        
         var noSleep = new NoSleep()
         noSleep.enable()
     }
 
     componentWillReceiveProps = (newProps) => {
         this.props = newProps
+        if (this.props.useEsig) {
+            const details = props.mealTallyDetails
+            this.sigCanvas ? this.sigCanvas.fromDataURL(details.esigbase64) : null
+        }
     }
     componentWillMount(props) {
         this.props = props
+        
         getLibraries().then(libraries => {
             this.setState({
                 ...this.state,
@@ -179,6 +185,7 @@ class MealTallyComponent extends React.Component {
                 showLoading: true
             })
             const data = this.state.mealTallyDetails
+            console.log('all datat', data)
             data['createdBy'] = (this.props.user && this.props.user._id) || 'guest'
             createMeal(data).then(response => {
                 this.setState({
@@ -215,15 +222,48 @@ class MealTallyComponent extends React.Component {
         return errors
     }
 
+    handleCanvasSignature = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            mealTallyDetails: {
+                ...this.state.mealTallyDetails,
+                esigbase64: this.sigCanvas.toDataURL()
+            }
+        })
+    }
+    clearCanvas = (event) => {
+        event.preventDefault()
+        this.sigCanvas.clear()
+    }
+
+    getSignature = (url) => {
+        if (this.state.mealTallyDetails._id !== '') {
+            return (
+                <img src={url} className="signature-image" />
+            )
+        }
+        else {
+            return (
+                <div>
+                    <SignatureCanvas penColor='green' onEnd={this.handleCanvasSignature} ref={(ref) => { this.sigCanvas = ref }} canvasProps={{width: 600, height: 200, className: 'sigCanvas'}} />
+                    <br />
+                    <button onClick={this.clearCanvas}>Clear Signature</button>
+                </div>
+            )
+        }
+
+    }
     render() {
         const totalMealAvailable = this.state.mealTallyDetails.received + this.state.mealTallyDetails.leftovers
         const totalMealServed = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers + this.state.mealTallyDetails.adult
         const totalLeftover = totalMealAvailable - totalMealServed - this.state.mealTallyDetails.unusable
         const totalMinors = this.state.mealTallyDetails.childrenAndTeens + this.state.mealTallyDetails.teenStaffAndVolunteers
+        const signature = this.getSignature(this.state.mealTallyDetails.esigbase64)
         const libraryOptions = this.state.libraries.map(library => {
             return library.name
         })
-
+        
         return (
             <div className="mealTallyContainer">
                 {this.state.showLoading ? <AlertComponent isLoading={true} message={'Saving report please wait...'} />: ''}
@@ -352,7 +392,6 @@ class MealTallyComponent extends React.Component {
                             <span className="tallyTotal">Leftover Meals:</span>
                             <div className="totalNumber">
                                 {totalLeftover > 0 ? totalLeftover: 0}
-
                             </div>
                         </div>
                     </div>
@@ -364,6 +403,9 @@ class MealTallyComponent extends React.Component {
                         <label>Signature: </label><input type="text" value={this.state.mealTallyDetails.signature} onChange={this.handleSignature} />
                         <div className="errorContainer">
                             <span className="errorMessage">{this.state.errors ? this.state.errors.signature: ''}</span>
+                        </div>
+                        <div className="e-signature-container">
+                            { signature }
                         </div>
                     </div>
 

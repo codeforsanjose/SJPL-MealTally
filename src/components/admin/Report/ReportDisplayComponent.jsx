@@ -39,6 +39,10 @@ class ReportDisplayComponent extends React.Component {
     }
 
     render () {
+        const url = this.props.reportData.esigbase64 ? this.props.reportData.esigbase64 : '';
+        const signatureStyle = {
+            backgroundImage: `url(${url})`,
+        }
         return [
             <tr key={this.props.reportData._id}>
                 <td className="deleteContainer">
@@ -58,6 +62,10 @@ class ReportDisplayComponent extends React.Component {
                 </td>
                 <td onClick={this.toggleDetails}>
                     {this.props.reportData.signature}
+                    
+                </td>
+                <td className="digital-signature">
+                    <img src={url} className="signature-image" />
                 </td>
                 
             </tr>,
