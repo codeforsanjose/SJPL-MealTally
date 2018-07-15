@@ -4,6 +4,7 @@ import moment from 'moment'
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
 import ReportsListComponent from '../admin/ReportsList/ReportsListComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
+import SignatureCanvas from 'react-signature-canvas'
 import { getUser, getReportsInRange, generateReport } from '../../api/api'
 require('./ReportsComponent.scss')
 
@@ -89,7 +90,7 @@ class ReportsComponent extends React.Component {
     }
 
     enableExportButton = () => {
-        if (this.state.library === '' || this.state.type === '' || this.state.reports.length === 0) {
+        if (this.state.library === '' || this.state.type === '' || this.state.reports.length === 0 || this.state.esigbase6.length === 0) {
             return (<button className="disableGenerateReport" disabled onClick={this.handleGenerateReport}>Export Reports</button>)
         }
         else {
@@ -108,6 +109,9 @@ class ReportsComponent extends React.Component {
         }
         if (this.state.reports.length === 0) {
             errors['reports'] = 'Please export at least one report'
+        }
+        if (this.state.esigbase64.length === 0) {
+            errors['reports'] = 'Please sign report'
         }
         return Object.values(errors).join(' : ')
     }
@@ -322,12 +326,14 @@ class ReportsComponent extends React.Component {
                         itemSelected={this.state.type}
                         optionsHandler={this.handleMealTallyDetailsOptionsField}
                     />
-                    {this.enableExportButton()}
                 </div>
                 <div>
                     <SignatureCanvas penColor='black' onEnd={this.handleCanvasSignature} ref={(ref) => { this.sigCanvas = ref }} canvasProps={{width: 600, height: 200, className: 'sigCanvas'}} />
                     <br />
                     <button onClick={this.clearCanvas}>Clear Signature</button>
+                </div>
+                <div >
+                    {this.enableExportButton()}
                 </div>
                 <ReportsListComponent allReports={this.state.reports} />
             </div>

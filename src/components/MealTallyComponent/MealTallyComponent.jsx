@@ -217,7 +217,10 @@ class MealTallyComponent extends React.Component {
             errors.type = 'Please select meal type'    
         }
         if (this.state.mealTallyDetails.signature === '') {
-            errors.signature = 'Please sign with name'    
+            errors.signature = 'Please print name'    
+        }
+        if (this.state.mealTallyDetails.esigbase64 === '') {
+            errors.esignature = 'Please sign'    
         }
         return errors
     }
@@ -246,7 +249,7 @@ class MealTallyComponent extends React.Component {
         else {
             return (
                 <div>
-                    <SignatureCanvas penColor='green' onEnd={this.handleCanvasSignature} ref={(ref) => { this.sigCanvas = ref }} canvasProps={{width: 600, height: 200, className: 'sigCanvas'}} />
+                    <SignatureCanvas penColor='black' onEnd={this.handleCanvasSignature} ref={(ref) => { this.sigCanvas = ref }} canvasProps={{width: 600, height: 200, className: 'sigCanvas'}} />
                     <br />
                     <button onClick={this.clearCanvas}>Clear Signature</button>
                 </div>
@@ -406,6 +409,9 @@ class MealTallyComponent extends React.Component {
                         </div>
                         <div className="e-signature-container">
                             { signature }
+                            <div className="errorContainer">
+                                <span className="errorMessage">{this.state.errors ? this.state.errors.esignature: ''}</span>
+                            </div>
                         </div>
                     </div>
 
