@@ -51,7 +51,7 @@ class SignupComponent extends React.Component {
     
     validateState = () => {
         var errorMessage = ''
-        errorMessage = validateEmail(this.state.email)
+        errorMessage = validateEmail(this.state.email, '')
         if (this.state.name.length == 0) {
             errorMessage += 'Please enter a valid name\n'
         }
