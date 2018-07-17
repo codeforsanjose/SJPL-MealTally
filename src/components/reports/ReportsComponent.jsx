@@ -90,7 +90,7 @@ class ReportsComponent extends React.Component {
     }
 
     enableExportButton = () => {
-        if (this.state.library === '' || this.state.type === '' || this.state.reports.length === 0 || this.state.esigbase6.length === 0) {
+        if (this.state.library === '' || this.state.type === '' || this.state.reports.length === 0 || this.state.esigbase64.length === 0) {
             return (<button className="disableGenerateReport" disabled onClick={this.handleGenerateReport}>Export Reports</button>)
         }
         else {
