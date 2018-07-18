@@ -43,6 +43,7 @@ class ReportDisplayComponent extends React.Component {
         const signatureStyle = {
             backgroundImage: `url(${url})`,
         }
+        const signature = url !== '' ? <img src={url} className="signature-image" /> : 'No eSignature'
         return [
             <tr key={this.props.reportData._id}>
                 <td className="deleteContainer">
@@ -65,7 +66,7 @@ class ReportDisplayComponent extends React.Component {
                     
                 </td>
                 <td className="digital-signature">
-                    <img src={url} className="signature-image" />
+                    {signature}
                 </td>
                 
             </tr>,
