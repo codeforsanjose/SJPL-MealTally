@@ -1,0 +1,10 @@
+{
+    "facebookAppID": "",
+    "facebookTestAppID": "",
+    "apiEmailKey": "",
+    
+    "mongoData": {
+        "localURL": "mongodb://localhost:27017/localMealTally",
+        "productionURL": "mongodb://togetherly2:namajoga@ds046549.mlab.com:46549/mealtally"
+    }
+}
