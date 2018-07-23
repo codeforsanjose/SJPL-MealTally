@@ -1,3 +1,5 @@
+$break-large: 1200px;
+
 body {
     margin: 0;
     padding-bottom: 3em;
@@ -45,9 +47,13 @@ body {
     
 
     select {
-        font-size: 1.4em;
+        font-size: 3em;
         background-color: #fff;
         border: 1px solid #000;
+        width: 100%;
+         @media screen and (min-width: $break-large) {
+            font-size: 1.4em;
+        }
     }
 
     .totalsHeader {
@@ -56,7 +62,7 @@ body {
         text-align: center;
         font-weight: bold;
         margin-bottom: 2em;
-        width: 100%;
+
     }
 
     .tallyTotal {
@@ -120,9 +126,12 @@ body {
             background-color: #eee;
 
             input {
-                font-size: 1.4em;
+                font-size: 3em;
                 display: block;
                 text-align: center;
+                 @media screen and (min-width: $break-large) {
+                    font-size: 1.4em;
+                }
             }
         }
     }
@@ -138,7 +147,8 @@ body {
             display: block;
         }
         input {
-            font-size: 1.4em;
+            font-size: 2em;
+            padding: 0 .5em;
             width: 40%;
             height: 2em;
             margin: .5em;
@@ -181,9 +191,16 @@ body {
         }
 
     }
-
+    .e-signature-container {
+        text-align: center;
+    }
     .sigCanvas {
+        margin-top:1em;
         background-color: white;
         border: 1px solid #eee;
+
+   
     }
+
+
 }

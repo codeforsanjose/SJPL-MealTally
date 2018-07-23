@@ -1,3 +1,5 @@
+$break-large: 1200px;
+
 .errorContainer {
 
     .errorMessage {
@@ -7,7 +9,13 @@
 }
 
 .optionsSelectorContainer {
-    padding: 1em 1em 0 1em;
-    margin: 1em;
-    display: inline-block;
+    padding: 1em 0 0 0;
+    margin: 2em auto;
+    display: block;
+    width: 90%;
+    @media screen and (min-width: $break-large) {
+        display: inline-block;
+        width: auto;
+        margin: 1em;
+    }
 }

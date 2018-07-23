@@ -403,7 +403,7 @@ class MealTallyComponent extends React.Component {
                         <label>Comments: </label><input type="text" value={this.state.mealTallyDetails.comments} onChange={this.handleComments} />
                     </div>
                     <div className="signatureBox">
-                        <label>Signature: </label><input type="text" value={this.state.mealTallyDetails.signature} onChange={this.handleSignature} />
+                        <label>Signed by: </label><input type="text" wrap="hard" value={this.state.mealTallyDetails.signature} onChange={this.handleSignature} />
                         <div className="errorContainer">
                             <span className="errorMessage">{this.state.errors ? this.state.errors.signature: ''}</span>
                         </div>
