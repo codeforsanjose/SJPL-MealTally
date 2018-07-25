@@ -1,0 +1,14 @@
+body {
+   margin: 0;
+   padding-bottom: 3em;
+   font-family: Helvetica, sans-serif;
+   touch-action: none;
+}
+
+button {
+	touch-action:none;
+}
+
+* {
+	touch-action:none;
+}
