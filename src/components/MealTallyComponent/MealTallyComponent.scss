@@ -198,11 +198,20 @@ body {
         text-align: center;
     }
     .sigCanvas {
+        border: 2px dotted #0682FE;
+        width: 80%;
         margin-top:1em;
         background-color: white;
-        border: 1px solid #eee;
 
    
+    }
+
+    .sigClear {
+        background-color: #ccc;
+        border: 1px solid #000;
+        margin:1em;
+        padding: 1em;
+        font-size: 1.4em;
     }
 
     button {

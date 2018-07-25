@@ -251,7 +251,7 @@ class MealTallyComponent extends React.Component {
                 <div>
                     <SignatureCanvas penColor='black' onEnd={this.handleCanvasSignature} ref={(ref) => { this.sigCanvas = ref }} canvasProps={{width: 600, height: 200, className: 'sigCanvas'}} />
                     <br />
-                    <button onClick={this.clearCanvas}>Clear Signature</button>
+                    <button className="sigClear" onClick={this.clearCanvas}>Clear Signature</button>
                 </div>
             )
         }
@@ -407,6 +407,7 @@ class MealTallyComponent extends React.Component {
                         <div className="errorContainer">
                             <span className="errorMessage">{this.state.errors ? this.state.errors.signature: ''}</span>
                         </div>
+                        <label>Signature:</label>
                         <div className="e-signature-container">
                             { signature }
                             <div className="errorContainer">
