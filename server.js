@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === 'production') {
     meals_db_name = 'test_meals'
 }
 
+app.use(bodyParser({limit: '4MB'}))
 app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
@@ -164,6 +165,7 @@ app.post('/api/user', (req, res) => {
 app.post('/api/generateReport', (req, res) => {
     const reports =  _.pick(req.body, ['reports'])
     const signature =  _.pick(req.body, ['esigbase64'])
+
     createReport(reports['reports'], signature['esigbase64']).then( (result) => {
         res.json(result)
     }).catch(error => {
