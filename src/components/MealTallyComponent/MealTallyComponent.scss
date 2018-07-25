@@ -146,13 +146,16 @@ body {
             font-size: 1.4em;
             display: block;
         }
-        input {
+        textarea, input {
             font-size: 2em;
             padding: 0 .5em;
-            width: 40%;
+            width: 80%;
             height: 2em;
             margin: .5em;
             border: 1px solid #000;
+        }
+        textarea {
+            height: 4em;
         }
     }
 

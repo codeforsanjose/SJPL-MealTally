@@ -400,7 +400,7 @@ class MealTallyComponent extends React.Component {
                     </div>
 
                     <div className="commentsBox">
-                        <label>Comments: </label><input type="text" value={this.state.mealTallyDetails.comments} onChange={this.handleComments} />
+                        <label>Comments: </label><textarea type="text" value={this.state.mealTallyDetails.comments} onChange={this.handleComments} />
                     </div>
                     <div className="signatureBox">
                         <label>Signed by: </label><input type="text" wrap="hard" value={this.state.mealTallyDetails.signature} onChange={this.handleSignature} />
