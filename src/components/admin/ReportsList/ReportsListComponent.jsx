@@ -65,6 +65,7 @@ class ReportListComponent extends React.Component {
                                 <th className="library">Library</th>
                                 <th className="type">Type</th>
                                 <th className="comment">Comment</th>
+                                <th className="signature">Print Signature</th>
                                 <th className="signature">Signature</th>
                             </tr>
                         </thead>

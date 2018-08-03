@@ -4,6 +4,7 @@ import moment from 'moment'
 import DatePickerComponent from '../commonComponents/DatePickerComponent'
 import ReportsListComponent from '../admin/ReportsList/ReportsListComponent'
 import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
+import SignatureCanvas from 'react-signature-canvas'
 import { getUser, getReportsInRange, generateReport } from '../../api/api'
 require('./ReportsComponent.scss')
 
@@ -30,6 +31,7 @@ class ReportsComponent extends React.Component {
             months: this.MONTHS,
             selectedMonth: '',
             tabs: 0,
+            esigbase64: ''
         }
     }
     componentDidMount() {
@@ -88,7 +90,7 @@ class ReportsComponent extends React.Component {
     }
 
     enableExportButton = () => {
-        if (this.state.library === '' || this.state.type === '' || this.state.reports.length === 0) {
+        if (this.state.library === '' || this.state.type === '' || this.state.reports.length === 0 || this.state.esigbase64.length === 0) {
             return (<button className="disableGenerateReport" disabled onClick={this.handleGenerateReport}>Export Reports</button>)
         }
         else {
@@ -108,6 +110,9 @@ class ReportsComponent extends React.Component {
         if (this.state.reports.length === 0) {
             errors['reports'] = 'Please export at least one report'
         }
+        if (this.state.esigbase64.length === 0) {
+            errors['reports'] = 'Please sign report'
+        }
         return Object.values(errors).join(' : ')
     }
     handleGenerateReport = (event) => {
@@ -117,7 +122,8 @@ class ReportsComponent extends React.Component {
         }
         else {
             const data = {
-                reports: this.state.reports
+                reports: this.state.reports,
+                esigbase64: this.state.esigbase64
             }
             generateReport(data)
         }
@@ -276,6 +282,18 @@ class ReportsComponent extends React.Component {
         return tab === this.state.tabs ? 'nav-item active': 'nav-item'
     }
 
+    handleCanvasSignature = (event) => {
+        event.preventDefault()
+        this.setState({
+            ...this.state,
+            esigbase64: this.sigCanvas.toDataURL()
+        })
+    }
+    clearCanvas = (event) => {
+        event.preventDefault()
+        this.sigCanvas.clear()
+    }
+
     render() {
         const libraryOptions = this.props.libraries.map(library => {
             return library.name
@@ -297,20 +315,26 @@ class ReportsComponent extends React.Component {
 
                 <div className="dateContainerContainer">
                     <OptionsSelectorComponent
-                            fieldName={'library'}
-                            options={libraryOptions}
-                            itemSelected={this.state.library}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-                        <OptionsSelectorComponent
-                            fieldName={'type'}
-                            options={this.props.mealTypes}
-                            itemSelected={this.state.type}
-                            optionsHandler={this.handleMealTallyDetailsOptionsField}
-                        />
-
-                         {this.enableExportButton()}
-                     </div>
+                        fieldName={'library'}
+                        options={libraryOptions}
+                        itemSelected={this.state.library}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+                    <OptionsSelectorComponent
+                        fieldName={'type'}
+                        options={this.props.mealTypes}
+                        itemSelected={this.state.type}
+                        optionsHandler={this.handleMealTallyDetailsOptionsField}
+                    />
+                </div>
+                <div>
+                    <SignatureCanvas penColor='black' onEnd={this.handleCanvasSignature} ref={(ref) => { this.sigCanvas = ref }} canvasProps={{width: 600, height: 200, className: 'sigCanvas'}} />
+                    <br />
+                    <button onClick={this.clearCanvas}>Clear Signature</button>
+                </div>
+                <div >
+                    {this.enableExportButton()}
+                </div>
                 <ReportsListComponent allReports={this.state.reports} />
             </div>
         )

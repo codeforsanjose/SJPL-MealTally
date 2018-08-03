@@ -23,7 +23,7 @@ class ModalComponent extends React.Component {
 
     handleDisplayReport = (event) => {
         return (
-            <MealTallyComponent mealTallyDetails={this.state.mealTallyDetails} />
+            <MealTallyComponent mealTallyDetails={this.state.mealTallyDetails} useEsig={true}  />
         )
     }
 
@@ -50,19 +50,39 @@ class ModalComponent extends React.Component {
         })
     }
 
+    getSignature = (url) => {
+        if (this.props.report._id !== '') {
+            return (
+                <img src={url} className="signature-image" />
+            )
+        }
+        else {
+            return (
+                <div>
+                    No Signature
+                </div>
+            )
+        }
+
+    }
+
     showMealDetails = () => {
+        const exportButton = this.props.handleExport ? <button onClick={this.props.handleExport}>Export</button> : ''
+        const editButton = (!this.state.showEdit) ? <button className="editButton" onClick={this.handleDisplayEdit}>Edit</button> : ''
+        const saveButton = this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button> : ''
+        const report = this.state.showEdit ? <MealTallyComponent report={this.props.report} editReport={this.handleEditReport} closeModal={this.props.closeReport} /> : ''
+        const tallys = this.state.showEdit ? '': this.showTallies()
         return (
             <div >
-                
-                {this.state.showEdit ? '': this.showTallies()}
+                { tallys }
                 <div className="reportActions">
                     <button className="closeButton" onClick={this.props.closeReport}>X</button>
-                    {this.props.handleExport ? <button onClick={this.props.handleExport}>Export</button>: ''}
-                    {(!this.state.showEdit) ? <button className="editButton" onClick={this.handleDisplayEdit}>Edit</button>: ''}
-                    {this.props.handleSave ? <button onClick={this.props.handleSave}>Save</button>: ''}
+                    { exportButton }
+                    { editButton }
+                    { saveButton }
                 </div>
                 <div className="editReportContainer">
-                    {this.state.showEdit ? <MealTallyComponent report={this.props.report} editReport={this.handleEditReport} closeModal={this.props.closeReport} /> : ''}
+                    { report }
                 </div>
             </div>
         )
@@ -94,22 +114,29 @@ class ModalComponent extends React.Component {
     }
 
     showTallies = () => {
+        const signature = this.getSignature(this.props.report.esigbase64)
+        const date = moment(this.props.report.date).format('MMM DD, YYYY, hh:mm:ss a')
+        const library = this.props.report.library
+        const type = this.props.report.type
+        const received = this.props.report.received
+        const leftovers = this.props.report.leftovers
+        const totalMealsAvailable = this.state.totalMealsAvailable
         return (
             <div>
                 <div>
                     <h3>{this.props.message}</h3>
                     <div>
                         <div className="typeBox">
-                            <span>{moment(this.props.report.date).format('MMM DD, YYYY, hh:mm:ss a')}</span>
-                            <span className="mealPlace">{this.props.report.library}</span>
-                            <span className="mealType">{this.props.report.type}</span>
+                            <span>{ date }</span>
+                            <span className="mealPlace">{ library }</span>
+                            <span className="mealType">{ type }</span>
                         </div>
                     </div>
                     <div className="inventoyBox">
                         <div><h4>Day's Inventory</h4></div>
-                        <span className="received">Meals from Vendor: {this.props.report.received}</span>
-                        <span className="leftoverBefore">Leftover from day before: {this.props.report.leftovers}</span>
-                        <span className="totalMealsAvailable">Total meals available: {this.state.totalMealsAvailable}</span>
+                        <span className="received">Meals from Vendor: { received }</span>
+                        <span className="leftoverBefore">Leftover from day before: { leftovers }</span>
+                        <span className="totalMealsAvailable">Total meals available: { totalMealsAvailable }</span>
                     </div>
               
                     <div className="servedBox">
@@ -136,6 +163,9 @@ class ModalComponent extends React.Component {
                     </div>
                     <div>
                         <span>Signed by:</span> <span className="value">{this.props.report.signature}</span>
+                    </div>
+                    <div>
+                        { signature }
                     </div>
                 </div>
             </div>

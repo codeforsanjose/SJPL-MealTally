@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === 'production') {
     meals_db_name = 'test_meals'
 }
 
+app.use(bodyParser({limit: '4MB'}))
 app.use(bodyParser.json());
 app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
@@ -163,7 +164,9 @@ app.post('/api/user', (req, res) => {
 
 app.post('/api/generateReport', (req, res) => {
     const reports =  _.pick(req.body, ['reports'])
-    createReport(reports['reports']).then( (result) => {
+    const signature =  _.pick(req.body, ['esigbase64'])
+
+    createReport(reports['reports'], signature['esigbase64']).then( (result) => {
         res.json(result)
     }).catch(error => {
         console.log(error)
@@ -171,10 +174,10 @@ app.post('/api/generateReport', (req, res) => {
     })
 })
 
-const createReport = (reports, type = 'excel') => {
+const createReport = (reports, esigbase64, type = 'excel') => {
     return new Promise((resolve, reject) => {
         if (type === 'excel') {
-            excelCreator.createExcelReport(reports).then( (result) => {
+            excelCreator.createExcelReport(reports, esigbase64).then( (result) => {
                 return resolve({
                     'filename': result,
                     'allMeals': reports

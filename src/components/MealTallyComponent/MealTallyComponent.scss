@@ -1,8 +1,10 @@
+$break-large: 1200px;
+
 body {
-    margin: 0;
-    padding-bottom: 3em;
-    font-family: Helvetica, sans-serif;
-    touch-action: none;
+   margin: 0;
+   padding-bottom: 3em;
+   font-family: Helvetica, sans-serif;
+   touch-action: none;
 }
 
     button:focus {outline:0;}
@@ -45,9 +47,13 @@ body {
     
 
     select {
-        font-size: 1.4em;
+        font-size: 3em;
         background-color: #fff;
         border: 1px solid #000;
+        width: 100%;
+         @media screen and (min-width: $break-large) {
+            font-size: 1.4em;
+        }
     }
 
     .totalsHeader {
@@ -56,7 +62,7 @@ body {
         text-align: center;
         font-weight: bold;
         margin-bottom: 2em;
-        width: 100%;
+
     }
 
     .tallyTotal {
@@ -120,9 +126,12 @@ body {
             background-color: #eee;
 
             input {
-                font-size: 1.4em;
+                font-size: 3em;
                 display: block;
                 text-align: center;
+                 @media screen and (min-width: $break-large) {
+                    font-size: 1.4em;
+                }
             }
         }
     }
@@ -137,12 +146,16 @@ body {
             font-size: 1.4em;
             display: block;
         }
-        input {
-            font-size: 1.4em;
-            width: 40%;
+        textarea, input {
+            font-size: 2em;
+            padding: 0 .5em;
+            width: 80%;
             height: 2em;
             margin: .5em;
             border: 1px solid #000;
+        }
+        textarea {
+            height: 4em;
         }
     }
 
@@ -181,4 +194,28 @@ body {
         }
 
     }
+    .e-signature-container {
+        text-align: center;
+    }
+    .sigCanvas {
+        border: 2px dotted #0682FE;
+        margin-top:1em;
+        background-color: white;
+
+   
+    }
+
+    .sigClear {
+        background-color: #ccc;
+        border: 1px solid #000;
+        margin:1em;
+        padding: 1em;
+        font-size: 1.4em;
+    }
+
+    button {
+  touch-action: manipulation;
+}
+
+
 }
