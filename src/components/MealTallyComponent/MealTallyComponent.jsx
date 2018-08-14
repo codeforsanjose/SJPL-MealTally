@@ -255,7 +255,6 @@ class MealTallyComponent extends React.Component {
                 </div>
             )
         }
-
     }
     render() {
         const totalMealAvailable = this.state.mealTallyDetails.received + this.state.mealTallyDetails.leftovers
@@ -302,7 +301,6 @@ class MealTallyComponent extends React.Component {
                                     optionsHandler={this.handleMealTallyDetailsOptionsField}
                                     errorMessage={this.state.errors ? this.state.errors.type: ''}
                                 />
-                                
                             </div>
                         </div>
                         <div className="infoContainer availableContainer">
@@ -322,17 +320,15 @@ class MealTallyComponent extends React.Component {
                                 itemCount={this.state.mealTallyDetails.leftovers} 
                                 incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                             />
-                            
                         </div>
                     </div>
                     <div className="infoContainer servedTitle">
-                            <h3 className="infoContainerTitle">Served Meals</h3>
-                        </div>
+                        <h3 className="infoContainerTitle">Served Meals</h3>
+                    </div>
                     <div className="infoContainer servedContainer">
                         <div className="childrenServed">
                             <IncrementComponent 
                                 incrementerName={'Children and Teens'}
-
                                 fieldName={'childrenAndTeens'}
                                 itemCount={this.state.mealTallyDetails.childrenAndTeens} 
                                 incrementerHandler={this.handleMealTallyDetailsIncrementField} 
@@ -362,12 +358,6 @@ class MealTallyComponent extends React.Component {
                                 incrementerHandler={this.handleMealTallyDetailsIncrementField} 
                             />
                         </div>
-
-                    </div>
-                    
-                    <div className="infoContainer">
-
-                       
                     </div>
                     <div className="totalsContainer">
                         <div className="totalsHeader">Tally Totals</div>
