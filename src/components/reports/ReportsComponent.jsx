@@ -50,16 +50,20 @@ class ReportsComponent extends React.Component {
     handleDate = (date, type) => {
         let data = {}
         if (type === 'startDate') {
+            const startDate = date.startOf('day')
+            console.log('what is startDate', startDate)
             data = {
                 ...this.state,
-                startDate: date.endOf('day'),
+                startDate: startDate,
                 showStartDate: !this.state.showStartDate
             }
         }
         else if (type === 'endDate') {
+            const endDate = date.startOf('day')
+            console.log('what is endDate', endDate)
             data = {
                 ...this.state,
-                endDate: date.startOf('day'),
+                endDate: endDate,
                 showEndDate: !this.state.showEndDate
             }
         }
