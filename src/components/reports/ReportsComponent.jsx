@@ -19,8 +19,8 @@ class ReportsComponent extends React.Component {
             
         }
         this.state = {
-            startDate: moment(),
-            endDate: moment(),
+            startDate: moment().endOf('day'),
+            endDate: moment().startOf('day'),
             selectedDate: moment(),
             showStartDate: false,
             showEndDate: false,
@@ -40,8 +40,8 @@ class ReportsComponent extends React.Component {
     componentWillMount(newProps) {
         this.setState({
             ...this.state,
-            startDate: moment(),
-            endDate: moment().subtract(7,'d'),
+            startDate: moment().endOf('day'),
+            endDate: moment().subtract(7,'d').startOf('day'),
             library: '',
             type: ''
         })
@@ -51,7 +51,6 @@ class ReportsComponent extends React.Component {
         let data = {}
         if (type === 'startDate') {
             const startDate = date.startOf('day')
-            console.log('what is startDate', startDate)
             data = {
                 ...this.state,
                 startDate: startDate,
@@ -60,7 +59,6 @@ class ReportsComponent extends React.Component {
         }
         else if (type === 'endDate') {
             const endDate = date.startOf('day')
-            console.log('what is endDate', endDate)
             data = {
                 ...this.state,
                 endDate: endDate,
