@@ -19,7 +19,7 @@ const publicDir = __dirname + '/public'
 let meals_db_name = ''
 
 if (process.env.NODE_ENV === 'production') {
-    meals_db_name = 'meals'
+    meals_db_name = 'test_meals'
 } else {
     meals_db_name = 'test_meals'
 }
