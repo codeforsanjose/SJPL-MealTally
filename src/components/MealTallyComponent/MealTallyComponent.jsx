@@ -382,7 +382,7 @@ class MealTallyComponent extends React.Component {
 
                         
                         <div className="totalLeftover">
-                            <span className="tallyTotal">Leftover Meals:</span>
+                            <span className="tallyTotal">Unused Meals:</span>
                             <div className="totalNumber">
                                 {totalLeftover > 0 ? totalLeftover: 0}
                             </div>
