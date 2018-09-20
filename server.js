@@ -261,6 +261,22 @@ app.get('/api/libraries', function(req, res) {
     })
 });
 
+
+app.post('/api/admin/libraries', (req, res) => {
+    if (auth.isAdmin(req)) {
+        const libraryDetails = _.pick(req.body, ['name', 'address', 'city', 'state', 'zip', 'phone_number'])
+        libraryDetails['isActive'] = true
+        db.insertOne('libraries', libraryDetails).then( newLibrary => {
+            res.status(201).json({msg: 'successfully created library'});
+        }).catch( error => {
+            console.log('error in create library', error)
+        })
+    }
+    else {
+        return res.json({ error: 'You do not have permission to access this resource.....' })
+    }
+})
+
 // POST: create a new meal
 app.post('/api/meals', function(req, res) {
     delete req.body['_id']
