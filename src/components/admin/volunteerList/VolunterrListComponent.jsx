@@ -1,30 +1,20 @@
-import * as React from 'react'
+import React from 'react'
 import VolunteerDisplayComponent from '../volunteerDisplay/VolunteerDisplayComponent'
 
 require('./VolunteerListComponent.css');
 
-class VolunteerListComponent extends React.Component {
-    constructor (props) {
-        super(props)
-        this.props = props
+export default function VolunteerListComponent(props) {
+    if (props.allVolunteers) {
+        const volunteers = props.allVolunteers.map( (volunteer, index) => {
+            return ( <VolunteerDisplayComponent key={index} volunteerData={volunteer} />)
+        })
+        return (
+            <div className='volunteerListContainer'>
+                { volunteers }
+            </div>
+        )
     }
-
-    render () {
-        if (this.props.allVolunteers) {
-            return (
-                <div className="volunteerListContainer">
-                    {
-                        this.props.allVolunteers.map( (volunteer, index) => {
-                            return ( <VolunteerDisplayComponent key={index} volunteerData={volunteer} />)
-                        })
-                    }
-                </div>
-            )
-        }
-        else {
-            return (<div></div>)
-        }
+    else {
+        return (<div></div>)
     }
 }
-
-export default VolunteerListComponent
