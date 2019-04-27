@@ -2,8 +2,7 @@ import React from 'react'
 import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle'
 import EmailIcon from 'material-ui/svg-icons/communication/email'
 import CallIcon from 'material-ui/svg-icons/communication/call'
-import PlaceIcon from 'material-ui/svg-icons/maps/place'
-import MapIcon from 'material-ui/svg-icons/maps/map'
+
 require('./VolunteerDisplayComponent.css');
 
 export default function VolunteerDisplayComponent(props) {

@@ -1,39 +1,34 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import ReportDisplayComponent from '../Report/ReportDisplayComponent'
 import { deleteMeal } from '../../../api/api'
 import { AlertComponent } from '../../commonComponents/alertComponent/AlertComponent'
 
 require('./ReportsListComponent.scss');
 
-class ReportListComponent extends React.Component {
-    constructor (props) {
-        super(props)
-        this.props = props
-        this.state = {
-            allReports: this.props.allReports
+export default function ReportListComponent(props) {
+    const [state, setState] = useState({allReports: props.allReports})
+
+    useEffect( () => {
+        console.log(props.allReports)
+        if (state.allReports.length === 0) {
+            setState({
+                allReports: props.allReports
+            })
         }
-    }
-
-    componentWillReceiveProps = (newProps) => {
-        this.props = newProps
-        this.setState({
-            allReports: newProps.allReports
-        })
-    }
-
-    handleDeleteReport = (reportId) => {
-        const filteredReports = this.state.allReports.filter(report => {
+    })
+    const handleDeleteReport = (reportId) => {
+        const filteredReports = state.allReports.filter(report => {
             return report._id !== reportId
         })
         
         deleteMeal(reportId).then(response => {
-            this.setState({
+            setState({
                 allReports: filteredReports
             })
         }).catch(error => {
             console.log('error with delete', error)
-            this.setState({
-                allReports: this.state.allReports,
+            setState({
+                allReports: state.allReports,
                 showError: true
             })
         })
@@ -41,49 +36,46 @@ class ReportListComponent extends React.Component {
 
     }
 
-    alertHandler = (event) => {
+    const alertHandler = (event) => {
         event.preventDefault()
-        this.setState({
-            ...this.state,
+        setState({
+            ...state,
             showLoading: false,
             showError: false
         })
     }
 
-    render () {
-        if (this.state.allReports) {
-            return (
-                <div className="reportListContainer">
-                {this.state.showLoading ? <AlertComponent isLoading={true} message={'Deleting report please wait...'} />: ''}
-                {this.state.showError ? <AlertComponent isError={true} errors={''} handleAlert={this.alertHandler} message={'Report not deleted'} />: ''}
-                
-                    <table>
-                        <thead>
-                            <tr>
-                                <th ></th>
-                                <th className="date">Date</th>
-                                <th className="library">Library</th>
-                                <th className="type">Type</th>
-                                <th className="comment">Comment</th>
-                                <th className="signature">Print Signature</th>
-                                <th className="signature">Signature</th>
-                            </tr>
-                        </thead>
-                        <tbody className="reportList">
-                        {
-                            this.state.allReports.map( (report, index) => {
-                                return ( <ReportDisplayComponent key={index} handleDeleteReport={this.handleDeleteReport} reportData={report} />)
-                            })
-                        }
-                        </tbody>
-                    </table>
-                </div>
-            )
-        }
-        else {
-            return (<div></div>)
-        }
+
+    if (state.allReports) {
+        const loading = state.showLoading ? <AlertComponent isLoading={true} message={'Deleting report please wait...'} /> : null 
+        const error = state.showError ? <AlertComponent isError={true} errors={''} handleAlert={alertHandler} message={'Report not deleted'} /> : null
+        const allReports = state.allReports.map( (report, index) => {
+            return ( <ReportDisplayComponent key={index} handleDeleteReport={handleDeleteReport} reportData={report} />)
+        })
+        return (
+            <div className="reportListContainer">
+                { loading }
+                { error }
+                <table>
+                    <thead>
+                        <tr>
+                            <th ></th>
+                            <th className="date">Date</th>
+                            <th className="library">Library</th>
+                            <th className="type">Type</th>
+                            <th className="comment">Comment</th>
+                            <th className="signature">Print Signature</th>
+                            <th className="signature">Signature</th>
+                        </tr>
+                    </thead>
+                    <tbody className="reportList">
+                    { allReports }
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+    else {
+        return (<div></div>)
     }
 }
-
-export default ReportListComponent

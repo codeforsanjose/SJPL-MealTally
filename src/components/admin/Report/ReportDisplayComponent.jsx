@@ -1,5 +1,4 @@
-import * as React from 'react'
-import $ from 'jquery'
+import React, { useState } from 'react'
 import moment from 'moment'
 
 import ModalComponent from '../../commonComponents/modalComponent/ModalComponent'
@@ -7,77 +6,60 @@ import ModalComponent from '../../commonComponents/modalComponent/ModalComponent
 require('./ReportDisplayComponent.scss');
 
 
-class ReportDisplayComponent extends React.Component {
-    constructor (props) {
-        super(props)
-        this.props = props
-        this.state ={
-            showDetails: false
-        }
+export default function ReportDisplayComponent(props) {
+    const [showDetails, setShowDetails] = useState(false)
+
+    const toggleDetails = (event) => {
+        event.preventDefault()
+        setShowDetails(!showDetails)
     }
 
-    toggleDetails = (event) => {
+    const handleDelete = (event, reportID) => {
         event.preventDefault()
-        this.setState({
-            ...this.state,
-            showDetails: !this.state.showDetails
-        })
+        props.handleDeleteReport(reportID)
     }
-
-    handleDelete = (event, reportID) => {
-        event.preventDefault()
-        this.props.handleDeleteReport(reportID)
-    }
-    showReportDetails = () => {
-        const children = this.props.reportData.children
-        const adults = this.props.reportData.adults
+    const showReportDetails = () => {
+        const reportData = props.reportData
         return (
             <div>
-                <ModalComponent closeReport={this.toggleDetails} report={this.props.reportData} />
+                <ModalComponent closeReport={toggleDetails} report={reportData} />
             </div>
         )
     }
 
-    render () {
-        const url = this.props.reportData.esigbase64 ? this.props.reportData.esigbase64 : '';
-        const signatureStyle = {
-            backgroundImage: `url(${url})`,
-        }
-        const signature = url !== '' ? <img src={url} className="signature-image" /> : 'No eSignature'
-        return [
-            <tr key={this.props.reportData._id}>
-                <td className="deleteContainer">
-                    <button className="deleteButton" onClick={(event) => this.handleDelete(event, this.props.reportData._id)} >X</button>
-                </td>
-                <td className="date" onClick={this.toggleDetails}>
-                    {moment(this.props.reportData.date).format('MMM DD, YYYY, hh:mm:ss a')}
-                </td>
-                <td className="libraryName" onClick={this.toggleDetails}>
-                    {this.props.reportData.library}
-                </td>
-                <td className="type" onClick={this.toggleDetails}>
-                    {this.props.reportData.type}
-                </td>
-                <td onClick={this.toggleDetails}>
-                    {this.props.reportData.comments}
-                </td>
-                <td onClick={this.toggleDetails}>
-                    {this.props.reportData.signature}
-                    
-                </td>
-                <td className="digital-signature">
-                    {signature}
-                </td>
-                
-            </tr>,
-            <div key={moment()}>
-                {this.state.showDetails ? this.showReportDetails(): ''}
-            </div>
-        ]
-    }
-    componentDidMount() {
-        
-    }
+    const reportId = props.reportData._id
+    const { date, library, type, comments, signature } = props.reportData
+    const formattedDate = moment(date).format('MMM DD, YYYY, hh:mm:ss a')
+    const url = props.reportData.esigbase64 ? props.reportData.esigbase64 : ''
+    const signature = url !== '' ? <img src={url} className='signature-image' /> : 'No eSignature'
+    const modalDetails = showDetails ? showReportDetails() : null
+    return [
+        <tr key={ reportId }>
+            <td className='deleteContainer'>
+                <button className='deleteButton' onClick={(event) => handleDelete(event, reportId)} >X</button>
+            </td>
+            <td className='date' onClick={ toggleDetails }>
+                { formattedDate }
+            </td>
+            <td className='libraryName' onClick={ toggleDetails }>
+                { library }
+            </td>
+            <td className='type' onClick={ toggleDetails }>
+                { type }
+            </td>
+            <td onClick={ toggleDetails }>
+                { comments }
+            </td>
+            <td onClick={ toggleDetails }>
+                { signature }
+            </td>
+            <td className="digital-signature">
+                {signature}
+            </td>
+            
+        </tr>,
+        <div key={moment()}>
+            { modalDetails }
+        </div>
+    ]   
 }
-
-export default ReportDisplayComponent
