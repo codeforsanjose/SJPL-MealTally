@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import { exportUserData, getAllUsers, searchVolunteers, makeAdmin } from '../../api/api'
 import { interests } from '../../models/interests'
 import VolunteerInterestsCheckboxesComponent from '../commonComponents/VolunteerInterestsCheckboxesComponent'
@@ -10,32 +10,28 @@ import { validateEmail } from '../../../lib/validation.js'
 require('./AdminPanelComponent.css')
 require('../sharedCss.css')
 
+function AdminPanelComponent(props) {
+    const [state, setState] = useState({
+        allUsers: [],
+        filteredVolunteers: [],
+        loadingScreenShow: false,
+        makeAdminField: '',
+    })
 
-
-class AdminPanelComponent extends React.Component {
-    constructor(props) {
-        super(props)
-        const checkInterests = interests.map(interest => ({ interest: interest, checked: false }));
-        this.state = {
-            allUsers: [],
-            filteredVolunteers: [],
-            loadingScreenShow: false,
-            makeAdminField: '',
-            searchQuery: {
-            },
-        }
-    }
-    componentDidMount() {
-        getAllUsers().then( response => {
-            this.setState({
-                filteredVolunteers: response,
+    useEffect( () => {
+        if (state.allUsers.length === 0) {
+            getAllUsers().then( response => {
+                setState({
+                    ...state,
+                    filteredVolunteers: response,
+                })
+            }).catch( error => {
+                console.log(error)    
             })
-        }).catch( error => {
-            console.log(error)    
-        })
-    }
+        }
+    })
 
-    handleGettingData = (event) => {
+    const handleGettingData = (event) => {
         event.preventDefault()
         exportUserData().then(data => {
         }).catch( (error) => {
@@ -44,9 +40,9 @@ class AdminPanelComponent extends React.Component {
         })
     }
 
-    getAllVolunteers = () => {
+    const getAllVolunteers = () => {
         getAllUsers().then( response => {
-            this.setState({
+            setState({
                 filteredVolunteers: response,
                 loadingScreenShow: false,
             })
@@ -55,16 +51,13 @@ class AdminPanelComponent extends React.Component {
         })
     }
 
-    
-
-    searchVolunteersHandler = (searchQuery) => {
-
+    const searchVolunteersHandler = (searchQuery) => {
         if (Object.keys(searchQuery).length != 0) {
             searchVolunteers(searchQuery).then( response => {
                 console.log(response)
                 if (response.length) {
-                    this.setState({
-                        ...this.state,
+                    setState({
+                        ...state,
                         filteredVolunteers: response,
                         loadingScreenShow: false,
                         searchQuery: {
@@ -73,8 +66,8 @@ class AdminPanelComponent extends React.Component {
                     })
                 }
                 else {
-                    this.setState({
-                        ...this.state,
+                    setState({
+                        ...state,
                         filteredVolunteers: [],
                         loadingScreenShow: false,
                         searchQuery: {
@@ -85,16 +78,16 @@ class AdminPanelComponent extends React.Component {
                 }
             }).catch( error => {
                 console.log(error)
-                this.setState({ ...this.state, loadingScreenShow: false })
+                setState({ ...state, loadingScreenShow: false })
             })
         }
         else {
-            this.getAllVolunteers()
+            getAllVolunteers()
         }
     }
 
-    showLoadingScreen = () => {
-        if (this.state.loadingScreenShow) {
+    const showLoadingScreen = () => {
+        if (state.loadingScreenShow) {
             return (
                 <div className="loadingScreenContainer">
                     Searching Volunteers Please Wait...
@@ -103,31 +96,31 @@ class AdminPanelComponent extends React.Component {
         }
     }
 
-    displayVolunteerList = () => {
-        if (this.state.filteredVolunteers.length == 0) {
+    const displayVolunteerList = () => {
+        if (state.filteredVolunteers.length == 0) {
             return (
                 <div> No Results for search query</div>
             )
         }
         else {
             return (
-                <VolunteerListComponent allVolunteers={this.state.filteredVolunteers} />
+                <VolunteerListComponent allVolunteers={state.filteredVolunteers} />
             )
         }
     }
 
-    handleMakeAdmin = (event) => {
-        this.setState({
-            ...this.state,
+    const handleMakeAdmin = (event) => {
+        setState({
+            ...state,
             makeAdminField: event.target.value,
         })
     }
-    submitMakeAdmin = () => {
+    const submitMakeAdmin = () => {
         event.preventDefault()
-        let emailInvalidMsg = validateEmail(this.state.makeAdminField, '')
+        const emailInvalidMsg = validateEmail(state.makeAdminField, '')
             if (emailInvalidMsg == '') {
-            let data = {
-                'email': this.state.makeAdminField
+            const data = {
+                'email': state.makeAdminField
             }
             makeAdmin(data).then( response => {
                 console.log(response)
@@ -138,31 +131,28 @@ class AdminPanelComponent extends React.Component {
         else {
             window.alert('Invalid Email')
         }
-        
     }
 
-    render() {
-        return (
-            <div className="adminPanelContainer">
-                {this.showLoadingScreen()}
-                <div className="adminHeaderContainer">
+    return (
+        <div className="adminPanelContainer">
+            { showLoadingScreen() }
+            <div className="adminHeaderContainer">
+                <div>
+                    <button onClick={handleGettingData}>Export User Data</button>
                     <div>
-                        <button onClick={this.handleGettingData}>Export User Data</button>
-                        <div>
-                            <input type="text" onChange={this.handleMakeAdmin} />
-                            <button onClick={this.submitMakeAdmin} >Make New Admin</button>
-                        </div>
+                        <input type="text" onChange={handleMakeAdmin} />
+                        <button onClick={submitMakeAdmin} >Make New Admin</button>
                     </div>
                 </div>
-                <div className="filterContainer">
-                    
-                </div>
-                <div className="filterResultsContainer">
-                    { this.displayVolunteerList() }
-                </div>
             </div>
-            )
-    }
+            <div className="filterContainer">
+                
+            </div>
+            <div className="filterResultsContainer">
+                { displayVolunteerList() }
+            </div>
+        </div>
+    )
 }
 
 export default AdminPanelComponent
