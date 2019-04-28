@@ -1,5 +1,5 @@
 import * as React from 'react'
-import appConfig from '../../AppContentConfig.json'
+import appConfig from '../AppContentConfig.json'
 
 require('./LogoComponent.css');
 

@@ -5,11 +5,10 @@ import Paper from 'material-ui/Paper'
 import NoSleep from 'nosleep.js'
 import SignatureCanvas from 'react-signature-canvas'
 
-import IncrementComponent from '../commonComponents/incrementComponent'
-import OptionsSelectorComponent from '../commonComponents/OptionsSelectorComponent'
-import DatePickerComponent from '../commonComponents/DatePickerComponent'
-import AlertComponent from '../commonComponents/alertComponent/AlertComponent'
-import ModalComponent from '../commonComponents/modalComponent/ModalComponent'
+import IncrementComponent from '../../Components/incrementComponent'
+import OptionsSelectorComponent from '../../Components/OptionsSelectorComponent'
+import DatePickerComponent from '../../Components/DatePickerComponent'
+import AlertComponent from '../../Components/alertComponent/AlertComponent'
 import { createMeal, getLibraries } from '../../api/api'
 
 require('./MealTallyComponent.scss');

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReportDisplayComponent from '../Report/ReportDisplayComponent'
 import { deleteMeal } from '../../../api/api'
-import { AlertComponent } from '../../commonComponents/alertComponent/AlertComponent'
+import { AlertComponent } from '../../../Components/alertComponent/AlertComponent'
 
 require('./ReportsListComponent.scss');
 
@@ -9,7 +9,6 @@ export default function ReportListComponent(props) {
     const [state, setState] = useState({allReports: props.allReports})
 
     useEffect( () => {
-        console.log(props.allReports)
         if (state.allReports.length === 0) {
             setState({
                 allReports: props.allReports

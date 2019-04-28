@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { exportUserData, getAllUsers, searchVolunteers, makeAdmin } from '../../api/api'
-import { interests } from '../../models/interests'
-import VolunteerInterestsCheckboxesComponent from '../commonComponents/VolunteerInterestsCheckboxesComponent'
-import VolunteerSkillsInputComponent from '../commonComponents/SkillsInputComponent'
 import VolunteerListComponent from './volunteerList/VolunterrListComponent'
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector-material-ui'
 import { validateEmail } from '../../../lib/validation.js'
 
 require('./AdminPanelComponent.css')

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import moment from 'moment'
-import MealTallyComponent from '../../MealTallyComponent/MealTallyComponent'
+import MealTallyComponent from '../../Compositions/MealTallyComponent/MealTallyComponent'
 
-import { editReport } from '../../../api/api'
+import { editReport } from '../../api/api'
 require('./ModalComponent.scss');
 
 

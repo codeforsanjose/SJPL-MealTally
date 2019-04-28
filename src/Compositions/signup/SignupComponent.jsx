@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import { validateEmail } from '../../../lib/validation.js'
 
-import LogoComponent from '../commonComponents/LogoComponent'
+import LogoComponent from '../../Components/LogoComponent'
 
 import { registerUser } from '../../api/api'
 

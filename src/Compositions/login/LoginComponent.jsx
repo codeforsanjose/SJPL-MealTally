@@ -3,9 +3,9 @@ import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import LogoComponent from '../commonComponents/LogoComponent'
+import LogoComponent from '../../Components/LogoComponent'
 
-import IncrementComponent from '../commonComponents/incrementComponent'
+import IncrementComponent from '../../Components/incrementComponent'
 
 import { loginUser } from '../../api/api'
 import {

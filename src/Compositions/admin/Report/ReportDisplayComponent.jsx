@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 
-import ModalComponent from '../../commonComponents/modalComponent/ModalComponent'
+import ModalComponent from '../../../Components/modalComponent/ModalComponent'
 
 require('./ReportDisplayComponent.scss');
 
@@ -28,7 +28,7 @@ export default function ReportDisplayComponent(props) {
     }
 
     const reportId = props.reportData._id
-    const { date, library, type, comments, signature } = props.reportData
+    const { date, library, type, comments } = props.reportData
     const formattedDate = moment(date).format('MMM DD, YYYY, hh:mm:ss a')
     const url = props.reportData.esigbase64 ? props.reportData.esigbase64 : ''
     const signature = url !== '' ? <img src={url} className='signature-image' /> : 'No eSignature'
