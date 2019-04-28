@@ -9,7 +9,7 @@ export default function ReportListComponent(props) {
     const [state, setState] = useState({allReports: props.allReports})
 
     useEffect( () => {
-        if (state.allReports.length === 0) {
+        if (state.allReports.length === 0 || state.allReports.length !== props.allReports.length) {
             setState({
                 allReports: props.allReports
             })
@@ -25,7 +25,6 @@ export default function ReportListComponent(props) {
                 allReports: filteredReports
             })
         }).catch(error => {
-            console.log('error with delete', error)
             setState({
                 allReports: state.allReports,
                 showError: true
