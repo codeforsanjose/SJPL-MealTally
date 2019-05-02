@@ -1,0 +1,41 @@
+.volunteerDisplayContainer {
+    width: 500px;
+    margin: 6px;
+    padding: 6px;
+    text-align: left;
+    display: inline-block;
+    border: solid #cccccc 1px;
+}
+
+.volunteerContactInformation {
+    width: 100%;
+    display: grid;
+    grid-template-areas: 
+        'accountIconArea nameArea'
+        'emailIconArea emailArea'
+        'phoneIconArea phoneArea';
+}
+
+.volunteerContactInformation .accountIcon {
+    grid-area: accountIconArea;
+}
+
+.volunteerContactInformation .name {
+    grid-area: nameArea;
+}
+
+.volunteerContactInformation .emailIcon {
+    grid-area: emailIconArea;
+}
+
+.volunteerContactInformation .email {
+    grid-area: emailArea;
+}
+
+.volunteerContactInformation .phoneIcon {
+    grid-area: phoneIconArea;
+}
+
+.volunteerContactInformation .phone {
+    grid-area: phoneArea;
+}
