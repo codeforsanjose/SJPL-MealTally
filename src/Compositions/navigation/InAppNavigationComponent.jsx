@@ -7,6 +7,8 @@ import ReportsComponent from '../reports/ReportsComponent'
 
 import { getUser, getLibraries } from '../../api/api'
 
+import './InAppNavigationComponent.css'
+
 export default function InAppNavigationComponent(props) {
     const user = {
         _id: '',

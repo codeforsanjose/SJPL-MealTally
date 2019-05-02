@@ -12,6 +12,7 @@ function AdminPanelComponent(props) {
         filteredVolunteers: [],
         loadingScreenShow: false,
         makeAdminField: '',
+        tab: 1,
     })
 
     useEffect( () => {
@@ -19,6 +20,7 @@ function AdminPanelComponent(props) {
             getAllUsers().then( response => {
                 setState({
                     ...state,
+                    allUsers: response,
                     filteredVolunteers: response,
                 })
             }).catch( error => {
@@ -128,8 +130,22 @@ function AdminPanelComponent(props) {
             window.alert('Invalid Email')
         }
     }
+    
+    const handleTabNav = (tab) => {
+        setState({
+            ...state,
+            tab: tab
+        })
+    }
+    const adminNav = (
+        <div className="adminNavigationContainer">
+            <a className={`navItem ${state.tab === 0 ? 'active' : ''}`} onClick={(e) => handleTabNav(0)} >Users</a>
+            <a className={`navItem ${state.tab === 1 ? 'active' : ''}`} onClick={(e) => handleTabNav(1)} >Libraries</a>
+            <a className={`navItem ${state.tab === 2 ? 'active' : ''}`} onClick={(e) => handleTabNav(2)} >Sponsors</a>
+        </div>
+    )
 
-    return (
+    const userManagemntNav = (
         <div className="adminPanelContainer">
             { showLoadingScreen() }
             <div className="adminHeaderContainer">
@@ -147,6 +163,43 @@ function AdminPanelComponent(props) {
             <div className="filterResultsContainer">
                 { displayVolunteerList() }
             </div>
+        </div>
+    )
+    
+    const libraryManagementNav = (
+        <div>
+            libraries
+        </div>
+    )
+
+    const SponsorManagementNav = (
+        <div>
+            Sponsors
+        </div>
+    )
+    const getCurrentTab = () => {
+        console.log('tab is', state.tab)
+        switch (state.tab) {
+            case (0): {
+                return libraryManagementNav
+            }
+            case (1): {
+                return libraryManagementNav
+            }
+            case (2): {
+                return SponsorManagementNav
+            }
+            default: {
+                return libraryManagementNav
+            }
+        }
+    
+    }
+    const currentTab = getCurrentTab()
+    return (
+        <div className="AdminPanelComponent">
+            { adminNav }
+            { currentTab }
         </div>
     )
 }

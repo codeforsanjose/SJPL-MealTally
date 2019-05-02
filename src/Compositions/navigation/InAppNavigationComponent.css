@@ -1,0 +1,11 @@
+.adminProfileNavigationContainer .navItem {
+    display: inline-block;
+    font-size: 1em;
+    font-family: arial;
+	margin: 0;
+    cursor: pointer;
+    background-color: #1e616a;
+    color: #fff;
+    padding: 1em;
+    width: 30%;
+}
