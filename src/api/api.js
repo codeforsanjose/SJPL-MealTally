@@ -184,6 +184,81 @@ const getLibraries = () => {
     })
 }
 
+const createLibrary = (library) => {
+    return makeRequest(library, 'POST', '/api/libraries').then(response => {
+        response.json().then( result => {
+            return result
+        })
+        //return {}
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
+const editLibrary = (library) => {
+    return makeRequest(library, 'PUT', '/api/libraries').then(response => {
+        response.json().then( result => {
+            return result
+        })
+        //return {}
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
+const deleteLibrary = (libraryId) => {
+    return makeRequest({}, 'GET', `/api/libraries/delete/${libraryId}`).then(response => {
+        return response
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
+const getSponsors = () => {
+    return makeRequest({}, 'GET', '/api/sponsors').then(response => {
+        return response.json()
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
+const createSponsor = (sponsor) => {
+    return makeRequest(library, 'POST', '/api/sponsors').then(response => {
+        response.json().then( result => {
+            return result
+        })
+        //return {}
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
+const editSponsor = (sponsor) => {
+    return makeRequest(library, 'PUT', '/api/sponsors').then(response => {
+        response.json().then( result => {
+            return result
+        })
+        //return {}
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
+const deleteSponsor = (sponsorId) => {
+    return makeRequest({}, 'GET', `/api/libraries/delete/${sponsorId}`).then(response => {
+        return response
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
 const createMeal = (newMeal) => {
     return new Promise((resolve, reject) => {
         return makeRequest(newMeal, 'POST', '/api/meals').then(response => {
@@ -223,4 +298,12 @@ export {
     getLibraries,
     createMeal,
     editReport,
+    createLibrary,
+    editLibrary,
+    deleteLibrary,
+    getSponsors,
+    createSponsor,
+    editSponsor,
+    deleteSponsor,
+    
 }

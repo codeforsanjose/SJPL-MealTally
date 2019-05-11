@@ -16,6 +16,8 @@ const auth = require('./lib/auth')
 const pdfCreator = require('./lib/pdfCreator')
 const excelCreator = require('./lib/excelCreator')
 const publicDir = __dirname + '/public'
+const librariesRouter = require('./lib/routes/libraryRoutes')
+const sponsorsRouter = require('./lib/routes/sponsorRoutes')
 let meals_db_name = ''
 
 if (process.env.NODE_ENV === 'production') {
@@ -31,6 +33,8 @@ app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cro
 app.use('/public', express.static('public'));
 app.use(cookieParser())
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
+app.use(librariesRouter)
+app.use(sponsorsRouter)
 auth.init(app)
 
 app.get(['/', '/signup', '/login', '/profile/:id'], (req, res) => {
