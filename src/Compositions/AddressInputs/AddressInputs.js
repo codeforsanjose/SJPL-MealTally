@@ -13,17 +13,7 @@ export function InformationMarkup({ details = {}, updateHandler = null, editMode
     const {
         title,
         description,
-        updateItem,
-        updates,
     } = details
-
-    const updatesMarkup = (updates && updates.length > 0) ? updates.map( (item, index) => {
-        return (
-            <span key={`update-item-${index}`} className='update-item'>{ item }</span>
-        )
-    }) : null
-
-    const addUpdateButton = <button className='update-item-btn' onClick={ updateHandler }>Add</button>
 
     const editInformationMarkup = (
         <Fragment>
@@ -39,17 +29,6 @@ export function InformationMarkup({ details = {}, updateHandler = null, editMode
                 type = 'text'
                 label = 'Description'
             />
-            <div className = 'update-container'>
-                <InputField 
-                    name = 'updateItem'
-                    value = { updateItem }
-                    type = 'text'
-                    label = 'Updates'
-                    required = { false }
-                />
-                { updateHandler && addUpdateButton}
-                { updatesMarkup }
-            </div>
         </Fragment>
     )
 
@@ -60,9 +39,6 @@ export function InformationMarkup({ details = {}, updateHandler = null, editMode
             </section>
             <section className='description'>
                 <span>{ description }</span>
-            </section>
-            <section className='post-updates'>
-                { updatesMarkup }
             </section>
         </section>
     )
@@ -77,14 +53,10 @@ export function InformationMarkup({ details = {}, updateHandler = null, editMode
  * @param {boolean}     editMode 
  */
 export function AddressMarkup({ details = {}, editMode = false }) {
-    
     const { 
         addressLine1,
         addressLine2,
         zipcode,
-        longitude,
-        latitude,
-        radius,
     } = details
     
     const editAddressMarkup = (
@@ -108,24 +80,6 @@ export function AddressMarkup({ details = {}, editMode = false }) {
                 type = 'tel'
                 label = 'Zipcode'
             />
-            <InputField 
-                name = 'longitude'
-                value = { longitude }
-                type = 'number'
-                label = 'Longitude'
-            />
-            <InputField 
-                name = 'latitude'
-                value = { latitude }
-                type = 'number'
-                label = 'Latitude'
-            />
-            <InputField 
-                name = 'radius'
-                value = { radius }
-                type = 'number'
-                label = 'Radius'
-            />
         </Fragment>
     )
 
@@ -142,18 +96,6 @@ export function AddressMarkup({ details = {}, editMode = false }) {
             <section>
                 <label htmlFor='zipcode'>Zipcode:</label>
                 <span>{ zipcode }</span>
-            </section>
-            <section>
-                <label htmlFor='longitude'>Longitude:</label>
-                <span>{ longitude }</span>
-            </section>
-            <section>
-                <label htmlFor='latitude'>Latitude:</label>
-                <span>{ latitude }</span>
-            </section>
-            <section>
-                <label htmlFor='radius'>Radius:</label>
-                <span>{ radius }</span>
             </section>
         </section>
     )

@@ -41,13 +41,17 @@ export default function MealTallyComponent(props) {
         mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
         mealTallyDetails: props.report || INITIAL_MEAL_TALLY_DETAILS
     }
-    var noSleep = new NoSleep()
-    noSleep.enable()
+    
     const [state, setState] = useState(initialState)
     useEffect(() => {
+        var noSleep = new NoSleep()
+        noSleep.enable()
         if (props.useEsig) {
             const details = props.mealTallyDetails
             sigCanvas && sigCanvas.fromDataURL(details.esigbase64)
+        }
+        return () => {
+            noSleep.disable()
         }
     })
 
