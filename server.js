@@ -16,6 +16,8 @@ const auth = require('./lib/auth')
 const pdfCreator = require('./lib/pdfCreator')
 const excelCreator = require('./lib/excelCreator')
 const publicDir = __dirname + '/public'
+const librariesRouter = require('./lib/routes/libraryRoutes')
+const sponsorsRouter = require('./lib/routes/sponsorRoutes')
 let meals_db_name = ''
 
 if (process.env.NODE_ENV === 'production') {
@@ -31,6 +33,8 @@ app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cro
 app.use('/public', express.static('public'));
 app.use(cookieParser())
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
+app.use(librariesRouter)
+app.use(sponsorsRouter)
 auth.init(app)
 
 app.get(['/', '/signup', '/login', '/profile/:id'], (req, res) => {
@@ -299,12 +303,25 @@ app.put('/api/meals', function(req, res) {
 
 app.get('/api/meals/delete/:id', function(req, res) {
     const mealId = req.params.id
-    db.deleteOne(meals_db_name, mealId).then(response => {
-        res.status(201).json({msg: 'successfully deleted meal report'});
-    }).catch(error => {
-        console.log('error is', error)
-        res.status(406).json({'error': error})
-    })
+    db.getOneById(meals_db_name, mealId)
+        .then(meal => {
+            meal['deleted'] = true
+            db.updateOneById(meals_db_name, meal)
+                .then(response => {
+                    console.log('response is', response)
+                    res.status(201).json({msg: 'successfully deleted meal report'});         
+                })
+                .catch(error => {
+                    console.log('error is', error)
+                    res.status(406).json({'error': error})
+                })
+        })
+    // db.deleteOne(meals_db_name, mealId).then(response => {
+    //     res.status(201).json({msg: 'successfully deleted meal report'});
+    // }).catch(error => {
+    //     console.log('error is', error)
+    //     res.status(406).json({'error': error})
+    // })
 })
 
 const prepareSearchQuery = (searchQuery) => {
