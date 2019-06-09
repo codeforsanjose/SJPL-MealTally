@@ -163,11 +163,17 @@ export default function ReportsComponent(props) {
             type: data.type
         }
         getReportsInRange(postData).then(response => {
+            console.log('all meals', response.allMeals.length)
+            const allNonDeletedMeals = response.allMeals.filter(item => {
+                console.log('deleted?', item.deleted)
+                return item.deleted ? !item.deleted : true
+            })
+            console.log('allNonDeletedMeals', allNonDeletedMeals)
             setState({
                 ...state,
                 ...data,
                 selectedMonth: month,
-                reports: response.allMeals,
+                reports: allNonDeletedMeals,
                 totals: {
                     ...response.totals
                 }
