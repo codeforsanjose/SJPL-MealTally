@@ -8,10 +8,7 @@
     "build": "webpack",
     "watch-build": "webpack --watch",
     "watch": "webpack --watch",
-    "start": "webpack && node server.js"
-  },
-  "engines": {
-    "node": "6"
+    "start": "node server.js"
   },
   "dependencies": {
     "@uirouter/react": "^0.5.5",
