@@ -268,7 +268,7 @@ export default function ReportsComponent(props) {
         event.preventDefault()
         setState({
             ...state,
-            esigbase64: sigCanvas.toDataURL()
+            esigbase64: sigCanvas.current.toDataURL()
         })
     }
     const clearCanvas = (event) => {
