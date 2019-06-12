@@ -101,5 +101,8 @@
     "web app",
     "boilerplate"
   ],
+  "engines": {
+    "node": "11.10.0"
+  },
   "author": "Code For San Jose Meal Tally Team"
 }
