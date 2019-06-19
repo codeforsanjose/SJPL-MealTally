@@ -15,7 +15,7 @@ export default function NavigationComponent(props) {
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path='/' component={MealTallyComponent}/>
+                    <Route exact path='/' component={LoginComponent}/>
                     <Route path='/signup' component={SignupComponent}/>
                     <Route path='/login' component={LoginComponent}/>
                     <Route path='/profile' component={InAppNavigationComponent}/>
