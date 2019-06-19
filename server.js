@@ -253,7 +253,8 @@ app.put('/api/user', (req, res) => {
 })
 
 app.get('/api/libraries', function(req, res) {
-    db.getAll('libraries', {name: 1}).then(result => {
+    const query = req.user ? {sponser: req.user.sponser} : {};
+    db.getAll('libraries',{}, {name: 1}).then(result => {
         return res.json(result)
     }).catch(error => {
         console.log('error getting all libraries', error)
