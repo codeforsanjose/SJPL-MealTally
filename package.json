@@ -30,6 +30,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "cors": "^2.8.4",
     "css-loader": "^0.28.11",
+    "csv-parser": "^2.3.0",
     "cz-conventional-changelog": "^2.x",
     "errorhandler": "^1.0.1",
     "eslint": "^5.1.0",
