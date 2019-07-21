@@ -73,7 +73,11 @@ function AdminPanelComponent(props) {
         }
     }
     const createSupervisor = () => {
-        registerUser(userState)
+        const userData = {
+            ...userState,
+            sponser: state.sponser.name,
+        }
+        registerUser(userData)
     }
 
     const sponserSearch = (event) => {
