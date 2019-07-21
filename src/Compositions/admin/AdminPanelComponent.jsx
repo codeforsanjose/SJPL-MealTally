@@ -92,7 +92,7 @@ function AdminPanelComponent(props) {
         return sponser.name.toLowerCase().includes(state.sponserSearch.toLowerCase())
     })
     const sponserMarkup = searchedSponsers.map(sponser => {
-        return <li onClick={ selectSponser }>{ sponser.name }</li>
+        return <li onClick={ (event) => selectSponser(sponser) }>{ sponser.name }</li>
     })
     return (
         <div className="adminPanelContainer">
@@ -106,7 +106,7 @@ function AdminPanelComponent(props) {
                         <label htmlFor="email">Email</label><input name="email" type="email" onChange={(event) => handleInputField(event, 'email')} />
                     </div>
                     <div>
-                        <label htmlFor="sponser">Sponser</label><input name="sponser" type="text" onChange={(event) => handleInputField(event, 'sponser')} />
+                        <label htmlFor="sponser">Sponser:</label><span>{ state.sponser.name }</span><input value={ state.sponser.name } name="sponser" type="text"  />
                         
                     </div>
                     <div>
