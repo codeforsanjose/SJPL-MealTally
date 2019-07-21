@@ -262,6 +262,15 @@ app.get('/api/libraries', function(req, res) {
     })
 });
 
+app.get('/api/sponsers', function(req, res) {
+    db.getAll('test_sponser').then(result => {
+        return res.json(result)
+    }).catch(error => {
+        console.log('error getting all sponsers', error)
+        return res.json(error)
+    })
+});
+
 
 app.post('/api/admin/libraries', (req, res) => {
     if (auth.isAdmin(req)) {

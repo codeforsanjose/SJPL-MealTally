@@ -26,3 +26,8 @@
     left: 300px;
     border: 1px solid #ccc;
 }
+
+.register-site-superviser .sponser-list {
+    height: 300px;
+    overflow: scroll;
+}
