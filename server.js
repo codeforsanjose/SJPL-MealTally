@@ -142,7 +142,7 @@ app.get('/api/admin/users', (req, res) => {
 app.post('/api/user', (req, res) => {
     var newUser =  _.pick(req.body, [
         'name', 'email', 'phone', 'passphrase', 'isAdmin', 'sponser'])
-    newUser.approvedBy = ''
+    newUser.approvedBy = req.user._id
     bcrypt.hash(newUser.passphrase, 10, (err, hash) => {
         newUser.passphrase = hash
         db.insertOne('user', newUser).then(result => {
