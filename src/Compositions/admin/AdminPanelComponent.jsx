@@ -76,6 +76,7 @@ function AdminPanelComponent(props) {
         const userData = {
             ...userState,
             sponser: state.sponser.name,
+            isAdmin: true,
         }
         registerUser(userData)
     }
@@ -100,32 +101,33 @@ function AdminPanelComponent(props) {
     })
     return (
         <div className="adminPanelContainer">
-            { showLoadingScreen() }
-            <div className="adminHeaderContainer">
-                <div className="register-site-superviser">
-                    <div>
-                        <label htmlFor="name">First and Last Name</label><input name="name" type="text" onChange={(event) => handleInputField(event, 'name')} />
-                    </div>
-                    <div>
-                        <label htmlFor="email">Email</label><input name="email" type="email" onChange={(event) => handleInputField(event, 'email')} />
-                    </div>
-                    <div>
-                        <label htmlFor="sponser">Sponser:</label><span>{ state.sponser.name }</span><input value={ state.sponser.name } name="sponser" type="text"  />
-                        
-                    </div>
-                    <div>
-                        <input type="text" onChange={ sponserSearch } />
-                        <ul className="sponser-list">
-                            { sponserMarkup }
-                        </ul>
-                    </div>
-                    <div>
-                        <label htmlFor="region">Region</label><input name="region" type="text" onChange={(event) => handleInputField(event, 'region')} />
-                    </div>
+        { showLoadingScreen() }
+            <div className="register-site-superviser">
+                <div>
+                    <label htmlFor="name">First and Last Name:</label><input name="name" type="text" onChange={(event) => handleInputField(event, 'name')} />
                 </div>
-                <button onClick={createSupervisor}>Register</button>
-
+                <div>
+                    <label htmlFor="passphrase">Passphrase:</label><input name="passphrase" type="text" onChange={(event) => handleInputField(event, 'passphrase')} />
+                </div>
+                <div>
+                    <label htmlFor="email">Email:</label><input name="email" type="email" onChange={(event) => handleInputField(event, 'email')} />
+                </div>
+                <div>
+                    <label htmlFor="region">Region</label><input name="region" type="text" onChange={(event) => handleInputField(event, 'region')} />
+                </div>
+                <div>
+                    <label htmlFor="sponser">Sponser:</label><span>{ state.sponser.name }</span>
+                </div>
+                <div>
+                    <div>
+                        <label htmlFor="sponser-search">Search Sponsers:</label><input className="sponser-search" name="sponer-search" type="text" onChange={ sponserSearch } />
+                    </div>
+                    <ul className="sponser-list">
+                        { sponserMarkup }
+                    </ul>
+                </div>
             </div>
+            <button onClick={createSupervisor}>Register</button>
         </div>
     )
 }

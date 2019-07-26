@@ -140,20 +140,12 @@ app.get('/api/admin/users', (req, res) => {
 })
 
 app.post('/api/user', (req, res) => {
-    // It is good practice to specifically pick the fields we want to insert here *in the backend*,
-    // even if we have already done so on the front end. This is to prevent malicious users
-    // from adding unexpected fields by modifying the front end JS in the browser.
-
     var newUser =  _.pick(req.body, [
-        'name', 'email', 'phone', 'passphrase'])
-    newUser.isAdmin = false
+        'name', 'email', 'phone', 'passphrase', 'isAdmin', 'sponser'])
     newUser.approvedBy = ''
     bcrypt.hash(newUser.passphrase, 10, (err, hash) => {
-        // Store hash in database
         newUser.passphrase = hash
         db.insertOne('user', newUser).then(result => {
-            var userRecord = req.body
-
             return res.json(result)
         }).catch(error => {
             console.log(error)
