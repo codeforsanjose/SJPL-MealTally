@@ -8,10 +8,7 @@
     "build": "webpack",
     "watch-build": "webpack --watch",
     "watch": "webpack --watch",
-    "start": "webpack && node server.js"
-  },
-  "engines": {
-    "node": "6"
+    "start": "node server.js"
   },
   "dependencies": {
     "@uirouter/react": "^0.5.5",
@@ -33,6 +30,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "cors": "^2.8.4",
     "css-loader": "^0.28.11",
+    "csv-parser": "^2.3.0",
     "cz-conventional-changelog": "^2.x",
     "errorhandler": "^1.0.1",
     "eslint": "^5.1.0",
@@ -101,5 +99,8 @@
     "web app",
     "boilerplate"
   ],
+  "engines": {
+    "node": "11.10.0"
+  },
   "author": "Code For San Jose Meal Tally Team"
 }

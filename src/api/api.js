@@ -31,12 +31,11 @@ const loginUser = (userCreds) => {
 }
 
 const registerUser = (newUser) => {
-    const uploadData = {
-        ...newUser
+    const userData = {
+        ...newUser,
+        isAdmin: true,
     }
-    let data = cleanupData(uploadData)
-
-    makeRequest(data, 'POST', '/api/user').then(response => {
+    makeRequest(userData, 'POST', '/api/user').then(response => {
         if (response.status == 422) {
             window.alert('Email ID already exist. Try Login')
             return response
@@ -75,6 +74,8 @@ const getAllUsers = (id) => {
     })
 }
 
+
+
 const makeAdmin = (volunteerEmail) => {
     return new Promise((resolve, reject) => {
         return makeRequest(volunteerEmail, 'POST', '/api/admin/user/makeAdmin').then(response => {
@@ -107,13 +108,6 @@ const exportUserData  = () => {
         'Content-Disposition': 'attachment; filename=UserData.xlsx'
     }
     return makeRequest({}, 'GET', '/api/admin/user/exportData', headers)
-}
-
-const cleanupData = (uploadData) => {
-    delete uploadData.checkboxInterests
-    delete uploadData.retypePassphrase
-    delete uploadData.skillsInput
-    return { ...uploadData }
 }
 
 const updateUser = (newUser) => {
@@ -184,6 +178,15 @@ const getLibraries = () => {
     })
 }
 
+const getSponsers = () => {
+    return makeRequest({}, 'GET', '/api/sponsers').then(response => {
+        return response.json()
+    }).catch(error => {
+        console.log("error in api js", error)
+        return console.log(error)
+    })
+}
+
 const createMeal = (newMeal) => {
     return new Promise((resolve, reject) => {
         return makeRequest(newMeal, 'POST', '/api/meals').then(response => {
@@ -223,4 +226,5 @@ export {
     getLibraries,
     createMeal,
     editReport,
+    getSponsers,
 }
