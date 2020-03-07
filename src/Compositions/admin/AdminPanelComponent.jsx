@@ -35,7 +35,7 @@ function AdminPanelComponent(props) {
                 })
             })
         }
-    })
+    }, [])
 
     const handleMakeAdmin = (event) => {
         setState({
