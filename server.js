@@ -17,11 +17,13 @@ const pdfCreator = require('./lib/pdfCreator')
 const excelCreator = require('./lib/excelCreator')
 const publicDir = __dirname + '/public'
 let meals_db_name = ''
-
+const userDBName = 'users'
+const librariesDbName = 'libraries'
+const sponsorsDbName = 'sponsors'
 if (process.env.NODE_ENV === 'production') {
-    meals_db_name = 'test_meals'
+    meals_db_name = 'meals'
 } else {
-    meals_db_name = 'test_meals'
+    meals_db_name = 'meals'
 }
 
 app.use(bodyParser({limit: '4MB'}))
@@ -102,7 +104,7 @@ app.post('/api/reportsRange', (req, res) => {
 
 app.get('/api/users', (req, res) => {
     if (auth.isAdmin(req)) {
-        db.getAll('user').then(users => {
+        db.getAll('users').then(users => {
             return res.json({ users })
         })
     } else {
@@ -116,7 +118,7 @@ app.get('/api/user/:id', (req, res) => {
         return res.json({ user });
     }
     if (req.isAuthenticated() && req.params.id === req.user._id.toString()) {
-        db.getById('user', req.params.id).then(user => {
+        db.getById('users', req.params.id).then(user => {
             req.user = user
             return res.json({ user })
         })
@@ -127,7 +129,7 @@ app.get('/api/user/:id', (req, res) => {
 
 app.get('/api/admin/users', (req, res) => {
     if (auth.isAdmin(req)) {
-        db.getAll('user').then((results) => {
+        db.getAll(userDBName).then((results) => {
             return res.json(results)
         }).catch((error) => {
             console.log(error)
@@ -145,7 +147,7 @@ app.post('/api/user', (req, res) => {
     newUser.approvedBy = req.user._id
     bcrypt.hash(newUser.passphrase, 10, (err, hash) => {
         newUser.passphrase = hash
-        db.insertOne('user', newUser).then(result => {
+        db.insertOne(userDBName, newUser).then(result => {
             return res.json(result)
         }).catch(error => {
             console.log(error)
@@ -211,10 +213,10 @@ app.get('/report/delete/:filename', (req, res) => {
 
 app.post('/api/admin/user/makeAdmin', (req, res) => {
     if (auth.isAdmin(req)) {
-        db.getByEmail('user', _.pick(req.body, ['email'])).then( volunteer => {
+        db.getByEmail(userDBName, _.pick(req.body, ['email'])).then( volunteer => {
             volunteer.isAdmin = true
             volunteer.approvedBy = req.user._id
-            db.updateOneById('user', volunteer).then(result => {
+            db.updateOneById(userDBName, volunteer).then(result => {
                 return res.status(200).json(result)
             }).catch(error => {
                 console.log(error)
@@ -231,7 +233,7 @@ app.post('/api/admin/user/makeAdmin', (req, res) => {
 
 app.put('/api/user', (req, res) => {
     if (req.isAuthenticated() && req.body._id === req.user._id.toString()) {
-        db.updateOneById('user', req.body).then(result => {
+        db.updateOneById(userDBName, req.body).then(result => {
             var userRecord = req.body;
             userRecord.recordType = 'User Profile Update'
             return res.json(result);
@@ -246,7 +248,7 @@ app.put('/api/user', (req, res) => {
 
 app.get('/api/libraries', function(req, res) {
     const query = req.user ? {sponser: req.user.sponser} : {};
-    db.getAll('test_all_libraries',query, {name: 1}).then(result => {
+    db.getAll(librariesDbName,query, {name: 1}).then(result => {
         return res.json(result)
     }).catch(error => {
         console.log('error getting all libraries', error)
@@ -255,7 +257,7 @@ app.get('/api/libraries', function(req, res) {
 });
 
 app.get('/api/sponsers', function(req, res) {
-    db.getAll('test_sponser').then(result => {
+    db.getAll(sponsorsDbName).then(result => {
         return res.json(result)
     }).catch(error => {
         console.log('error getting all sponsers', error)
@@ -268,7 +270,7 @@ app.post('/api/admin/libraries', (req, res) => {
     if (auth.isAdmin(req)) {
         const libraryDetails = _.pick(req.body, ['name', 'address', 'city', 'state', 'zip', 'phone_number'])
         libraryDetails['isActive'] = true
-        db.insertOne('libraries', libraryDetails).then( newLibrary => {
+        db.insertOne(librariesDbName, libraryDetails).then( newLibrary => {
             res.status(201).json({msg: 'successfully created library'});
         }).catch( error => {
             console.log('error in create library', error)
@@ -335,7 +337,7 @@ const prepareSearchQuery = (searchQuery) => {
 app.post('/api/admin/search/users', (req, res) => {
     if (auth.isAdmin(req)) {
         searchQuery = prepareSearchQuery(req.body)
-        db.findAll('user', searchQuery).then(users => {
+        db.findAll('users', searchQuery).then(users => {
             return res.json(users)
         });
     } else {

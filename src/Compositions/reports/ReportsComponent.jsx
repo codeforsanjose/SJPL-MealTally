@@ -15,9 +15,9 @@ export default function ReportsComponent(props) {
     }
     const sigCanvas = useRef(null)
     const [state, setState] = useState({
-        startDate: moment().endOf('day'),
-        endDate: moment().subtract(7,'d').startOf('day'),
-        selectedDate: moment(),
+        startDate: new Date(moment().endOf('day')),
+        endDate: new Date(moment().subtract(7,'d').startOf('day')),
+        selectedDate: new Date(),
         showStartDate: false,
         showEndDate: false,
         library: '',
@@ -33,7 +33,7 @@ export default function ReportsComponent(props) {
     const handleDate = (date, type) => {
         let data = {}
         if (type === 'startDate') {
-            const startDate = date.startOf('day')
+            const startDate = date
             data = {
                 ...state,
                 startDate: startDate,
@@ -41,7 +41,7 @@ export default function ReportsComponent(props) {
             }
         }
         else if (type === 'endDate') {
-            const endDate = date.startOf('day')
+            const endDate = date
             data = {
                 ...state,
                 endDate: endDate,
@@ -53,26 +53,26 @@ export default function ReportsComponent(props) {
     }
     
 
-    const toggleShowDate = (event, type) => {
-        if (type === "startDate") {
-            setState({
-                ...state,
-                showStartDate: !state.showStartDate
-            })
-        }
-        else if (type === "endDate") {
-            setState({
-                ...state,
-                showEndDate: !state.showEndDate
-            })
-        }
-        else if (type === "selectedDate") {
-            setState({
-                ...state,
-                showSelectedDate: !state.showSelectedDate
-            })
-        }
-    }
+    // const toggleShowDate = (event, type) => {
+    //     if (type === "startDate") {
+    //         setState({
+    //             ...state,
+    //             showStartDate: !state.showStartDate
+    //         })
+    //     }
+    //     else if (type === "endDate") {
+    //         setState({
+    //             ...state,
+    //             showEndDate: !state.showEndDate
+    //         })
+    //     }
+    //     else if (type === "selectedDate") {
+    //         setState({
+    //             ...state,
+    //             showSelectedDate: !state.showSelectedDate
+    //         })
+    //     }
+    // }
 
     const enableExportButton = () => {
         if (state.library === '' || state.type === '' || state.reports.length === 0 || state.esigbase64.length === 0) {
@@ -115,7 +115,7 @@ export default function ReportsComponent(props) {
     }
 
     const getSelectedDay = (date, type) => {
-        const startDate = moment(date).startOf("day")
+        const startDate = new Date(moment(date).startOf("day"))
         const endDate = startDate.endOf("day")
         const data = {
             startDate: startDate,
@@ -124,26 +124,26 @@ export default function ReportsComponent(props) {
         handleGetReportsInRange(data)
     }
 
-    const getLastSevenDays = (event) => {
-        event.preventDefault()
-        let today = moment()
-        let lastSeven = moment().subtract(7,'d')
-        const { library, type } = state
-        const data = {
-            startDate: today,
-            endDate: lastSeven,
-            library: library,
-            type: type
-        }
-        handleGetReportsInRange(data)
-    }
+    // const getLastSevenDays = (event) => {
+    //     event.preventDefault()
+    //     let today = moment()
+    //     let lastSeven = moment().subtract(7,'d')
+    //     const { library, type } = state
+    //     const data = {
+    //         startDate: today,
+    //         endDate: lastSeven,
+    //         library: library,
+    //         type: type
+    //     }
+    //     handleGetReportsInRange(data)
+    // }
 
     const getMonthStartEndDates = (event) => {
         event.preventDefault()
         
         const year = +moment().format('YYYY')
-        let startDate = moment([year, event.target.selectedIndex - 1])
-        let endDate = moment(startDate).endOf('month')
+        let startDate = new Date(moment([year, event.target.selectedIndex - 1]))
+        let endDate = new Date(moment(startDate).endOf('month'))
         const { library, type } = state
         const data = {
             startDate: endDate,
@@ -162,6 +162,7 @@ export default function ReportsComponent(props) {
             library: data.library,
             type: data.type
         }
+
         getReportsInRange(postData).then(response => {
             setState({
                 ...state,
@@ -220,11 +221,11 @@ export default function ReportsComponent(props) {
         }
     }
     
-    const displayTotals = () => {
-        return Object.keys(state.totals).map((key, index) => {
-            itemTotals.push(<span key={index} className="itemTotal">{key}: {state.totals[key]}</span>)
-        })
-    }
+    // const displayTotals = () => {
+    //     return Object.keys(state.totals).map((key, index) => {
+    //         itemTotals.push(<span key={index} className="itemTotal">{key}: {state.totals[key]}</span>)
+    //     })
+    // }
 
     const getMonthSelector = () => {
         return (
