@@ -51,28 +51,6 @@ export default function ReportsComponent(props) {
         
         handleGetReportsInRange(data)
     }
-    
-
-    // const toggleShowDate = (event, type) => {
-    //     if (type === "startDate") {
-    //         setState({
-    //             ...state,
-    //             showStartDate: !state.showStartDate
-    //         })
-    //     }
-    //     else if (type === "endDate") {
-    //         setState({
-    //             ...state,
-    //             showEndDate: !state.showEndDate
-    //         })
-    //     }
-    //     else if (type === "selectedDate") {
-    //         setState({
-    //             ...state,
-    //             showSelectedDate: !state.showSelectedDate
-    //         })
-    //     }
-    // }
 
     const enableExportButton = () => {
         if (state.library === '' || state.type === '' || state.reports.length === 0 || state.esigbase64.length === 0) {
@@ -123,20 +101,6 @@ export default function ReportsComponent(props) {
         }
         handleGetReportsInRange(data)
     }
-
-    // const getLastSevenDays = (event) => {
-    //     event.preventDefault()
-    //     let today = moment()
-    //     let lastSeven = moment().subtract(7,'d')
-    //     const { library, type } = state
-    //     const data = {
-    //         startDate: today,
-    //         endDate: lastSeven,
-    //         library: library,
-    //         type: type
-    //     }
-    //     handleGetReportsInRange(data)
-    // }
 
     const getMonthStartEndDates = (event) => {
         event.preventDefault()

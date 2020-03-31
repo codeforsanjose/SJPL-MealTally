@@ -16,7 +16,6 @@ function AdminPanelComponent(props) {
         sponser: '',
     })
     const [userState, setUserInfo] = useState({})
-    console.log('what the fukc?')
     const showLoadingScreen = () => {
         if (state.loadingScreenShow) {
             return (
