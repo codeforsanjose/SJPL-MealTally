@@ -337,7 +337,7 @@ const prepareSearchQuery = (searchQuery) => {
 app.post('/api/admin/search/users', (req, res) => {
     if (auth.isAdmin(req)) {
         searchQuery = prepareSearchQuery(req.body)
-        db.findAll('users', searchQuery).then(users => {
+        db.findAll(userDBName, searchQuery).then(users => {
             return res.json(users)
         });
     } else {
