@@ -104,7 +104,7 @@ app.post('/api/reportsRange', (req, res) => {
 
 app.get('/api/users', (req, res) => {
     if (auth.isAdmin(req)) {
-        db.getAll('users').then(users => {
+        db.getAll(userDBName).then(users => {
             return res.json({ users })
         })
     } else {
@@ -118,7 +118,7 @@ app.get('/api/user/:id', (req, res) => {
         return res.json({ user });
     }
     if (req.isAuthenticated() && req.params.id === req.user._id.toString()) {
-        db.getById('users', req.params.id).then(user => {
+        db.getById(userDBName, req.params.id).then(user => {
             req.user = user
             return res.json({ user })
         })
