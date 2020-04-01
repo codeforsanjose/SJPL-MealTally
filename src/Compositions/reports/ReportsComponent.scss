@@ -1,4 +1,4 @@
-.ReportContainer,  {
+.ReportContainer  {
 	font-family: Helvetica, sans-serif;
 	.report-controls {
 		background-color: #F7F7F7;
@@ -7,9 +7,9 @@
 	}
 	.title {
 		text-align: center;
-            color: #000;
-            font-weight: 100;
-            font-size: 2.5em;
+		color: #000;
+		font-weight: 100;
+		font-size: 2.5em;
 	}
 	select {
         font-size: 1.4em;
@@ -18,14 +18,11 @@
     }
 
     .dateContainerContainer {
-    	
-    
     	background-color: #fff;
     }
 
 	.dateContainer {
 		display: block;
-		vertical-align: text-top;
 		text-align: center;
 		margin: 2em 0 0 0;
 	}
@@ -136,11 +133,8 @@
 			}
     	}
 	}
-	
 	.sigCanvas {
         background-color: white;
         border: 1px solid #eee;
     }
-
-
 }

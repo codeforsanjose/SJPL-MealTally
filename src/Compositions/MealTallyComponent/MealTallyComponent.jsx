@@ -17,7 +17,7 @@ export default function MealTallyComponent(props) {
     const INITIAL_MEAL_TALLY_DETAILS = {
         _id: '',
         library: '',
-        date: moment(),
+        date: new Date(),
         type: '',
         received: 0,
         leftovers: 0,
@@ -49,7 +49,7 @@ export default function MealTallyComponent(props) {
             const details = props.mealTallyDetails
             sigCanvas && sigCanvas.fromDataURL(details.esigbase64)
         }
-    })
+    }, [])
 
     useEffect( () => {
         // should be passed in through props not here for next refactor
@@ -66,7 +66,7 @@ export default function MealTallyComponent(props) {
                 })
             })
         }
-    })
+    }, [])
 
     const toggleShowDate = (event) => {
         setState({
@@ -264,7 +264,7 @@ export default function MealTallyComponent(props) {
     const libraryOptions = state.libraries.map(library => {
         return library.name
     })
-    
+    const initailDate = new Date(state.mealTallyDetails.date)
     return (
         <div className="mealTallyContainer">
             {state.showLoading ? <AlertComponent isLoading={true} message={'Saving report please wait...'} />: ''}
@@ -279,7 +279,7 @@ export default function MealTallyComponent(props) {
                         <div className="dateContainer">
                             <DatePickerComponent
                                 name={'Date'}
-                                dateSelected={moment(state.mealTallyDetails.date)}
+                                dateSelected={initailDate}
                                 handleDateSelected={handleDateField}
                             />
                         </div>

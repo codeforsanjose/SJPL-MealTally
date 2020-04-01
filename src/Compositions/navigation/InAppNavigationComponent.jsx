@@ -29,7 +29,6 @@ export default function InAppNavigationComponent(props) {
         mealTypes: ['Breakfast', 'AM Sanck', 'Lunch', 'PM Snack', 'Dinner'],
         isAdmin: props.isAdmin
     })
-    
     useEffect( () => {
         if (state.libraries.length === 0) {
             getLibraries().then(libraries => {
@@ -45,7 +44,7 @@ export default function InAppNavigationComponent(props) {
                 })
             })
         }
-    })
+    }, [])
 
     useEffect( () => {
         if (state.user._id === '') {

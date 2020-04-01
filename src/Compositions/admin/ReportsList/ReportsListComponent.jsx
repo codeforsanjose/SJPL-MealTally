@@ -6,7 +6,8 @@ import { AlertComponent } from '../../../Components/alertComponent/AlertComponen
 require('./ReportsListComponent.scss');
 
 export default function ReportListComponent(props) {
-    const [state, setState] = useState({allReports: props.allReports})
+    const { allReports } = props
+    const [state, setState] = useState({allReports: allReports})
 
     useEffect( () => {
         if (state.allReports.length === 0 || state.allReports.length !== props.allReports.length) {
@@ -14,7 +15,7 @@ export default function ReportListComponent(props) {
                 allReports: props.allReports
             })
         }
-    })
+    }, [allReports])
     const handleDeleteReport = (reportId) => {
         const filteredReports = state.allReports.filter(report => {
             return report._id !== reportId
