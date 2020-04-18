@@ -25,8 +25,10 @@ let RedisStore = require('connect-redis')(session)
 let redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL)
 if (process.env.NODE_ENV === 'production') {
     meals_db_name = 'meals'
+    session_secret = process.env.SESSION_SECRET
 } else {
     meals_db_name = 'meals'
+    session_secret = 'keyboard cat'
 }
 
 app.use(bodyParser({limit: '4MB'}))
@@ -35,10 +37,9 @@ app.set('port', process.env.PORT || 8080);
 app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.use('/public', express.static('public'));
 app.use(cookieParser())
-app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
 
 // Handle session parameters - if prod use Redis, else use local express-session
-let sessionConfigs = { secret: 'keyboard cat', resave: false, saveUninitialized: false };
+let sessionConfigs = { secret: session_secret, resave: false, saveUninitialized: false };
 console.log(sessionConfigs);
 if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }) };
 console.log(sessionConfigs);
