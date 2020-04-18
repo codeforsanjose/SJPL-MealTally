@@ -20,6 +20,9 @@ let meals_db_name = ''
 const userDBName = 'users'
 const librariesDbName = 'libraries'
 const sponsorsDbName = 'sponsors'
+const redis = require('redis')
+let RedisStore = require('connect-redis')(session)
+let redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL)
 if (process.env.NODE_ENV === 'production') {
     meals_db_name = 'meals'
 } else {
@@ -33,6 +36,14 @@ app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cro
 app.use('/public', express.static('public'));
 app.use(cookieParser())
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
+
+// Handle session parameters - if prod use Redis, else use local express-session
+let sessionConfigs = { secret: 'keyboard cat', resave: false, saveUninitialized: false };
+console.log(sessionConfigs);
+if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }) };
+console.log(sessionConfigs);
+app.use(session(sessionConfigs))
+
 auth.init(app)
 
 app.get(['/', '/signup', '/login', '/profile/:id'], (req, res) => {
