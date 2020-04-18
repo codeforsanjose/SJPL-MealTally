@@ -40,7 +40,7 @@ app.use(cookieParser())
 
 // Handle session parameters - if prod use Redis, else use local express-session
 let sessionConfigs = { secret: session_secret, resave: false, saveUninitialized: false };
-if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }) };
+if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }); sessionConfigs.resave = false; };
 app.use(session(sessionConfigs))
 
 auth.init(app)
