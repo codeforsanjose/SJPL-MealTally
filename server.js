@@ -16,19 +16,17 @@ const auth = require('./lib/auth')
 const pdfCreator = require('./lib/pdfCreator')
 const excelCreator = require('./lib/excelCreator')
 const publicDir = __dirname + '/public'
-let meals_db_name = ''
 const userDBName = 'users'
 const librariesDbName = 'libraries'
 const sponsorsDbName = 'sponsors'
 const redis = require('redis')
 let RedisStore = require('connect-redis')(session)
 let redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL)
+let meals_db_name = ''
 if (process.env.NODE_ENV === 'production') {
     meals_db_name = 'meals'
-    session_secret = process.env.SESSION_SECRET
 } else {
     meals_db_name = 'meals'
-    session_secret = 'keyboard cat'
 }
 
 app.use(bodyParser({limit: '4MB'}))
@@ -39,8 +37,8 @@ app.use('/public', express.static('public'));
 app.use(cookieParser())
 
 // Handle session parameters - if prod use Redis, else use local express-session
-let sessionConfigs = { secret: session_secret, resave: false, saveUninitialized: false };
-if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }); sessionConfigs.resave = false; };
+let sessionConfigs = { secret: session_secret, resave: false, saveUninitialized: false }; let session_secret = 'keyboard cat';
+if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }); sessionConfigs.resave = false; session_secret = process.env.SESSION_SECRET };
 app.use(session(sessionConfigs))
 
 auth.init(app)
