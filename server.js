@@ -37,7 +37,7 @@ app.use('/public', express.static('public'));
 app.use(cookieParser())
 
 // Handle session parameters - if prod use Redis, else use local express-session
-let sessionConfigs = { secret: session_secret, resave: false, saveUninitialized: false }; let session_secret = 'keyboard cat';
+let session_secret = 'keyboard cat'; let sessionConfigs = { secret: session_secret, resave: false, saveUninitialized: false };
 if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }); sessionConfigs.resave = false; session_secret = process.env.SESSION_SECRET };
 app.use(session(sessionConfigs))
 
