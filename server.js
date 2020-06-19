@@ -37,8 +37,9 @@ app.use('/public', express.static('public'));
 app.use(cookieParser())
 
 // Handle session parameters - if prod use Redis, else use local express-session
-let sessionConfigs = { secret: session_secret, resave: false, saveUninitialized: false }; let session_secret = 'keyboard cat';
-if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }); sessionConfigs.resave = false; session_secret = process.env.SESSION_SECRET };
+const HALF_HOUR = 1000 * 60 * 30
+let sessionConfigs = { secret: 'keyboard cat', cookie: { maxAge: HALF_HOUR, sameSite: true }, rolling: true, resave: false, saveUninitialized: false };
+if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }); sessionConfigs.cookie.secure = true; sessionConfigs.resave = false; sessionConfigs.secret = process.env.SESSION_SECRET };
 app.use(session(sessionConfigs))
 
 auth.init(app)
