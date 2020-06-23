@@ -9,19 +9,6 @@ import { getReportsInRange, generateReport } from '../../api/api'
 require('./ReportsComponent.scss')
 
 
-const libraryNameMapForBadData = {
-    'Biblioteca Latinoamericana Branch Library': 'BIBLIOTECA LATINOAMERICA LIBRARY',
-    'Educational Park Branch Library': 'EDUCATIONAL PARK LIBRARY',
-    'Tully Community Branch Library': 'TULLY COMMUNITY BRANCH LIBRARY',
-    'Dr. Roberto Cruz - Alum Rock Branch Library': 'DR ROBERTO CRUZ - ALUM ROCK BRANCH LIBRARY',
-}
-
-const libraryKeyNameMapForBadData = {
-    'BIBLIOTECA LATINOAMERICA LIBRARY': 'Biblioteca Latinoamericana Branch Library',
-    'EDUCATIONAL PARK LIBRARY': 'Educational Park Branch Library',
-    'TULLY COMMUNITY BRANCH LIBRARY': 'Tully Community Branch Library',
-    'DR ROBERTO CRUZ - ALUM ROCK BRANCH LIBRARY': 'Dr. Roberto Cruz - Alum Rock Branch Library',
-}
 export default function ReportsComponent(props) {
     const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     const totals = {
@@ -134,11 +121,10 @@ export default function ReportsComponent(props) {
     }
 
     const handleGetReportsInRange = (data, month = MONTHS[0]) => {
-        const libName = libraryKeyNameMapForBadData[data.library] ? libraryKeyNameMapForBadData[data.library] : ''
         const postData = {
             startDate: data.startDate,
             endDate: data.endDate,
-            library: libName,
+            library: data.library,
             type: data.type
         }
 
