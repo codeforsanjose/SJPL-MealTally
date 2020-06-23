@@ -19,11 +19,9 @@ const publicDir = __dirname + '/public'
 const userDBName = 'users'
 const librariesDbName = 'libraries'
 const sponsorsDbName = 'sponsors'
-if (process.env.NODE_ENV === 'production') {
 const redis = require('redis');
 let RedisStore = require('connect-redis')(session);
 let redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL);
-};
 let meals_db_name = ''
 if (process.env.NODE_ENV === 'production') {
     meals_db_name = 'meals'
