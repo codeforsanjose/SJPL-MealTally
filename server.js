@@ -93,10 +93,11 @@ app.post('/api/reportsRange', (req, res) => {
                 $lte: req.body.startDate
             }
         }
-        if (req.body.type !== '') {
+        if (req.body.type !== '' && req.body.type !== 'Choose type...') {
             query.type = req.body.type
         }
-        if (req.body.library !== '') {
+        if (req.body.library !== '' && req.body.library !== 'Choose library...') {
+            var regexinput = {$regex: req.body.library, $options: "i"}
             query.library = req.body.library
         }
         db.findAll(meals_db_name, query).then(meals => {
