@@ -5,7 +5,6 @@ var cors = require('cors')
 var bcrypt = require('bcrypt')
 var fs = require('fs')
 var app = express()
-const session = require('express-session')
 const _ = require('lodash')
 const errorHandler = require('errorhandler')
 const passport = require('passport')
@@ -19,15 +18,9 @@ const publicDir = __dirname + '/public'
 const userDBName = 'users'
 const librariesDbName = 'libraries'
 const sponsorsDbName = 'sponsors'
-const redis = require('redis');
-let RedisStore = require('connect-redis')(session);
-let redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL);
-let meals_db_name = ''
-if (process.env.NODE_ENV === 'production') {
-    meals_db_name = 'meals'
-} else {
-    meals_db_name = 'meals'
-}
+const session = require('./lib/session')
+
+let meals_db_name = 'meals'
 
 app.use(bodyParser({limit: '4MB'}))
 app.use(bodyParser.json());
@@ -36,11 +29,7 @@ app.use(cors());  // CORS (Cross-Origin Resource Sharing) headers to support Cro
 app.use('/public', express.static('public'));
 app.use(cookieParser())
 
-// Handle session parameters - if prod use Redis, else use local express-session
-const HALF_HOUR = 1000 * 60 * 30
-let sessionConfigs = { secret: 'keyboard cat', cookie: { maxAge: HALF_HOUR, sameSite: true }, rolling: true, resave: false, saveUninitialized: false };
-if (process.env.NODE_ENV === 'production') { sessionConfigs.store = new RedisStore({ client: redisClient }); sessionConfigs.cookie.secure = true; sessionConfigs.resave = false; sessionConfigs.secret = process.env.SESSION_SECRET };
-app.use(session(sessionConfigs))
+app.use(session)
 
 auth.init(app)
 
@@ -51,11 +40,13 @@ app.get(['/', '/signup', '/login', '/profile/:id'], (req, res) => {
 app.post('/api/login', (req, res, next) => {
     // See: https://github.com/jaredhanson/passport-local
     passport.authenticate('local', (err, user, info) => {
+        console.log("passport local", user)
         if (err || !user) {
             console.log('error with login:', err, user)
             return res.status(422).json(err)
         }
         req.login(user, () => {
+            req.user = user
             return res.json(user)
         })
     })(req, res, next)
@@ -127,6 +118,7 @@ app.get('/api/user/:id', (req, res) => {
         var user = req.user
         return res.json({ user });
     }
+    console.log('Hi', req.params, req.user, req.isAuthenticated())
     if (req.isAuthenticated() && req.params.id === req.user._id.toString()) {
         db.getById(userDBName, req.params.id).then(user => {
             req.user = user
