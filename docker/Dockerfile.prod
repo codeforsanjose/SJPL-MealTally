@@ -1,0 +1,22 @@
+FROM node:14.5.0-alpine
+
+WORKDIR /srv
+
+RUN apk --no-cache --virtual build-dependencies add \
+    python \
+    git \
+    make \
+    g++
+
+RUN npm install -g nodemon
+
+COPY package.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 8080
+CMD ["npm", "start"]

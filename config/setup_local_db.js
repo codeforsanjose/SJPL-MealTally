@@ -46,8 +46,8 @@ const createLocalDB = () => {
 
 // get the db location from config file or setup the local db if no config file
 try {
-    const MongoDBData = require('./projectInfoData.json')['mongoData']
-    url = MongoDBData['productionURL']
+    // const MongoDBData = require('./projectInfoData.json')['mongoData']
+    url = process.env.MONGODB_URI
     MongoClient.connect(url, (err, dbParam) => {
         console.log("url:", url)
         console.log("error:", err)
