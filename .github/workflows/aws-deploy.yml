@@ -1,4 +1,4 @@
-name: Backend Build and Deploy
+name: Fullstack Build and Deploy
 on:
   workflow_dispatch:
     inputs:
