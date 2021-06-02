@@ -1,4 +1,4 @@
-name: Backend Build and Deploy
+name: Fullstack Build and Deploy
 on:
   workflow_dispatch:
     inputs:
@@ -107,4 +107,3 @@ jobs:
         cluster: ${{ env.AWS_SHARED_CLUSTER }}
         wait-for-service-stability: true
         wait-for-minutes: 5 minutes
-
