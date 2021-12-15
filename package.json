@@ -57,7 +57,7 @@
     "material-ui": "^0.19.4",
     "method-override": "^2.x",
     "moment": "^2.22.2",
-    "mongodb": "^2.2.35",
+    "mongodb": "^3.6.1",
     "node-sass": "^4.9.2",
     "nodemailer": "^4.6.7",
     "nosleep.js": "^0.7.0",
